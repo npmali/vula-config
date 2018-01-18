@@ -1,8 +1,0 @@
-This a copy of src_mods/login/login-tool/tool/src/webapp/WEB-INF/web.xml for testing CAS on devslscle001.
-
-After startup,
-
-cp web.xml.devslscle001 /usr/local/sakai/webapps/sakai-login-tool/WEB-INF/web.xml
-
-and restart.
-
