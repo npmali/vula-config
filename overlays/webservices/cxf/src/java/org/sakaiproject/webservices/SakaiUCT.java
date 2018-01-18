@@ -29,13 +29,13 @@ import javax.ws.rs.QueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.sakaiproject.assignment.api.Assignment;
-import org.sakaiproject.assignment.api.AssignmentContent;
-import org.sakaiproject.assignment.api.AssignmentContentEdit;
-import org.sakaiproject.assignment.api.AssignmentEdit;
-import org.sakaiproject.assignment.api.AssignmentService;
-import org.sakaiproject.assignment.api.AssignmentSubmission;
-import org.sakaiproject.assignment.api.AssignmentSubmissionEdit;
+//import org.sakaiproject.assignment.api.Assignment;
+//import org.sakaiproject.assignment.api.AssignmentContent;
+//import org.sakaiproject.assignment.api.AssignmentContentEdit;
+//import org.sakaiproject.assignment.api.AssignmentEdit;
+//import org.sakaiproject.assignment.api.AssignmentService;
+//import org.sakaiproject.assignment.api.AssignmentSubmission;
+//import org.sakaiproject.assignment.api.AssignmentSubmissionEdit;
 import org.sakaiproject.api.common.edu.person.SakaiPerson;
 import org.sakaiproject.api.common.edu.person.SakaiPersonManager;
 import org.sakaiproject.api.common.type.Type;
@@ -696,8 +696,9 @@ public class SakaiUCT extends AbstractWebService {
         return sakaiPerson;
     }
 
-   // Assignments method - moved from Assignments.java
+    // Assignments method - moved from Assignments.java
 
+    /*
     @WebMethod
     @Path("/setAssignmentGradeCommentforUser")
     @Produces("text/plain")
@@ -824,6 +825,7 @@ public class SakaiUCT extends AbstractWebService {
     	
     	return "success";
     }
+    */
 
     // This is a copy of the code in AssignmentAction.java
 
@@ -839,6 +841,8 @@ public class SakaiUCT extends AbstractWebService {
      * @param updateRemoveSubmission
      * @param context
      */
+
+    /*
     protected void updateGradebook(String assignmentRef, String associateGradebookAssignment, String submissionRef, String context, String grade)
     {
     	//add or remove external grades to gradebook
@@ -927,4 +931,5 @@ public class SakaiUCT extends AbstractWebService {
     	
     }	// isGradebookDefined()
 
+    */
 }
