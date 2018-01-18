@@ -1,0 +1,18 @@
+Index: providers/cm-authz-provider/src/java/org/sakaiproject/coursemanagement/impl/provider/CourseManagementGroupProvider.java
+===================================================================
+--- providers/cm-authz-provider/src/java/org/sakaiproject/coursemanagement/impl/provider/CourseManagementGroupProvider.java	(revision 101383)
++++ providers/cm-authz-provider/src/java/org/sakaiproject/coursemanagement/impl/provider/CourseManagementGroupProvider.java	(working copy)
+@@ -1,3 +1,4 @@
++
+ /**********************************************************************************
+  * $URL$
+  * $Id$
+@@ -142,7 +143,7 @@
+ 			// Only add the section eids if they aren't already in the map or if the new role has a higher preference.
+ 			for(Iterator<Entry<String, String>> rrRoleIter = rrGroupRoleMap.entrySet().iterator(); rrRoleIter.hasNext();) {
+ 				Entry<String, String> entry = rrRoleIter.next();
+-				String sectionEid = entry.getKey();
++				String sectionEid = entry.getKey().toUpperCase();
+ 				String existingRole = groupRoleMap.get(sectionEid);
+ 				String rrRole = entry.getValue();
+ 

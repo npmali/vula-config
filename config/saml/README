@@ -1,0 +1,7 @@
+SAML configuration (using Spring Security as per SAK-30105):
+
+federationmetadata.xml is supplied by the ADFS SAML server: https://adfs.uct.ac.za/federationmetadata/2007-06/federationmetadata.xml
+
+SP metadata is generated automatically by Spring Security, at the URL /sakai-login-tool/container/saml/metadata
+
+The metadata files here are for reference only.

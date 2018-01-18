@@ -1,0 +1,13 @@
+diff --git master/pom.xml b/master/pom.xml
+index b3cb84a..1e4af54 100644
+--- master/pom.xml
++++ master/pom.xml
+@@ -1745,7 +1745,7 @@
+       <dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+-          <version>5.1.40</version>
++          <version>5.1.42</version>
+           <scope>provided</scope>
+       </dependency>
+       <dependency>

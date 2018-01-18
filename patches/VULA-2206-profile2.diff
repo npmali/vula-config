@@ -1,0 +1,15 @@
+Index: profile2/impl/src/java/org/sakaiproject/profile2/logic/ProfileLogicImpl.java
+===================================================================
+--- profile2/impl/src/java/org/sakaiproject/profile2/logic/ProfileLogicImpl.java	(revision 310594)
++++ profile2/impl/src/java/org/sakaiproject/profile2/logic/ProfileLogicImpl.java	(working copy)
+@@ -184,6 +184,10 @@
+ 			p.setStatus(statusLogic.getUserStatus(userUuid));
+ 		}
+ 		
++		// VULA-2206 Always suppress these fields for now (UCT local change)
++		p.setHomephone(null);
++		p.setMobilephone(null);
++
+ 		return p;
+ 	}
+ 	

@@ -1,0 +1,52 @@
+Index: sitestats/sitestats-bundle/src/resources/Messages_de.properties
+===================================================================
+--- sitestats/sitestats-bundle/src/resources/Messages_de.properties	(revision 321245)
++++ sitestats/sitestats-bundle/src/resources/Messages_de.properties	(working copy)
+@@ -113,7 +113,7 @@
+ report_duplicate=Duplizieren
+ report_delete=L\u00f6schen
+ report_duplicate_name=Kopieren von ${title}
+-report_confirm_delete=Der Bericht \\'${title}\\' wird unwiderruflich gel\u00f6scht. Fortsetzen?
++report_confirm_delete=Der Bericht {0} wird unwiderruflich gel\u00f6scht. Fortsetzen?
+ 
+ # Report editing
+ report_what=Was?
+Index: sitestats/sitestats-bundle/src/resources/Messages_en_GB.properties
+===================================================================
+--- sitestats/sitestats-bundle/src/resources/Messages_en_GB.properties	(revision 321245)
++++ sitestats/sitestats-bundle/src/resources/Messages_en_GB.properties	(working copy)
+@@ -113,7 +113,7 @@
+ report_duplicate=Duplicate
+ report_delete=Delete
+ report_duplicate_name=Copy of ${title}
+-report_confirm_delete=The report \\'${title}\\' will be permanently removed. Continue?
++report_confirm_delete=The report {0} will be permanently removed. Continue?
+ 
+ # Report editing
+ report_what=What?
+Index: sitestats/sitestats-bundle/src/resources/Messages_it.properties
+===================================================================
+--- sitestats/sitestats-bundle/src/resources/Messages_it.properties	(revision 321245)
++++ sitestats/sitestats-bundle/src/resources/Messages_it.properties	(working copy)
+@@ -113,7 +113,7 @@
+ report_duplicate=Duplica
+ report_delete=Elimina
+ report_duplicate_name=Copia di ${title}
+-report_confirm_delete=Il report \\'${title}\\' sar\u00e0 eliminato definitivamente. Continuare?
++report_confirm_delete=Il report {0} sar\u00e0 eliminato definitivamente. Continuare?
+ 
+ # Report editing
+ report_what=Cosa?
+Index: sitestats/sitestats-bundle/src/resources/Messages_ko.properties
+===================================================================
+--- sitestats/sitestats-bundle/src/resources/Messages_ko.properties	(revision 321245)
++++ sitestats/sitestats-bundle/src/resources/Messages_ko.properties	(working copy)
+@@ -113,7 +113,7 @@
+ report_duplicate=\ubcf5\uc81c
+ report_delete=\uc0ad\uc81c
+ report_duplicate_name=${title} \uc0ac\ubcf8
+-report_confirm_delete=\\'${title}\\' \ubcf4\uace0\uc11c\uac00 \uc601\uad6c \uc0ad\uc81c\ub429\ub2c8\ub2e4. \uacc4\uc18d\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?
++report_confirm_delete={0} \ubcf4\uace0\uc11c\uac00 \uc601\uad6c \uc0ad\uc81c\ub429\ub2c8\ub2e4. \uacc4\uc18d\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?
+ 
+ # Report editing
+ report_what=\ud56d\ubaa9

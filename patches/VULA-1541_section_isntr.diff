@@ -1,0 +1,20 @@
+Index: providers/cm-authz-provider/src/java/org/sakaiproject/coursemanagement/impl/provider/SectionRoleResolver.java
+===================================================================
+--- providers/cm-authz-provider/src/java/org/sakaiproject/coursemanagement/impl/provider/SectionRoleResolver.java	(revision 102185)
++++ providers/cm-authz-provider/src/java/org/sakaiproject/coursemanagement/impl/provider/SectionRoleResolver.java	(working copy)
+@@ -149,13 +149,14 @@
+ 		}
+ 
+ 		// Finally, add the official instructors, overriding any other roles if necessary
++		/*
+ 		if ((officialInstructorRole != null) && (officialInstructorRole.length() > 0)) {
+ 			Set<Section> instructingSections = cmService.findInstructingSections(userEid);
+ 			for(Section instructingSection : instructingSections) {
+ 				groupRoleMap.put(instructingSection.getEid(), officialInstructorRole);
+ 			}
+ 		}
+-		
++		*/
+ 		if(log.isDebugEnabled()) {
+ 			for(Entry<String, String> sectionEid : groupRoleMap.entrySet()) {
+ 				log.debug("User " + userEid + " has role " + sectionEid.getValue() + " in " + sectionEid);

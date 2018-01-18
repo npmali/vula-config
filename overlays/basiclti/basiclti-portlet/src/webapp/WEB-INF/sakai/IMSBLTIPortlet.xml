@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<registration>
+
+        <!-- This is the default External Tool LTI launch -->
+        <tool
+                        id="sakai.basiclti"
+                        title="External Tool"
+                        description="Launch external tools using IMS Learning Tools Interoperability.">
+
+                <configuration name="sakai:portlet-pre-render" value="true" />
+
+                <category name="course" />
+                <category name="project" />
+				<category name="portfolio" />
+
+                <!-- Allow these to be set -->
+                <configuration name="functions.require" />
+				<!-- This allows an LTI Tool to choose a CSS class for its icon
+					other than the default.   It may require a new icon and 
+					CSS change to get it to work for a completely new icon. -->
+                <configuration name="sakai:menuClass"/>
+
+                <!-- The default / pre-configured settings for this 
+                     placement.  If you set a value here and don't make 
+                     it final below - it is just the default and the 
+                     Intructor can edit it.   If you make it final
+                     the Instructor won't even see the value.  
+
+                     If you make everything final, then the Instructor's 
+                     tool configuration screen will be empty.
+
+                     Adminitrators can set any of these Parameters in the
+                     Sites tool and set the finalness of the parameters
+                     as well.  -->
+
+                <configuration name="imsti.launch" />
+                <configuration name="imsti.xml" />
+                <configuration name="imsti.secret" />
+                <configuration name="imsti.encryptedsecret" />
+                <configuration name="imsti.key" />
+                <configuration name="imsti.pagetitle" />
+                <configuration name="imsti.tooltitle" />
+                <configuration name="imsti.newpage" />
+                <configuration name="imsti.maximize" />
+                <configuration name="imsti.frameheight" />
+                <configuration name="imsti.debug" />
+                <configuration name="imsti.releasename" />
+                <configuration name="imsti.releaseemail" />
+                <configuration name="imsti.custom" />
+                <configuration name="imsti.allowsettings" />
+                <configuration name="imsti.allowroster" />
+                <configuration name="imsti.allowoutcomes" />
+                <configuration name="imsti.contentlink" />
+                <configuration name="imsti.splash" />
+                <configuration name="imsti.fa_icon" /> <!-- A font awesome icon line "fa-adjust" -->
+
+                <!-- Setting these to true means the corresponding above values 
+		     cannot be altered by by the instructor.  -->
+                <configuration name="final.launch" value="false"/>
+		<!-- We default xml to final to suppress it in the configuration display -->
+                <configuration name="final.xml" value="true"/>
+                <configuration name="final.secret" value="false"/>
+                <configuration name="final.encryptedsecret" value="false"/>
+                <configuration name="final.key" value="false"/>
+                <configuration name="final.pagetitle" value="false"/>
+                <configuration name="final.tooltitle" value="false"/>
+                <configuration name="final.newpage" value="false"/>
+                <configuration name="final.maximize" value="false"/>
+                <configuration name="final.frameheight" value="false"/>
+                <configuration name="final.debug" value="false"/>
+                <configuration name="final.releasename" value="false"/>
+                <configuration name="final.releaseemail" value="false"/>
+                <configuration name="final.custom" value="false"/>
+                <configuration name="final.allowsettings" value="false"/>
+                <configuration name="final.allowroster" value="false"/>
+                <configuration name="final.allowoutcomes" value="false"/>
+                <configuration name="final.contentlink" value="false"/>
+                <configuration name="final.splash" value="false"/>
+                <configuration name="final.fa_icon" value="false"/>
+
+                <!-- Allow multiple instances of this tool within one site -->
+                <configuration name="allowMultipleInstances" value="true" />
+
+        </tool>
+
+        <!-- This is the Opencast Setup tool. It is replaced by sakai.opencast.series when configured -->
+        <tool
+                        id="sakai.opencast.setup"
+                        title="Lecture Videos"
+                        description="Set up a new video recording series">
+
+                <configuration name="sakai:portlet-pre-render" value="true" />
+
+                <category name="course" />
+                <category name="project" />
+
+		<!-- Visible only to site owners -->
+                <configuration name="functions.require" value="site.upd"/>
+
+                <configuration name="sakai:menuClass" value="icon-sakai--sakai-opencast-setup"/>
+                <configuration name="imsti.fa_icon" value="fa-pencil-square-o"/>
+
+                <!-- Launch URL can be overriden in sakai.properties -->
+                <configuration name="imsti.launch"
+                   value="https://tsugi.uct.ac.za/mod/tsugi-welcome-to-lecture-recording/" />
+
+                <configuration name="imsti.xml" />
+
+                <!-- Secrets are set globally for this domain in security.properties -->
+                <configuration name="imsti.secret" value="" />
+                <configuration name="imsti.key" value="" />
+
+                <configuration name="imsti.pagetitle" value="Lecture Videos" />
+                <configuration name="imsti.tooltitle" value="Lecture Videos"/>
+                <configuration name="imsti.newpage" value="off" />
+                <configuration name="imsti.maximize" value="on" />
+                <configuration name="imsti.frameheight" value="1024" />
+                <configuration name="imsti.debug" value="off"/>
+                <configuration name="imsti.releasename" value="on"/>  
+                <configuration name="imsti.releaseemail" value="on"/> 
+                <configuration name="imsti.custom" />
+                <configuration name="imsti.allowsettings" value="on"/>
+                <configuration name="imsti.allowroster" value="on"/> 
+                <configuration name="imsti.allowoutcomes" value="on"/> 
+                <configuration name="imsti.contentlink" />
+                <configuration name="imsti.splash" value=""/>
+
+                <configuration name="final.launch" value="true"/>
+                <configuration name="final.xml" value="true"/>
+                <configuration name="final.secret" value="true"/>
+                <configuration name="final.key" value="true"/>
+
+                <configuration name="final.pagetitle" value="false"/>
+                <configuration name="final.tooltitle" value="true"/>
+                <configuration name="final.newpage" value="true"/>
+                <configuration name="final.maximize" value="true"/>
+                <configuration name="final.frameheight" value="true"/>
+                <configuration name="final.debug" value="true"/>
+                <configuration name="final.releasename" value="true"/>
+                <configuration name="final.releaseemail" value="true"/>
+                <configuration name="final.custom" value="true"/>
+                <configuration name="final.allowsettings" value="true"/>
+                <configuration name="final.allowroster" value="true"/>
+                <configuration name="final.allowoutcomes" value="true"/>
+                <configuration name="final.contentlink" value="true"/>
+                <configuration name="final.splash" value="true"/>
+                <configuration name="final.fa_icon" value="true"/>
+
+                <!-- Allow multiple instances of this tool within one site -->
+                <configuration name="allowMultipleInstances" value="false" />
+        </tool>
+
+        <!-- This is the Opencast Series tool. -->
+        <tool
+                        id="sakai.opencast.series"
+                        title="Lecture Videos"
+                        description="For recording and playing back videos">
+
+                <configuration name="sakai:portlet-pre-render" value="true" />
+
+		<!-- Don't show up by default, because this is placed and configured by webservices.
+                  <category name="course" />
+                  <category name="project" />
+		-->
+
+		<!-- Visible to everyone -->
+                <configuration name="functions.require" />
+
+                <configuration name="sakai:menuClass" value="icon-sakai--sakai-opencast-series"/>
+
+		<!-- Launch URL can be overriden in sakai.properties -->
+                <configuration name="imsti.launch"
+                   value="https://media.uct.ac.za/lti" />
+
+                <configuration name="imsti.xml" />
+                <configuration name="imsti.fa_icon" value="fa-play-circle-o"/>
+
+                <!-- Secrets are set globally for this domain in security.properties -->
+                <configuration name="imsti.secret" value="" />
+                <configuration name="imsti.key" value="" />
+
+                <configuration name="imsti.pagetitle" value="Lecture Videos" />
+                <configuration name="imsti.tooltitle" value="Lecture Videos"/>
+                <configuration name="imsti.newpage" value="off" />
+                <configuration name="imsti.maximize" value="on" />
+                <configuration name="imsti.frameheight" value="1024" />
+                <configuration name="imsti.debug" value="off"/>
+                <configuration name="imsti.releasename" value="on"/>  
+                <configuration name="imsti.releaseemail" value="on"/> 
+                <configuration name="imsti.custom" />
+                <configuration name="imsti.allowsettings" value="on"/>
+                <configuration name="imsti.allowroster" value="on"/> 
+                <configuration name="imsti.allowoutcomes" value="on"/> 
+                <configuration name="imsti.contentlink" />
+                <configuration name="imsti.splash" value=""/>
+
+                <configuration name="final.launch" value="true"/>
+                <configuration name="final.xml" value="true"/>
+                <configuration name="final.secret" value="true"/>
+                <configuration name="final.key" value="true"/>
+
+                <configuration name="final.pagetitle" value="false"/>
+                <configuration name="final.tooltitle" value="true"/>
+                <configuration name="final.newpage" value="true"/>
+                <configuration name="final.maximize" value="true"/>
+                <configuration name="final.frameheight" value="true"/>
+                <configuration name="final.debug" value="true"/>
+                <configuration name="final.releasename" value="true"/>
+                <configuration name="final.releaseemail" value="true"/>
+                <configuration name="final.custom" value="false"/>
+                <configuration name="final.allowsettings" value="true"/>
+                <configuration name="final.allowroster" value="true"/>
+                <configuration name="final.allowoutcomes" value="true"/>
+                <configuration name="final.contentlink" value="true"/>
+                <configuration name="final.splash" value="true"/>
+                <configuration name="final.fa_icon" value="true"/>
+
+                <!-- Allow multiple instances of this tool within one site -->
+                <configuration name="allowMultipleInstances" value="true" />
+        </tool>
+
+</registration>

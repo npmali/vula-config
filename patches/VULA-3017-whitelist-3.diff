@@ -1,0 +1,86 @@
+From 90fab6aa697c43c2c8bc03908b5d48a490a46a72 Mon Sep 17 00:00:00 2001
+From: root <stephen.marquard@uct.ac.za>
+Date: Thu, 20 Jul 2017 14:50:36 +0200
+Subject: [PATCH] SAK-32699 Update entitybroker session provider to use
+ authenticationManager
+
+---
+ .../providers/SessionEntityProvider.java           | 33 +++++++++++++++-------
+ .../src/webapp/WEB-INF/applicationContext.xml      |  1 +
+ 2 files changed, 24 insertions(+), 10 deletions(-)
+
+diff --git a/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/SessionEntityProvider.java b/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/SessionEntityProvider.java
+index e9f182afe29..02bee7f464f 100644
+--- a/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/SessionEntityProvider.java
++++ b/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/SessionEntityProvider.java
+@@ -54,9 +54,14 @@
+ import org.sakaiproject.tool.api.SessionManager;
+ import org.sakaiproject.authz.api.AuthzGroupService;
+ import org.sakaiproject.authz.api.SecurityService;
++import org.sakaiproject.user.api.Authentication;
++import org.sakaiproject.user.api.AuthenticationException;
++import org.sakaiproject.user.api.AuthenticationManager;
++import org.sakaiproject.user.api.Evidence;
+ import org.sakaiproject.user.api.User;
+ import org.sakaiproject.user.api.UserDirectoryService;
+ import org.sakaiproject.user.api.UserNotDefinedException;
++import org.sakaiproject.util.IdPwEvidence;
+ 
+ /**
+  * Entity provider for Sakai Sessions
+@@ -72,6 +77,11 @@
+    private static Logger log = LoggerFactory.getLogger(SessionEntityProvider.class);
+    protected static final String SU_WS_BECOME_USER = "su.ws.become";
+ 
++   public AuthenticationManager authenticationManager;
++   public void setAuthenticationManager(AuthenticationManager authenticationManager) {
++      this.authenticationManager = authenticationManager;
++   }
++
+    public SessionManager sessionManager;
+    public void setSessionManager(SessionManager sessionManager) {
+       this.sessionManager = sessionManager;
+@@ -199,18 +209,21 @@ public String createEntity(EntityReference ref, Object entity, Map<String, Objec
+                      + "the username must be provided as '_username' and the password as '_password' in the POST");
+             }
+             // now we auth
+-            User u = userDirectoryService.authenticate(username, password);
+-            if (u == null) {
++            try {
++                Evidence evidence = new IdPwEvidence(username, password, req.getRemoteAddr());
++                Authentication auth = authenticationManager.authenticate(evidence);
++
++                // create session or update existing one
++                currentSession = sessionManager.getCurrentSession();
++                if (currentSession == null) {
++                   // start a session if none is found
++                   currentSession = sessionManager.startSession();
++                }
++                currentSession.setUserId(auth.getUid());
++                currentSession.setUserEid(auth.getEid());
++            } catch (AuthenticationException ae) {
+                throw new SecurityException("The username or password provided were invalid, could not authenticate user ("+username+") to create a session");
+             }
+-            // create session or update existing one
+-            currentSession = sessionManager.getCurrentSession();
+-            if (currentSession == null) {
+-               // start a session if none is found
+-               currentSession = sessionManager.startSession();
+-            }
+-            currentSession.setUserId(u.getId());
+-            currentSession.setUserEid(u.getEid());
+          }
+       }
+ 
+diff --git a/entitybroker/core-providers/src/webapp/WEB-INF/applicationContext.xml b/entitybroker/core-providers/src/webapp/WEB-INF/applicationContext.xml
+index 7bfaf7958b9..f4768588de4 100644
+--- a/entitybroker/core-providers/src/webapp/WEB-INF/applicationContext.xml
++++ b/entitybroker/core-providers/src/webapp/WEB-INF/applicationContext.xml
+@@ -27,6 +27,7 @@
+     <bean parent="org.sakaiproject.entitybroker.entityprovider.AbstractEntityProvider"
+             class="org.sakaiproject.entitybroker.providers.SessionEntityProvider">
+         <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
++        <property name="authenticationManager" ref="org.sakaiproject.user.api.AuthenticationManager"/>
+         <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
+         <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+         <property name="authzGroupService" ref="org.sakaiproject.authz.api.AuthzGroupService"/>

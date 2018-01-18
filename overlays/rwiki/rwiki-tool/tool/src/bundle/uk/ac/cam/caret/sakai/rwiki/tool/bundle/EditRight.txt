@@ -1,0 +1,30 @@
+h1 Editing Tips
+
+See [Help] for more details.
+
+__Formatting__
+{table}
+ markup | result |
+ \_\_bold\_\_ | __bold__ |
+ \~\~italic\~\~ | ~~italic~~ |
+ \-\-strike\-\- | --strike-- |
+{table}
+
+__Headings__
+
+\h1 Large Heading \\
+\h2 Subheading \\
+\h3 Sub-Subheading
+
+__Lists__
+
+\* bullet point list \\
+\# numbered list
+
+__Links__
+
+\[Page Name\]\\
+link to another wiki page
+
+http\://www.site.xyz\\
+link to external URL

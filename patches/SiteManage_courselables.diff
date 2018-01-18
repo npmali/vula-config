@@ -1,0 +1,26 @@
+Index: site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java
+===================================================================
+--- site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java	(revision 101153)
++++ site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java	(working copy)
+@@ -11902,16 +11902,14 @@
+ 		List<String> rv = new Vector<String>();
+ 
+ 		// get CourseSet
+-		Set courseSets = getCourseSet(state);
++		Set courseSets = cms.getCourseSets();
+ 		String currentLevel = "";
+ 		if (courseSets != null)
+ 		{
+-			// Hieriarchy of CourseSet, CourseOffering and Section are multiple levels in CourseManagementService
+-			List<SectionField> sectionFields = sectionFieldProvider.getRequiredFields();
+-			for (SectionField field : sectionFields)
+-			{
+-				rv.add(field.getLabelKey());
+-			}
++			// CourseSet, CourseOffering and Section are three levels in CourseManagementService
++			rv.add(rb.getString("cm.level.courseSet"));
++			rv.add(rb.getString("cm.level.course"));
++			rv.add(rb.getString("cm.level.section"));
+ 		}
+ 		return rv;
+ 	}

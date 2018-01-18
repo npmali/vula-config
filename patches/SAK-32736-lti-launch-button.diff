@@ -1,0 +1,36 @@
+From 09f9c799f46f0340dc47a5bbdf6a94076c0598a9 Mon Sep 17 00:00:00 2001
+From: Charles Severance <csev@umich.edu>
+Date: Sun, 30 Jul 2017 12:16:15 -0400
+Subject: [PATCH] SAK-32736 - Launch button is rendered when it's not required
+
+---
+ .../tsugi-util/src/java/org/tsugi/basiclti/BasicLTIUtil.java | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/basiclti/tsugi-util/src/java/org/tsugi/basiclti/BasicLTIUtil.java b/basiclti/tsugi-util/src/java/org/tsugi/basiclti/BasicLTIUtil.java
+index f7bd2cf72ec..6bee412cef9 100644
+--- a/basiclti/tsugi-util/src/java/org/tsugi/basiclti/BasicLTIUtil.java
++++ b/basiclti/tsugi-util/src/java/org/tsugi/basiclti/BasicLTIUtil.java
+@@ -553,14 +553,18 @@ public static String postLaunchHTML(
+ 		}
+ 
+ 		// Paint the submit button
+-		text.append("<input type=\"submit\" value=\"");
+-		text.append(htmlspecialchars(launchtext));
+-		text.append("\">\n");
+-
+ 		if ( debug ) {
++			text.append("<input type=\"submit\" value=\"");
++			text.append(htmlspecialchars(launchtext));
++			text.append("\">\n");
++
+ 			text.append(" <input type=\"Submit\" value=\"Show Launch Data\" onclick=\"document.getElementById('ltiLaunchDebug_");
+ 			text.append(submit_uuid);
+ 			text.append("').style.display = 'block';return false;\">\n");
++		} else {
++			text.append("<input type=\"submit\" style=\"display: none\" value=\"");
++			text.append(htmlspecialchars(launchtext));
++			text.append("\">\n");
+ 		}
+ 
+ 		if ( extra != null ) {

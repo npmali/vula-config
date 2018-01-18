@@ -1,0 +1,15 @@
+Index: common/common-composite-component/src/java/org/sakaiproject/component/common/edu/person/SakaiPersonManagerImpl.java
+===================================================================
+--- common/common-composite-component/src/java/org/sakaiproject/component/common/edu/person/SakaiPersonManagerImpl.java	(revision 46240)
++++ common/common-composite-component/src/java/org/sakaiproject/component/common/edu/person/SakaiPersonManagerImpl.java	(working copy)
+@@ -365,6 +365,10 @@
+ 			
+ 			
+ 		}
++
++		String uncache = Long.toString(System.currentTimeMillis()/1000L); //Update session variable (caching of profile pictures) 
++		SessionManager.getCurrentSession().setAttribute("profileLastUpdate", uncache); 
++
+ 	}
+ 
+ 	private String getReference(SakaiPerson spi) {

@@ -1,0 +1,25 @@
+
+Property changes on: site-manage
+___________________________________________________________________
+Modified: svn:mergeinfo
+   Merged /msub/uct.ac.za/vula/trunk/site-manage:r78265
+
+Index: site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java
+===================================================================
+--- site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java	(revision 83218)
++++ site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java	(working copy)
+@@ -792,13 +792,7 @@
+ 				if (ToolManager.getTool("sakai.iframe.site") != null)
+ 					rv.add("sakai.iframe.site");
+ 			}
+-			
+-			// synoptical tools
+-			if (ToolManager.getTool(TOOL_ID_SUMMARY_CALENDAR) != null)
+-			{
+-				rv.add(TOOL_ID_SUMMARY_CALENDAR);
+-			}
+-			
++
+ 			if (ToolManager.getTool(TOOL_ID_SYNOPTIC_ANNOUNCEMENT) != null)
+ 			{
+ 				rv.add(TOOL_ID_SYNOPTIC_ANNOUNCEMENT);

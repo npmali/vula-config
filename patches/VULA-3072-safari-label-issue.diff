@@ -1,0 +1,104 @@
+Index: samigo/samigo-app/src/java/org/sakaiproject/tool/assessment/bundle/DeliveryMessages.properties
+================================================================
+--- samigo/samigo-app/src/java/org/sakaiproject/tool/assessment/bundle/DeliveryMessages.properties
++++ samigo/samigo-app/src/java/org/sakaiproject/tool/assessment/bundle/DeliveryMessages.properties
+@@ -573,4 +573,9 @@ receiptEmail_changeSetting = You can change your email notification settings via
+ fib_sr_explanation = What follows is a fill in the blank question with {0} blanks.
+ fib_sr_answer_label_part1 = Blank
+ fib_sr_answer_label_part2 = Fill in the blank, read surrounding text.
+-
++fin_sr_explanation = What follows is a numeric fill in the blank question with {0} blanks.
++fin_sr_answer_label_part1 = Blank
++fin_sr_answer_label_part2 = Fill in the blank, read surrounding text.
++calcq_sr_explanation = What follows is a calculated question with {0} blanks.
++calcq_sr_answer_label_part1 = Blank
++calcq_sr_answer_label_part2 = Calculate the answer by read surrounding text.
+
+Index: samigo/samigo-app/src/webapp/jsf/delivery/item/deliverCalculatedQuestion.jsp
+================================================================
+--- samigo/samigo-app/src/webapp/jsf/delivery/item/deliverCalculatedQuestion.jsp
++++ samigo/samigo-app/src/webapp/jsf/delivery/item/deliverCalculatedQuestion.jsp
+@@ -27,9 +27,15 @@ should be included in file importing DeliveryMessages
+   <!-- ATTACHMENTS -->
+ <%@ include file="/jsf/delivery/item/attachment.jsp" %>
+ 
++<div class="sr-only">
++  <h:outputFormat value="#{deliveryMessages.calcq_sr_explanation}" escape="false">
++    <f:param value="#{question.finArray.size()-1}" />
++  </h:outputFormat>
++</div>
++
+ <samigo:dataLine value="#{question.finArray}" var="answer" separator=" " first="0" rows="100">
+   <h:column>
+-      <h:outputLabel for="calcq" value="#{answer.text} " escape="false" />
++      <h:outputText id="calcq-question-text" styleClass="calcq-question-text" value="#{answer.text} " escape="false" />
+       <f:verbatim>&nbsp;</f:verbatim>
+       <h:panelGroup styleClass="icon-sakai--check feedBackCheck" id="image"
+         rendered="#{delivery.feedback eq 'true' &&
+@@ -41,15 +47,12 @@ should be included in file importing DeliveryMessages
+                     delivery.feedbackComponent.showCorrectResponse &&
+                     answer.isCorrect != null && !answer.isCorrect && answer.hasInput && !delivery.noFeedback=='true'}" >
+       </h:panelGroup>      
+-	  <h:inputText size="10" rendered="#{answer.hasInput 
+-		&& delivery.actionString !='gradeAssessment' 
+-		&& delivery.actionString !='reviewAssessment'}"
+-        disabled="#{delivery.actionString=='previewAssessment'}" value="#{answer.response}" onkeypress="return noenter()" id="calcq" />
+-      <h:outputText style="text-decoration: underline" 
+-		rendered="#{delivery.actionString=='gradeAssessment' 
+-			|| delivery.actionString=='reviewAssessment'}"
+-             value="#{answer.response}"/>
+-
++      <h:panelGroup rendered="#{answer.hasInput && delivery.actionString !='gradeAssessment' && delivery.actionString !='reviewAssessment'}">
++        <h:outputLabel styleClass="sr-only" for="calcq" value="#{deliveryMessages.calcq_sr_answer_label_part1} #{question.answerCounter}. #{deliveryMessages.calcq_sr_answer_label_part2}" />
++        <h:inputText size="20" value="#{answer.response}" onkeypress="return noenter()" id="calcq" />
++      </h:panelGroup>
++      <h:outputText style="text-decoration: underline" rendered="#{delivery.actionString=='gradeAssessment' || delivery.actionString=='reviewAssessment'}"
++         value="#{answer.response}"/>
+   </h:column>
+ </samigo:dataLine>
+ 
+Index: samigo/samigo-app/src/webapp/jsf/delivery/item/deliverFillInNumeric.jsp
+================================================================
+--- samigo/samigo-app/src/webapp/jsf/delivery/item/deliverFillInNumeric.jsp
++++ samigo/samigo-app/src/webapp/jsf/delivery/item/deliverFillInNumeric.jsp
+@@ -42,9 +42,15 @@ should be included in file importing DeliveryMessages
+ <h:outputText value="#{deliveryMessages.fin_invalid_characters_error} " escape="false" rendered="#{question.isInvalidFinInput}" styleClass="messageSamigo3"/>
+ <f:verbatim><br /></f:verbatim>
+ 
++<div class="sr-only">
++  <h:outputFormat value="#{deliveryMessages.fin_sr_explanation}" escape="false">
++    <f:param value="#{question.finArray.size()-1}" />
++  </h:outputFormat>
++</div>
++
+ <samigo:dataLine value="#{question.finArray}" var="answer" separator=" " first="0" rows="100">
+   <h:column>
+-      <h:outputLabel for="fillinnumeric" value="#{answer.text} " escape="false" />
++      <h:outputText id="fin-question-text" styleClass="fin-question-text" value="#{answer.text} " escape="false" />
+       <f:verbatim>&nbsp;</f:verbatim>
+       <h:panelGroup styleClass="icon-sakai--check feedBackCheck" id="image"
+         rendered="#{delivery.feedback eq 'true' &&
+@@ -57,17 +63,12 @@ should be included in file importing DeliveryMessages
+                     delivery.feedbackComponent.showCorrectResponse &&
+                     answer.isCorrect != null && !answer.isCorrect && answer.hasInput && !delivery.noFeedback=='true'}">
+       </h:panelGroup>
+-	  <h:inputText size="10" rendered="#{answer.hasInput 
+-		&& delivery.actionString !='gradeAssessment' 
+-		&& delivery.actionString !='reviewAssessment'}"
+-		 value="#{answer.response}" onkeypress="return noenter()" id="fillinnumeric">
+- 	  </h:inputText>
+-
+-      <h:outputText style="text-decoration: underline" 
+-		rendered="#{delivery.actionString=='gradeAssessment' 
+-			|| delivery.actionString=='reviewAssessment'}"
+-             value="#{answer.response}"/>
+-
++      <h:panelGroup rendered="#{answer.hasInput && delivery.actionString !='gradeAssessment' && delivery.actionString !='reviewAssessment'}">
++        <h:outputLabel styleClass="sr-only" for="fin" value="#{deliveryMessages.fin_sr_answer_label_part1} #{question.answerCounter}. #{deliveryMessages.fin_sr_answer_label_part2}" />
++        <h:inputText size="20" value="#{answer.response}" onkeypress="return noenter()" id="fin" />
++      </h:panelGroup>
++      <h:outputText style="text-decoration: underline" rendered="#{delivery.actionString=='gradeAssessment' || delivery.actionString=='reviewAssessment'}"
++         value="#{answer.response}"/>
+   </h:column>
+ </samigo:dataLine>
+ 

@@ -1,0 +1,68 @@
+Index: chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java
+===================================================================
+--- chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java	(revision 112270)
++++ chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java	(working copy)
+@@ -178,6 +178,11 @@
+    private static final int DEFAULT_ITEMS = 3;
+    private static final int DEFAULT_LENGTH = 50;
+    
++   /**
++    * A tool level cache to enable better efficiency in retrieving use details
++    */
++   private Map<String, User> userCache = new HashMap<String, User>();
++   
+    /* All the managers */
+    /**   The work-horse of chat   */
+    private ChatManager chatManager;
+@@ -1399,11 +1404,28 @@
+       }
+       
+       List<DecoratedChatMessage> decoratedMessages = new ArrayList<DecoratedChatMessage>();
++      List<String> userIds = new ArrayList<String>();
+       
+       for (ChatMessage message : messages) {         
+          DecoratedChatMessage decoratedMessage = new DecoratedChatMessage(this, message);
+          decoratedMessages.add(decoratedMessage);
++         //limit this to users not already in the tool cache
++         if (! userCache.containsKey(message.getOwner())) {
++        	 userIds.add(message.getOwner());
++         }
+       }
++      
++      //populate the User Cache Efficiently as possible
++      List<User> users = UserDirectoryService.getUsers(userIds);
++      for (User user : users ) {
++    	  
++    	  userCache.put(user.getId(), user);
++      }
++      if (logger.isDebugEnabled()) {
++    	  logger.debug(users.size() + " users added to cache cache contains " + userCache.size());
++      }
++      
++      
+       return decoratedMessages;
+    }
+ 
+@@ -1455,11 +1477,22 @@
+       return (getChatManager() == null) ? false : getChatManager().isMaintainer(getContext());
+    }
+    
++   
++   
+    public String getMessageOwnerDisplayName(ChatMessage message)
+    {
+       User sender = null;
++      if (userCache.containsKey(message.getOwner())) {
++    	 sender = userCache.get(message.getOwner());
++    	 if (logger.isDebugEnabled()) {
++    		 logger.debug("returning user from cache " + userCache.size() + " objects in cache");
++    	 }
++    	 return sender.getDisplayName();
++      }
++      
+       try {
+          sender = UserDirectoryService.getUser(message.getOwner());
++         userCache.put(sender.getId(), sender);
+       } catch(UserNotDefinedException e) {
+          logger.error(e);
+          return message.getOwner();

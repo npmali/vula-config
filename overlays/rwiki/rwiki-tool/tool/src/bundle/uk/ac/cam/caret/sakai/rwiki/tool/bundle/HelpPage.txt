@@ -1,0 +1,71 @@
+Wiki text may contain the following markup and macros.
+Markup syntax provides simple text styles such as __bold__, ~~italic~~ and lists. Macros provide more complex formatting for items such as tables, images and attachments. The Wiki dialect used is based on {link:Radeox|http://radeox.org}.
+
+h1 Editor shortcuts
+You can insert common markup and macros using the toolbar at the top of the wiki page editor. Editor shortcuts include bold, italic, headings, tables, links, and uploading attachments.
+
+h1 Text formatting
+
+{table}
+Markup | Result | Comment
+\_\_bold\_\_ | __bold__ | Bold text
+\~\~italics\~\~ | ~~italics~~ | Italic text
+\-\-strike\-\- | --strike-- | Strike-through text
+h1 Title || Level-1 heading
+h2 Title || Level-2 heading
+h3 Title || Level-3 heading
+- text || Bulleted list
+* text || Bulleted list
+# text |1, 2, 3| An enumerated list
+a. text |a, b, c| Alphabetical enumerated list
+A. text |A, B, C| Uppercase alphabetical enumerated list
+i. text |i, ii, iii| Roman enumerated list
+I. text |I, II, III| Uppercase Roman enumerated list
+g.  h.  k.  j. || Enumerated lists for Greek, Hiragana, Katakana and Hebrew
+(empty line) || New paragraph
+\\\\\\ || Line break
+\[Home\] | [Home] | Internal link to another page
+\http://snipsnap.org/ | http://snipsnap.org/ | Link to an external resource.
+\\\X | \X | Escape special wiki character X, for example \{ and \}
+{table}
+
+h1 Macros
+Each macro has a name, and a list of optional parameters, separated by | where there is more than one. The syntax for macros is:
+
+__\{macroname__~~__:attribute=value|unamedvalue|other=values__... ~~__\}__
+contents
+__\{macroname\}__
+
+{table}
+Macro | Description | Parameters
+code | Displays a chunk of source code with syntax highlighting. | Code language: java, xml, ..., none
+image | Includes an image in the page | img: path to the file \\ alt: (optional) ALT text \\ target: target window
+index | Lists all pages in a given space | (optional) space to index, defaults to the space of the current page.
+link | Link to a URL | text: link text \\ url: link URL \\ img: (optional) small URL image to display \\ target: (optional) target window
+mailto | Links to an email address | Email address to link
+quote | Displays a quotation | (Optional) Source URL \\ (Optional) Source link text
+recent-changes | Displays a list of recently changed pages | 
+table | Displays a table | none
+
+{table}
+
+h1 Examples
+
+__Including an image__
+
+* \{image:worksite:/wikiimages/sunflowers.gif|Sunflowers\}
+
+__Linking to an external page (with an alias)__
+
+* \{link:Google|http\://www.google.com\}
+
+__Linking to an email address__
+
+* \{mailto:someone@some.domain\}
+
+h1 Advanced Macros
+
+Supported macros not described above include ~~api~~, ~~api-docs~~, ~~asin~~,  ~~file-path~~, ~~hello~~, ~~inter-wiki~~, ~~isbn~~, ~~math~~, ~~rfc~~, and ~~xref~~. Details of all supported macros can be seen by including this macro in any wiki page:
+
+\{list-of-macros\}
+

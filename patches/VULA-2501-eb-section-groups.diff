@@ -1,0 +1,16 @@
+Index: entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/MembershipEntityProvider.java
+===================================================================
+--- entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/MembershipEntityProvider.java	(revision 322559)
++++ entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/MembershipEntityProvider.java	(working copy)
+@@ -341,7 +341,10 @@
+                         + ") could not be found.");
+             }
+ 
+-            checkGroupType(group);
++            String currentUserId = developerHelperService.getCurrentUserId();
++            if (!developerHelperService.isUserAdmin(currentUserId)) {
++                checkGroupType(group);
++            }
+ 
+             if (!siteService.allowUpdateSite(site.getId())) {
+                 throw new SecurityException("This site (" + site.getReference()

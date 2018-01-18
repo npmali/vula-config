@@ -1,0 +1,37 @@
+diff --git site-manage/site-manage-group-helper/tool/src/java/org/sakaiproject/site/tool/helper/managegroup/rsf/GroupDelProducer.java
+index 07b6713..b78893f 100644
+--- site-manage/site-manage-group-helper/tool/src/java/org/sakaiproject/site/tool/helper/managegroup/rsf/GroupDelProducer.java
++++ site-manage/site-manage-group-helper/tool/src/java/org/sakaiproject/site/tool/helper/managegroup/rsf/GroupDelProducer.java
+@@ -73,7 +73,6 @@ public class GroupDelProducer implements ViewComponentProducer, ActionResultInte
+ 		//get the headers for the table
+ 		UIMessage.make(deleteForm, "group-title-title","group.title");
+ 		UIMessage.make(deleteForm, "group-size-title", "group.number");
+-		UIMessage.make(deleteForm, "group-remove-title", "editgroup.remove");
+ 		
+ 		List<Group> groups = handler.getSelectedGroups();
+ 		
+diff --git site-manage/site-manage-group-helper/tool/src/webapp/content/templates/GroupList.html
+index 7e9232f..05bb94d 100644
+--- site-manage/site-manage-group-helper/tool/src/webapp/content/templates/GroupList.html
++++ site-manage/site-manage-group-helper/tool/src/webapp/content/templates/GroupList.html
+@@ -36,7 +36,7 @@
+ 							<th rsf:id="group-title-title"></th>
+ 							<th></th>
+ 							<th rsf:id="group-size-title"></th>
+-							<th rsf:id="group-remove-title">
++							<th>
+ 								<input type="checkbox" id="selectAll" onclick="toggleCheckboxes( this );" />
+ 								<label for="selectAll">
+ 									<span rsf:id="msg=groupList.selectAllNone">Remove?</span>
+@@ -70,8 +70,8 @@
+ 		</div>
+ 		<script  type="text/JavaScript">
+ 			$(document).ready(function(){
+-				if ($('.listHier td').length === 0) {
+-					$('.listHier').hide();
++				if ($('.table td').length === 0) {
++					$('.table').hide();
+ 				}
+ 				$('tbody :checkbox').click(function(){
+ 					if (this.checked){
+

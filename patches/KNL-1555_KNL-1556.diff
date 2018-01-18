@@ -1,0 +1,26 @@
+diff --git a/kernel/kernel-impl/pom.xml b/kernel/kernel-impl/pom.xml
+index 544c95668b0..6f6f4748002 100644
+--- a/kernel/kernel-impl/pom.xml
++++ b/kernel/kernel-impl/pom.xml
+@@ -263,7 +263,7 @@
+     <dependency>
+       <groupId>org.jasypt</groupId>
+       <artifactId>jasypt</artifactId>
+-      <version>1.9.0</version>
++      <version>1.9.2</version>
+     </dependency>
+     <dependency>
+         <groupId>com.ibm.icu</groupId>
+diff --git a/kernel/kernel-impl/pom.xml b/kernel/kernel-impl/pom.xml
+index 544c95668b0..c299efc7517 100644
+--- a/kernel/kernel-impl/pom.xml
++++ b/kernel/kernel-impl/pom.xml
+@@ -299,7 +299,7 @@
+     <dependency>
+       <groupId>org.jsoup</groupId>
+       <artifactId>jsoup</artifactId>
+-      <version>1.7.3</version>
++      <version>1.10.3</version>
+       <type>jar</type>
+       <scope>compile</scope>
+     </dependency>

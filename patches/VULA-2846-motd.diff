@@ -1,0 +1,18 @@
+--- message/message-tool/tool/src/webapp/vm/recent/chef_synoptic_message-List.vm	2016-11-08 16:04:47.000000000 +0200
++++ message/message-tool/tool/src/webapp/vm/recent/chef_synoptic_message-List.vm	2016-12-22 11:13:16.000000000 +0200
+@@ -3,15 +3,6 @@
+ 	#set($counter = 0)
+ 
+ 		#if ($toolId=="sakai.motd")
+-			#if($menu)
+-			<ul class="navIntraTool actionToolBar">
+-				<li class="firstToolBarItem"><span><a href="#" title="$tlang.getString("motd.options")" onclick="location = '#toolLink("$action" "doOptions")';return false;">
+-					$tlang.getString("gen.options")
+-					<span class="skip">$toolTitle</span>
+-				</a>
+-				</span></li>
+-			</ul>
+-			#end
+ 			#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div><div class="clear"></div>#end
+ 			<ul class="synopticList">
+ 			#foreach ($item in $messages)

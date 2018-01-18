@@ -1,0 +1,61 @@
+Index: assignment/assignment-impl/impl/src/java/org/sakaiproject/assignment/impl/BaseAssignmentService.java
+===================================================================
+--- assignment/assignment-impl/impl/src/java/org/sakaiproject/assignment/impl/BaseAssignmentService.java	(revision 323653)
++++ assignment/assignment-impl/impl/src/java/org/sakaiproject/assignment/impl/BaseAssignmentService.java	(working copy)
+@@ -5424,8 +5424,14 @@
+ 						if (allowAddSubmissionUsers.contains(u))
+ 						{
+ 							submittersName = root;
+-							
++						
++							// If the submitter ID is a valid user but submitters is empty, include the user	
+ 							User[] submitters = s.getSubmitters();
++							if (submitters.length == 0) {
++								submitters = new User[1];
++								submitters[0] = u;
++							}
++
+ 							String submittersString = "";
+ 							for (int i = 0; i < submitters.length; i++)
+ 							{
+@@ -5599,6 +5605,7 @@
+ 					}
+ 					catch (Exception e)
+ 					{
++						M_log.debug("Exception generating submitter info", e);
+ 						caughtException = e.toString();
+ 						break;
+ 					}
+@@ -10551,14 +10558,13 @@
+ 		 */
+ 		private void getIsUserSubmission( String isUserSubmission )
+ 		{
++			if( m_submittedAttachments == null )
++			{
++				m_submittedAttachments = m_entityManager.newReferenceList();
++			}
++
+ 			if( StringUtils.isBlank( isUserSubmission ) )
+ 			{
+-				// Initialize the list if it's null, to avoid NPE's in check below
+-				if( m_submittedAttachments == null )
+-				{
+-					m_submittedAttachments = m_entityManager.newReferenceList();
+-				}
+-
+ 				// If there is submitted text, attachments, or if the type is 'non-electronic', this is considered an actual user submission
+ 				m_isUserSubmission = StringUtils.isNotBlank( m_submittedText ) || 
+ 									 getAssignment().getContent().getTypeOfSubmission() == Assignment.NON_ELECTRONIC_ASSIGNMENT_SUBMISSION ||
+@@ -10567,6 +10573,12 @@
+ 			else
+ 			{
+ 				m_isUserSubmission = getBool( isUserSubmission );
++
++				// If there's submitted text or attachments, set to true
++				if ((!m_isUserSubmission) && (StringUtils.isNotBlank( m_submittedText ) || !m_submittedAttachments.isEmpty())) {
++					m_isUserSubmission = true;
++				}
++
+ 			}
+ 		}
+ 

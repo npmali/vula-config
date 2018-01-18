@@ -1,0 +1,13 @@
+Index: search/search-tool/tool/src/webapp/WEB-INF/vm/index.vm
+===================================================================
+--- search/search-tool/tool/src/webapp/WEB-INF/vm/index.vm	(revision 310705)
++++ search/search-tool/tool/src/webapp/WEB-INF/vm/index.vm	(working copy)
+@@ -88,7 +88,7 @@
+ 	   <div id="results" class="tabHeadOn" >        	
+ 		  <p class="tabhead" title="${rlb.jsp_results}" ><a href="#" onclick="selectTabs('tagsTab','tabOn','tabOff','resultsTab','tabOff','tabOn','tags','tabHeadOn','tabHeadOff','results','tabHeadOff','tabHeadOn'); setMainFrameHeightNoScroll('${sakai_tool_placement_id}'); return false;" >${rlb.jsp_results}</a></p>
+        </div>
+-	   <div id="tags" class="tabHeadOff" >        	
++	   <div id="tags" class="tabHeadOff" style="display:none">        	
+ 		  <p class="tabhead" title="${rlb.jsp_tags}" ><a href="#" onclick="selectTabs('tagsTab','tabOff','tabOn','resultsTab','tabOn','tabOff','tags','tabHeadOff','tabHeadOn','results','tabHeadOn','tabHeadOff'); setMainFrameHeightNoScroll('${sakai_tool_placement_id}'); return false;" >${rlb.jsp_tags}</a></p>
+     	</div>
+     </div>

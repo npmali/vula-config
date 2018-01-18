@@ -1,0 +1,20 @@
+All special pages can be customized by editing them in the same way as any other wiki page.
+
+h2 Default template
+The [default_template] page is used as the template for new pages. You can customize this page (for example to include a navigation structure), or remove its contents so that new pages are created empty.
+
+h2 Help Page
+The [Help] page provides detailed help.
+
+h2 Index
+The [Index] page lists all pages in this wiki. You can also include an index on any wiki page by using the \{index\} macro.
+
+h2 Recent Changes
+The [Recent Changes] page lists recent changes to all pages in this wiki. You can also include a recent changes list on any wiki page by using the \{recent-changes\} macro.
+
+h2 Edit Right
+The [edit_right] page is displayed in a column to the right of the editor window when you are editing a page. This page provides useful information about wiki markup that you may need while editing.
+
+h2 View Right
+The [view_right] page is displayed in a column to the right of the current page when viewing a page. This page does not exist by default, but if created can be used to provide a navigation structure or other helpful information for wiki readers (such as an index or list of recent changes).
+

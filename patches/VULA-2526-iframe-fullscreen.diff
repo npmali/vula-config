@@ -1,0 +1,13 @@
+Index: basiclti/basiclti-portlet/src/java/org/sakaiproject/portlets/IMSBLTIPortlet.java
+===================================================================
+--- basiclti/basiclti-portlet/src/java/org/sakaiproject/portlets/IMSBLTIPortlet.java	(revision 320142)
++++ basiclti/basiclti-portlet/src/java/org/sakaiproject/portlets/IMSBLTIPortlet.java	(working copy)
+@@ -252,7 +252,7 @@
+ 					text.append("height=\""+frameHeight+"\" \n");
+ 					text.append("width=\"100%\" frameborder=\"0\" marginwidth=\"0\"\n");
+ 					text.append("marginheight=\"0\" scrolling=\"auto\"\n");
+-					text.append("src=\""+iframeUrl+"\">\n");
++					text.append("src=\""+iframeUrl+"\" allowfullscreen=\"true\" webkitallowfullscreen=\"true\" mozallowfullscreen=\"true\">\n");
+ 					text.append(rb.getString("noiframes"));
+ 					text.append("<br>");
+ 					text.append("<a href=\""+iframeUrl+"\">");

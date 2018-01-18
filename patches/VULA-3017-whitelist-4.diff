@@ -1,0 +1,79 @@
+From ef0a87368f7538da46c895319276e0925a02c54f Mon Sep 17 00:00:00 2001
+From: root <stephen.marquard@uct.ac.za>
+Date: Thu, 20 Jul 2017 16:44:31 +0200
+Subject: [PATCH] SAK-32699 Code cleanup and trim for whitespace
+
+---
+ .../java/org/sakaiproject/util/IPAddrUtil.java     | 29 ++++++++++------------
+ .../java/org/sakaiproject/util/IPAddrUtilTest.java |  2 +-
+ 2 files changed, 14 insertions(+), 17 deletions(-)
+
+diff --git a/kernel/kernel-util/src/main/java/org/sakaiproject/util/IPAddrUtil.java b/kernel/kernel-util/src/main/java/org/sakaiproject/util/IPAddrUtil.java
+index c05e99f9e38..bc99e22da81 100644
+--- a/kernel/kernel-util/src/main/java/org/sakaiproject/util/IPAddrUtil.java
++++ b/kernel/kernel-util/src/main/java/org/sakaiproject/util/IPAddrUtil.java
+@@ -49,7 +49,7 @@
+ 	 */
+ 	public static boolean matchIPList(String addrlist, String addr)
+ 	{
+-		log.info("Matching IP '" + addr + "' to whitelist '" + addrlist + "'");
++		log.info("Checking login IP '" + addr + "' is contained in whitelist '" + addrlist + "'");
+ 
+ 		// TODO Support IPv6
+ 
+@@ -58,30 +58,27 @@ public static boolean matchIPList(String addrlist, String addr)
+ 
+ 		boolean match = false;
+ 
+-		List<String> subnetMasks = Arrays.asList(addrlist.split(","));
+-
+-		for (String subnetMask : subnetMasks) {
+-			if (!subnetMask.contains("/") && subnetMask.equals(addr)) {
+-				// Exact match
+-				match = true;
+-				break;
+-			} else {
+-				// Subnet
++		for (String netaddr : Arrays.asList(addrlist.split(","))) {
++			if (netaddr.contains("/")) {
++				// Contained in subnet?
+ 				try {
+-					SubnetUtils.SubnetInfo subnet = new SubnetUtils(subnetMask).getInfo();
+-					log.info("Checking IP " + addr + " to subnet " + subnet.getCidrSignature());
++					SubnetUtils.SubnetInfo subnet = new SubnetUtils(netaddr.trim()).getInfo();
+ 					if (subnet.isInRange(addr)) {
+-						log.info("IP Address " + addr + " is in range " + subnet.getCidrSignature());
++						log.debug("IP Address " + addr + " is in network range " + subnet.getCidrSignature());
+ 						match = true;
+ 						break;
+ 					}
+ 				} catch (IllegalArgumentException e) {
+-					log.warn("IP Address " + addr + " or mask " + subnetMask + " is not a valid IP address format");
++					log.warn("IP network address '" + netaddr + "' is not a valid CIDR format");
++				}
++			} else {
++				// Exact match?
++				if (netaddr.trim().equals(addr)) {
++					match = true;
++					break;
+ 				}
+ 			}
+ 		}
+-
+ 		return match;
+ 	}
+-
+ }
+diff --git a/kernel/kernel-util/src/test/java/org/sakaiproject/util/IPAddrUtilTest.java b/kernel/kernel-util/src/test/java/org/sakaiproject/util/IPAddrUtilTest.java
+index 529308a7ded..fdf9849bf6e 100644
+--- a/kernel/kernel-util/src/test/java/org/sakaiproject/util/IPAddrUtilTest.java
++++ b/kernel/kernel-util/src/test/java/org/sakaiproject/util/IPAddrUtilTest.java
+@@ -39,7 +39,7 @@
+     @Test
+     public void testMatchIPList() {
+ 
+-	String privateRanges = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,198.51.100.0/24,127.0.0.0/8";
++	String privateRanges = "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 , 198.51.100.0/24, 127.0.0.0/8";
+ 
+ 	// null or empty list never matches
+ 	Assert.assertFalse(IPAddrUtil.matchIPList("", "1.2.3.4"));

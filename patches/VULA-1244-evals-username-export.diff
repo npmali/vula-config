@@ -1,0 +1,91 @@
+diff -ur /usr/local/src/vula_src/branches/vula-11.x/evaluation//sakai-evaluation-tool/src/java/org/sakaiproject/evaluation/tool/reporting/XLSReportExporter.java evaluation//sakai-evaluation-tool/src/java/org/sakaiproject/evaluation/tool/reporting/XLSReportExporter.java
+--- /usr/local/src/vula_src/branches/vula-11.x/evaluation//sakai-evaluation-tool/src/java/org/sakaiproject/evaluation/tool/reporting/XLSReportExporter.java	2017-05-08 15:05:55.000000000 +0200
++++ evaluation//sakai-evaluation-tool/src/java/org/sakaiproject/evaluation/tool/reporting/XLSReportExporter.java	2017-05-14 15:55:38.000000000 +0200
+@@ -17,11 +17,14 @@
+ import java.io.IOException;
+ import java.io.OutputStream;
+ import java.util.ArrayList;
++import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.Date;
+ import java.util.HashMap;
++import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Set;
+ import org.apache.commons.lang.StringUtils;
+ 
+ import org.apache.poi.ss.usermodel.CellStyle;
+@@ -38,6 +41,7 @@
+ import org.sakaiproject.evaluation.logic.model.EvalUser;
+ import org.sakaiproject.evaluation.model.EvalAnswer;
+ import org.sakaiproject.evaluation.model.EvalEvaluation;
++import org.sakaiproject.evaluation.model.EvalResponse;
+ import org.sakaiproject.evaluation.tool.reporting.CSVReportExporter.SortBySectionOrSiteComparator;
+ import org.sakaiproject.evaluation.tool.utils.EvalResponseAggregatorUtil;
+ import org.sakaiproject.evaluation.utils.EvalUtils;
+@@ -536,6 +540,11 @@
+            // 2: get DTIs for this eval from tidl
+            List<DataTemplateItem> dtiList = tidl.getFlatListOfDataTemplateItems(true);
+ 
++           // For exporting usernames
++           Set<EvalResponse> responses = evaluation.getResponses();
++           Set<String> groupIdSet = new HashSet<String>(Arrays.asList(groupIds));
++           Map<Long,String> responseOwners = ownersOfResponses(responses, groupIdSet);
++
+            Workbook wb = new XSSFWorkbook();
+            creationHelper = wb.getCreationHelper();
+ 
+@@ -609,7 +618,7 @@
+            Row questionCatRow = sheet.createRow(QUESTION_CAT_ROW);
+            Row questionTypeRow = sheet.createRow(QUESTION_TYPE_ROW);
+            Row questionTextRow = sheet.createRow(QUESTION_TEXT_ROW);
+-           short headerCount = 1;
++           short headerCount = 5;
+            for (DataTemplateItem dti : dtiList) {
+ 
+                if (!instructorViewAllResults // If the eval is so configured,
+@@ -671,8 +680,26 @@
+                Cell indexCell = row.createCell((short) 0);
+                indexCell.setCellValue(responseIdCounter + 1);
+                indexCell.setCellStyle(boldHeaderStyle);
++
++               // Add user info
++               String userId = responseOwners.get(responseId);
++               EvalUser user = commonLogic.getEvalUserById(userId);
++            
++               Cell realRespIdCell = row.createCell(1);
++               Cell eidCell = row.createCell(2);
++               Cell nameCell = row.createCell(3);
++               Cell emailCell = row.createCell(4);
++            
++               realRespIdCell.setCellValue(responseId);
++            
++               setPlainStringCell(eidCell, user.username);
++               setPlainStringCell(nameCell, user.sortName);
++               setPlainStringCell(emailCell, user.email);
++            
++               List<EvalAnswer> answers = tidl.getAnswersByResponseId(responseId);
++
+                // 6) loop over DTIs
+-               short dtiCounter = 1;
++               short dtiCounter = 5;
+                for (DataTemplateItem dti : dtiList) {
+ 
+                    if (!instructorViewAllResults // If the eval is so configured,
+@@ -746,5 +773,14 @@
+     public String getContentType() {
+         return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+     }
+-    
++
++    private Map<Long,String> ownersOfResponses(Set<EvalResponse> responses, Set<String> groupIdSet) {
++         Map<Long,String> owners = new HashMap<Long,String>(responses.size());
++         for (EvalResponse response : responses) {
++             if (response.getEvalGroupId() != null && groupIdSet.contains(response.getEvalGroupId())) {
++                 owners.put(response.getId(), response.getOwner());
++             }
++         }
++         return owners;
++    }
+ }

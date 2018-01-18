@@ -1,0 +1,6 @@
+__{worksiteinfo:title} Wiki__
+
+~~{worksiteinfo:shortdescription}~~
+
+{index:space=|nohead}
+
