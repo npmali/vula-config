@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor ID="https___vula.uct.ac.za_saml" entityID="https://vula.uct.ac.za/saml" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"><md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDezCCAmOgAwIBAgIEFlC4cTANBgkqhkiG9w0BAQsFADBuMQswCQYDVQQGEwJaQTEVMBMGA1UE
+CBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xDDAKBgNVBAoTA1VDVDENMAsGA1UE
+CxMEQ0lMVDEXMBUGA1UEAxMOdnVsYS51Y3QuYWMuemEwHhcNMTcwMjEyMDc0MjAzWhcNMjcwMjEw
+MDc0MjAzWjBuMQswCQYDVQQGEwJaQTEVMBMGA1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlD
+YXBlIFRvd24xDDAKBgNVBAoTA1VDVDENMAsGA1UECxMEQ0lMVDEXMBUGA1UEAxMOdnVsYS51Y3Qu
+YWMuemEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCNbrVpYyk9VMxWlcelTOwGDnRh
+IoDHEMdRSVjVe2B0nSX3FcUEisXGOrUpnF08K/ixz/geDRA2cjVUwYdQ0P27/blgEBfHf7Mkq8kv
+MKHceugkPrSGjXNrOJFza40GaRias9EMk9HjQTcbel+uRKNnJe+U3LPU5AtMWdmAhfC8tPoRutD2
+zpI39YT5LjOayxaC8WV4WSiHtn44uWXgE3nGm56YGQfDG1MiY/AUgGr4h4lhaxOh5JH1S7LMxIDb
+VqPCrZzmTPHKaHR1POpU5RGC2a/chQ8vRsoi5bjufT72F/LMrqi4PMjP++ljxGSqEzM3XUHG5uTS
+EntpLkWleLZPAgMBAAGjITAfMB0GA1UdDgQWBBTZPsH5oOHOd7MSinRkgOI4AB4K6DANBgkqhkiG
+9w0BAQsFAAOCAQEANhavy7cwtlhSL/T+e3axOu/f3WnqNwoiSJHtkJbSB8Ccpgwsf11q+vww7kFj
+3ia26pXH+q6ZAH6Tjflr6COMl847dv9NtuswhprnFxMCHDjiQHHOtWVlWUXlEsB3J8Fj4uc5VEG3
+E5QvDfQWzKbSqAS3drJX6USicx2gkB+XLiqfuJSV03PZRR/zGhCS645k1km96HQNx0BgRN5E0IpW
+8NsE6f6bwaTy5vgRswaGMac3wCpNGHV9gbVIb9cGoSDHD4G0NJxBbQPBtzDCFzdbBhhRjfO51Pre
+lNH32gvBX8imEk5Zlcp76f3CwRDBdztYyPj2fGoLcj/Q4Ll3667WYQ==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:KeyDescriptor use="encryption"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDezCCAmOgAwIBAgIEFlC4cTANBgkqhkiG9w0BAQsFADBuMQswCQYDVQQGEwJaQTEVMBMGA1UE
+CBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xDDAKBgNVBAoTA1VDVDENMAsGA1UE
+CxMEQ0lMVDEXMBUGA1UEAxMOdnVsYS51Y3QuYWMuemEwHhcNMTcwMjEyMDc0MjAzWhcNMjcwMjEw
+MDc0MjAzWjBuMQswCQYDVQQGEwJaQTEVMBMGA1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlD
+YXBlIFRvd24xDDAKBgNVBAoTA1VDVDENMAsGA1UECxMEQ0lMVDEXMBUGA1UEAxMOdnVsYS51Y3Qu
+YWMuemEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCNbrVpYyk9VMxWlcelTOwGDnRh
+IoDHEMdRSVjVe2B0nSX3FcUEisXGOrUpnF08K/ixz/geDRA2cjVUwYdQ0P27/blgEBfHf7Mkq8kv
+MKHceugkPrSGjXNrOJFza40GaRias9EMk9HjQTcbel+uRKNnJe+U3LPU5AtMWdmAhfC8tPoRutD2
+zpI39YT5LjOayxaC8WV4WSiHtn44uWXgE3nGm56YGQfDG1MiY/AUgGr4h4lhaxOh5JH1S7LMxIDb
+VqPCrZzmTPHKaHR1POpU5RGC2a/chQ8vRsoi5bjufT72F/LMrqi4PMjP++ljxGSqEzM3XUHG5uTS
+EntpLkWleLZPAgMBAAGjITAfMB0GA1UdDgQWBBTZPsH5oOHOd7MSinRkgOI4AB4K6DANBgkqhkiG
+9w0BAQsFAAOCAQEANhavy7cwtlhSL/T+e3axOu/f3WnqNwoiSJHtkJbSB8Ccpgwsf11q+vww7kFj
+3ia26pXH+q6ZAH6Tjflr6COMl847dv9NtuswhprnFxMCHDjiQHHOtWVlWUXlEsB3J8Fj4uc5VEG3
+E5QvDfQWzKbSqAS3drJX6USicx2gkB+XLiqfuJSV03PZRR/zGhCS645k1km96HQNx0BgRN5E0IpW
+8NsE6f6bwaTy5vgRswaGMac3wCpNGHV9gbVIb9cGoSDHD4G0NJxBbQPBtzDCFzdbBhhRjfO51Pre
+lNH32gvBX8imEk5Zlcp76f3CwRDBdztYyPj2fGoLcj/Q4Ll3667WYQ==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://vula.uct.ac.za/sakai-login-tool/container/saml/SingleLogout"/><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://vula.uct.ac.za/sakai-login-tool/container/saml/SingleLogout"/><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</md:NameIDFormat><md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://vula.uct.ac.za/sakai-login-tool/container/saml/SSO" index="0" isDefault="true"/><md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://vula.uct.ac.za/sakai-login-tool/container/saml/SSO" index="1"/></md:SPSSODescriptor></md:EntityDescriptor>

@@ -1,0 +1,6 @@
+configuration.ini replaces the distributed version in plugin/WEB-INF/pluginwiris/configuration.ini in pluginwiris_engine.war
+
+It is not deployed live from this location, and is here for reference. To recreate pluginwiris_engine.war, unzip it, modify the file, then use
+
+jar -cvf pluginwiris_engine.war *
+
