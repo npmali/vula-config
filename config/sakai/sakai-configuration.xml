@@ -4,6 +4,6 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
      <util:list id="contentReviewProviders">
-            <ref bean="org.sakaiproject.contentreview.service.ContentReviewServiceTii"/>
+	    <ref bean="org.sakaiproject.contentreview.turnitin.ContentReviewServiceTurnitin"/>
     </util:list>
 </beans>

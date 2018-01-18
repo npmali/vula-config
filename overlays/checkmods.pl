@@ -1,12 +1,12 @@
 #! /usr/bin/perl
 
-my $src = "/usr/local/src/vula_src/branches/vula-11.x";
+my $src = "/usr/local/src/vula_src/branches/vula-12.x";
 
 while (<>) {
 
  my $file = $_;
  chomp($file);
-# print "checking $src/$file\n";
+ # print "checking $src/$file\n";
 
  if ($file eq ".project" ) { next; }
 
