@@ -26,16 +26,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
-//import org.sakaiproject.assignment.api.Assignment;
-//import org.sakaiproject.assignment.api.AssignmentContent;
-//import org.sakaiproject.assignment.api.AssignmentContentEdit;
-//import org.sakaiproject.assignment.api.AssignmentEdit;
-//import org.sakaiproject.assignment.api.AssignmentService;
-//import org.sakaiproject.assignment.api.AssignmentSubmission;
-//import org.sakaiproject.assignment.api.AssignmentSubmissionEdit;
+import org.sakaiproject.assignment.api.AssignmentConstants;
+import org.sakaiproject.assignment.api.AssignmentReferenceReckoner;
+import org.sakaiproject.assignment.api.AssignmentServiceConstants;
+import org.sakaiproject.assignment.api.model.Assignment;
+import org.sakaiproject.assignment.api.model.AssignmentSubmission;
+import org.sakaiproject.assignment.api.model.AssignmentSubmissionSubmitter;
 import org.sakaiproject.api.common.edu.person.SakaiPerson;
 import org.sakaiproject.api.common.edu.person.SakaiPersonManager;
 import org.sakaiproject.api.common.type.Type;
@@ -92,9 +90,8 @@ import java.util.Set;
 
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC, use = SOAPBinding.Use.LITERAL)
+@Slf4j
 public class SakaiUCT extends AbstractWebService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(SakaiUCT.class);
 
     private static final String LTI_TOOL_ID = "sakai.basiclti";
 
@@ -144,7 +141,7 @@ public class SakaiUCT extends AbstractWebService {
 
         Session session = establishSession(sessionId);
         if (!securityService.isSuperUser()) {
-            LOG.warn("NonSuperUser trying to collect configuration: " + session.getUserId());
+            log.warn("NonSuperUser trying to collect configuration: " + session.getUserId());
             return new Integer(-1);
         }
 
@@ -253,7 +250,7 @@ public class SakaiUCT extends AbstractWebService {
 			return "success";
 		}
 		catch (Exception e) {
-			LOG.warn("Error adding tool " + toolid + " to site " + siteid + ": " + e);
+			log.warn("Error adding tool " + toolid + " to site " + siteid + ": " + e);
 		}
 		
 		return "failure";
@@ -273,7 +270,7 @@ public class SakaiUCT extends AbstractWebService {
         @WebParam(name = "siteid", partName = "siteid") @QueryParam("siteid") String siteid,
         @WebParam(name = "toolreg", partName = "toolreg") @QueryParam("toolreg") String toolreg) {
 
-                LOG.info("Removing tool " + toolreg + " from site " + siteid);
+                log.info("Removing tool " + toolreg + " from site " + siteid);
 
                 try {
                         // Establish the session. SiteService will enforce security for changes.
@@ -294,7 +291,7 @@ public class SakaiUCT extends AbstractWebService {
                         return "removed";
 
                 } catch (Exception e) {
-                        LOG.warn("Error updating tool in site " + siteid + ": " + e);
+                        log.warn("Error updating tool in site " + siteid + ": " + e);
                 }
 
                 return "failure";
@@ -318,7 +315,7 @@ public class SakaiUCT extends AbstractWebService {
         @WebParam(name = "ltilaunchurl", partName = "ltilaunchurl") @QueryParam("tooltitle") String ltiLaunchUrl,
         @WebParam(name = "lticustomparams", partName = "lticustomparams") @QueryParam("tooltitle") String ltiCustomParams) {
 
-                LOG.info("Updating tool " + oldtoolreg + " in site " + siteid + " to tool registration " + newtoolreg);
+                log.info("Updating tool " + oldtoolreg + " in site " + siteid + " to tool registration " + newtoolreg);
 
 		try {
 			// Establish the session. SiteService will enforce security for changes.
@@ -348,7 +345,7 @@ public class SakaiUCT extends AbstractWebService {
 			return "updated";
 
 		} catch (Exception e) {
-			LOG.warn("Error updating tool in site " + siteid + ": " + e);
+			log.warn("Error updating tool in site " + siteid + ": " + e);
 		}
 		
 		return "failure";
@@ -370,7 +367,7 @@ public class SakaiUCT extends AbstractWebService {
 	@WebParam(name = "ltilaunchurl", partName = "ltilaunchurl") @QueryParam("tooltitle") String ltiLaunchUrl,
 	@WebParam(name = "lticustomparams", partName = "lticustomparams") @QueryParam("tooltitle") String ltiCustomParams) {
 
-		LOG.info("Adding external tool to " + siteid + " with title: " + tooltitle);
+		log.info("Adding external tool to " + siteid + " with title: " + tooltitle);
 	
 		try {
 			// Establish the session. SiteService will enforce security for changes.
@@ -395,7 +392,7 @@ public class SakaiUCT extends AbstractWebService {
 
 			if (addTool) {
 				// Add a page and tool to the page
-				LOG.info("Adding new page to site " + siteid + " for tool title: " + tooltitle);
+				log.info("Adding new page to site " + siteid + " for tool title: " + tooltitle);
 
 				SitePage sitePageEdit = siteEdit.addPage();
 				sitePageEdit.setTitle(tooltitle);
@@ -419,7 +416,7 @@ public class SakaiUCT extends AbstractWebService {
 				return "added";
 
 			} else {
-				LOG.info("Updating existing page in site " + siteid + " for tool title: " + tooltitle);
+				log.info("Updating existing page in site " + siteid + " for tool title: " + tooltitle);
 
    				Properties propsedit = tool.getPlacementConfig();
 
@@ -438,7 +435,7 @@ public class SakaiUCT extends AbstractWebService {
 		}
 
 		catch (Exception e) {
-			LOG.warn("Error adding tool " + LTI_TOOL_ID + " to site " + siteid + ": " + e);
+			log.warn("Error adding tool " + LTI_TOOL_ID + " to site " + siteid + ": " + e);
 		}
 		
 		return "failure";
@@ -472,7 +469,7 @@ public class SakaiUCT extends AbstractWebService {
 			return realm.getProviderGroupId();
 		}
 		catch (Exception e) {
-			LOG.warn("Error getting provider ID for site " + siteid + ": " + e);
+			log.warn("Error getting provider ID for site " + siteid + ": " + e);
 			throw new RuntimeException("Error getting provider ID");
 		}				
 	}
@@ -549,7 +546,7 @@ public class SakaiUCT extends AbstractWebService {
 			return "success";
 		} 
 		catch (Exception e) {
-			LOG.warn("Error setting providers for site " + siteid + ": " + e);
+			log.warn("Error setting providers for site " + siteid + ": " + e);
 		}
 		
 		return "failure";
@@ -585,7 +582,7 @@ public class SakaiUCT extends AbstractWebService {
                         Session s = establishSession(sessionid);
 
 			if ("!admin".equalsIgnoreCase(siteid) && !securityService.isSuperUser(s.getUserId())) {
-				LOG.warn("WS getSiteMembers(): Permission denied. Restricted to super users.");
+				log.warn("WS getSiteMembers(): Permission denied. Restricted to super users.");
 				throw new RuntimeException("WS getSiteMembers(): Permission denied. Restricted to super users.");
 			}
 
@@ -631,12 +628,12 @@ public class SakaiUCT extends AbstractWebService {
         Session session = establishSession(sessionId);
 
         if (!securityService.isSuperUser()) {
-            LOG.warn("Non-admin trying to update user photo: " + session.getUserId());
+            log.warn("Non-admin trying to update user photo: " + session.getUserId());
             return "failed: user is not admin";
         }
 	
         if (userId == null || userId.equals("")) {
-            LOG.warn("Failed to update profile for user: (null or empty).");
+            log.warn("Failed to update profile for user: (null or empty).");
             return "failed: userid is empty";
         }
    
@@ -651,9 +648,9 @@ public class SakaiUCT extends AbstractWebService {
 		// sakaiPerson.setSystemPicturePreferred(Boolean.TRUE);
 		// sakaiPerson.setHidePrivateInfo(Boolean.TRUE);
 		sakaiPersonManager.save(sakaiPerson);
-                LOG.info("Updated profile photo for user " + userId);
+                log.info("Updated profile photo for user " + userId);
             } catch (Exception e) {
-		LOG.warn("Failed to update profile for user " + userId + ": " + e.getMessage());
+		log.warn("Failed to update profile for user " + userId + ": " + e.getMessage());
 		return "failed: " + e.getMessage();
             }
         } else {
@@ -676,20 +673,20 @@ public class SakaiUCT extends AbstractWebService {
         try {
         	Type _type = sakaiPersonManager.getSystemMutableType();
         	User user = userDirectoryService.getUserByEid(userId);
-        	LOG.info("Found profile for user " + user.getId() + " with eid of " + user.getEid());
+        	log.info("Found profile for user " + user.getId() + " with eid of " + user.getEid());
                 sakaiPerson = sakaiPersonManager.getSakaiPerson(user.getId(), _type);
 
                 // create profile if it doesn't exist
                 if (sakaiPerson == null){
                    sakaiPerson = sakaiPersonManager.create(user.getId(), _type);
-                   LOG.info("Creating profile for user " + userId + " eid " + user.getEid() + " of type " + _type);
+                   log.info("Creating profile for user " + userId + " eid " + user.getEid() + " of type " + _type);
                 }
         }
         catch (UserNotDefinedException und) {
-        	LOG.info("getUserProfile: User does not exist - userId " + userId);
+        	log.info("getUserProfile: User does not exist - userId " + userId);
         }
         catch(Exception e){
-            LOG.info("Unknown error occurred in getUserProfile(" + userId + "): " + e.getMessage());
+            log.info("Unknown error occurred in getUserProfile(" + userId + "): " + e.getMessage());
             e.printStackTrace();
         }
     
@@ -713,7 +710,7 @@ public class SakaiUCT extends AbstractWebService {
         // establish the session
 
         if (StringUtils.isEmpty(sessionId)) {
-		LOG.warn("No sessionId");
+		log.warn("No sessionId");
 		return "failure: no-session-id";
         }
     
@@ -722,35 +719,35 @@ public class SakaiUCT extends AbstractWebService {
     	try {		
     		s = establishSession(sessionId);
         } catch (RuntimeException e) {
-		LOG.warn("Invalid session for setAssignmentGradeCommentforUser (not active)");
+		log.warn("Invalid session for setAssignmentGradeCommentforUser (not active)");
 		return "failure: invalid-session";
         }
 
         try {
 
-    		LOG.info("User " + s.getUserEid() + " setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "'"); 
+    		log.info("User " + s.getUserEid() + " setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "'"); 
 
     		User user = userDirectoryService.getUserByEid(userId);
 		if (user == null) 
 		{
-			LOG.warn("UserEid " + userId + " is invalid");
+			log.warn("UserEid " + userId + " is invalid");
 			return "failure: invalid-user";
 		}
 			
     		Assignment assign = assignmentService.getAssignment(assignmentId);
 		int scaleFactor = assign.getContent().getFactor();
 
-		LOG.info("Scale factor for this assignment: " + scaleFactor);
+		log.info("Scale factor for this assignment: " + scaleFactor);
 
     		String aReference = assign.getReference();
     		
     		if (!securityService.unlock(AssignmentService.SECURE_GRADE_ASSIGNMENT_SUBMISSION, aReference))
     		{
-    			LOG.warn("User " + s.getUserEid() + " does not have permission to set assignment grades");
+    			log.warn("User " + s.getUserEid() + " does not have permission to set assignment grades");
     			return "failure: no permission";
     		}
     		
-    		LOG.info("Setting assignment grade/comment for " + userId + " on " + assignmentId + " to " + grade); 
+    		log.info("Setting assignment grade/comment for " + userId + " on " + assignmentId + " to " + grade); 
     		
     		AssignmentSubmission sub = assignmentService.getSubmission(assignmentId, user);
     		AssignmentSubmissionEdit asEdit =  null;
@@ -777,7 +774,7 @@ public class SakaiUCT extends AbstractWebService {
     		}
 
 		if (asEdit == null) {
-    			LOG.warn("User " + s.getUserEid() + " does not have permission to set assignment grades");
+    			log.warn("User " + s.getUserEid() + " does not have permission to set assignment grades");
     			return "failure: no submission";
 		}
 
@@ -785,7 +782,7 @@ public class SakaiUCT extends AbstractWebService {
 
 		String scaledGrade = String.valueOf(Math.round(grade * scaleFactor));
 
-		LOG.info("Scaled grade is: " + scaledGrade);
+		log.info("Scaled grade is: " + scaledGrade);
 
     		asEdit.setFeedbackComment(comment);
     		asEdit.setGrade(scaledGrade);
@@ -805,21 +802,21 @@ public class SakaiUCT extends AbstractWebService {
     	}
 	catch (UserNotDefinedException une) 
 	{
-		LOG.warn("UserEid " + userId + " is invalid");
+		log.warn("UserEid " + userId + " is invalid");
 		return "failure: invalid-user";
 	}
 	catch (InUseException iue) 
 	{
-		LOG.warn("Submission record for " + userId + " on " + assignmentId + " is locked");
+		log.warn("Submission record for " + userId + " on " + assignmentId + " is locked");
 		return "failure: submission-locked";
 	}
 	catch (PermissionException pe) {
-		LOG.warn("Permission exception while setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "' : " + pe.getMessage()); 
+		log.warn("Permission exception while setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "' : " + pe.getMessage()); 
 		return "failure: permission-denied";
 	}
     	catch (Exception e) 
     	{
-		LOG.error("WS setAssignmentGradeCommentforUser(): Exception while setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "'", e); 
+		log.error("WS setAssignmentGradeCommentforUser(): Exception while setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "'", e); 
 		return "failure: " + e.getMessage();	
     	}
     	
@@ -899,18 +896,19 @@ public class SakaiUCT extends AbstractWebService {
 				}
 				catch (Exception e)
 				{
-						LOG.warn("Cannot find submission " + submissionRef + ": " + e.getMessage());
+						log.warn("Cannot find submission " + submissionRef + ": " + e.getMessage());
 				}
 			}
 		}
 		catch (Exception e)
 		{
-			LOG.warn("Cannot find assignment: " + assignmentRef + ": " + e.getMessage());
+			log.warn("Cannot find assignment: " + assignmentRef + ": " + e.getMessage());
 		}
     		
     	}	// if gradebook exists
     	
     }	// updateGradebook
+    */
 
     protected boolean isGradebookDefined(String context)
     {
@@ -924,12 +922,11 @@ public class SakaiUCT extends AbstractWebService {
     	}
     	catch (Exception e)
     	{
-    		//LOG.debug("chef", this + rb.getString("addtogradebook.alertMessage") + "\n" + e.getMessage());
+    		//log.debug("chef", this + rb.getString("addtogradebook.alertMessage") + "\n" + e.getMessage());
     	}
     	
     	return false;
     	
     }	// isGradebookDefined()
 
-    */
 }
