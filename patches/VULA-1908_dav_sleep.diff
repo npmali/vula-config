@@ -1,8 +1,6 @@
-Index: dav/dav/src/java/org/sakaiproject/dav/DavServlet.java
-===================================================================
---- dav/dav/src/java/org/sakaiproject/dav/DavServlet.java	(revision 310399)
-+++ dav/dav/src/java/org/sakaiproject/dav/DavServlet.java	(working copy)
-@@ -1099,6 +1099,7 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/dav/dav/src/java/org/sakaiproject/dav/DavServlet.java	2018-01-05 11:44:22.000000000 +0200
++++ dav/dav/src/java/org/sakaiproject/dav/DavServlet.java	2018-01-22 15:23:13.000000000 +0200
+@@ -1114,6 +1114,7 @@
  						&& !UsageSessionService.login(a, req, UsageSessionService.EVENT_LOGIN_DAV))
  				{
  					// login failed
@@ -10,7 +8,7 @@ Index: dav/dav/src/java/org/sakaiproject/dav/DavServlet.java
  					res.addHeader("WWW-Authenticate","Basic realm=\"DAV\"");
  					res.sendError(401);
  					return;
-@@ -1107,6 +1108,7 @@
+@@ -1122,6 +1123,7 @@
  			catch (AuthenticationException ex)
  			{
  				// not authenticated
@@ -18,7 +16,7 @@ Index: dav/dav/src/java/org/sakaiproject/dav/DavServlet.java
  				res.addHeader("WWW-Authenticate","Basic realm=\"DAV\"");
  				res.sendError(401);
  				return;
-@@ -1115,6 +1117,7 @@
+@@ -1130,6 +1132,7 @@
  		else
  		{
  			// user name missing, so can't authenticate
@@ -26,7 +24,7 @@ Index: dav/dav/src/java/org/sakaiproject/dav/DavServlet.java
  			res.addHeader("WWW-Authenticate","Basic realm=\"DAV\"");
  			res.sendError(401);
  			return;
-@@ -1141,6 +1144,20 @@
+@@ -1156,6 +1159,20 @@
  		}
  	}
  
@@ -47,10 +45,10 @@ Index: dav/dav/src/java/org/sakaiproject/dav/DavServlet.java
  	/** log a request processed */
  	public void log(HttpServletRequest req, SakaidavServletInfo info)
  	{
-@@ -1168,6 +1185,7 @@
+@@ -1183,6 +1200,7 @@
  		if (remoteUser == null)
  		{
- 			if (M_log.isDebugEnabled()) M_log.debug("SAKAIDAV Requires Authorization");
+ 			if (log.isDebugEnabled()) log.debug("SAKAIDAV Requires Authorization");
 +			doAuthFailPause();
  			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
  			return;

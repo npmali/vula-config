@@ -1,7 +1,7 @@
-Index: assignment/assignment-bundles/resources/assignment_en_GB.properties
+Index: assignment/bundles/resources/assignment_en_GB.properties
 ===================================================================
---- assignment/assignment-bundles/resources/assignment_en_GB.properties	(revision 47452)
-+++ assignment/assignment-bundles/resources/assignment_en_GB.properties	(working copy)
+--- assignment/bundles/resources/assignment_en_GB.properties	(revision 47452)
++++ assignment/bundles/resources/assignment_en_GB.properties	(working copy)
 @@ -1,15 +1,13 @@
  #Fri Nov 26 20:32:02 CET 2010
  gen.modbyins=Modified by tutor
