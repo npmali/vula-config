@@ -33,7 +33,7 @@
 +        * Pause the request on auth failure
 +        */
 +       private void doAuthFailPause() {
-+               M_log.info("Pausing DAV request after failed authentication");
++               log.info("Pausing DAV request after failed authentication");
 +               try {
 +                       Thread.sleep(50);
 +               } catch (InterruptedException e) {
