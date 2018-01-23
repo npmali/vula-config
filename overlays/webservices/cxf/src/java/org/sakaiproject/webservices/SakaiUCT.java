@@ -740,9 +740,6 @@ public class SakaiUCT extends AbstractWebService {
 			return "failure: invalid-user";
 		}
 			
-		int scaleFactor = 100;
-		log.info("Scale factor for this assignment: " + scaleFactor);
-
     		Assignment assign = assignmentService.getAssignment(assignmentId);
 
     		String aReference = AssignmentReferenceReckoner.reckoner().assignment(assign).reckon().getReference();
@@ -752,6 +749,9 @@ public class SakaiUCT extends AbstractWebService {
     			log.warn("User " + s.getUserEid() + " does not have permission to set assignment grades");
     			return "failure: no permission";
     		}
+
+		int scaleFactor = assign.getScaleFactor();
+		log.info("Scale factor for this assignment: " + scaleFactor);
     		
     		log.info("Setting assignment grade/comment for " + userId + " on " + assignmentId + " to " + grade); 
     		
