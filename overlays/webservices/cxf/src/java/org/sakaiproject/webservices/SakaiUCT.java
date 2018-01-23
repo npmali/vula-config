@@ -19,6 +19,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -27,6 +28,10 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.PhaseInterceptorChain;
+import org.apache.cxf.transport.http.AbstractHTTPDestination;
 
 import org.sakaiproject.assignment.api.AssignmentConstants;
 import org.sakaiproject.assignment.api.AssignmentReferenceReckoner;
@@ -44,6 +49,8 @@ import org.sakaiproject.authz.api.Role;
 import org.sakaiproject.coursemanagement.api.CourseManagementService;
 import org.sakaiproject.coursemanagement.api.exception.IdNotFoundException;
 import org.sakaiproject.event.api.UsageSession;
+import org.sakaiproject.event.api.UsageSessionService;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.InUseException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.service.gradebook.shared.AssignmentHasIllegalPointsException;
@@ -733,10 +740,11 @@ public class SakaiUCT extends AbstractWebService {
 			return "failure: invalid-user";
 		}
 			
-		int scaleFactor = 10;
+		int scaleFactor = 100;
 		log.info("Scale factor for this assignment: " + scaleFactor);
 
     		Assignment assign = assignmentService.getAssignment(assignmentId);
+
     		String aReference = AssignmentReferenceReckoner.reckoner().assignment(assign).reckon().getReference();
     		
     		if (!securityService.unlock(AssignmentServiceConstants.SECURE_GRADE_ASSIGNMENT_SUBMISSION, aReference))
@@ -769,10 +777,9 @@ public class SakaiUCT extends AbstractWebService {
     		// If necessary, update the assignment grade in the Gradebook
 
     		String associateGradebookAssignment = StringUtils.trimToNull(assign.getProperties().get(AssignmentServiceConstants.PROP_ASSIGNMENT_ASSOCIATE_GRADEBOOK_ASSIGNMENT));
-    		String sReference = AssignmentReferenceReckoner.reckoner().submission(sub).reckon().getReference();
     		
     		// update grade in gradebook
-    		integrateGradebook(aReference, associateGradebookAssignment, null, null, -1, null, sReference, "update", context);
+    		integrateGradebook(assignmentId, aReference, associateGradebookAssignment, null, null, -1, null, sub.getId(), "update", context);
 
     	}
 	catch (UserNotDefinedException une) 
@@ -780,8 +787,12 @@ public class SakaiUCT extends AbstractWebService {
 		log.warn("UserEid " + userId + " is invalid");
 		return "failure: invalid-user";
 	}
+	catch (IdUnusedException iue) {
+		log.warn("Assignment not found while setting assignment grade/comment for user " + userId + " on assignment " + assignmentId + " to grade '" + grade + "' : " + iue.getMessage()); 
+		return "failure: not-found";
+	}
 	catch (PermissionException pe) {
-		log.warn("Permission exception while setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "' : " + pe.getMessage()); 
+		log.warn("Permission exception while setting assignment grade/comment for user " + userId + " on assignment " + assignmentId + " to grade '" + grade + "' : " + pe.getMessage()); 
 		return "failure: permission-denied";
 	}
     	catch (Exception e) 
@@ -803,11 +814,12 @@ public class SakaiUCT extends AbstractWebService {
      * @param newAssignment_title
      * @param newAssignment_maxPoints
      * @param newAssignment_dueTime
-     * @param submissionRef
+     * @param submissionId
      * @param updateRemoveSubmission
      * @param context
      */
-    protected void integrateGradebook( String assignmentRef, String associateGradebookAssignment, String addUpdateRemoveAssignment, String newAssignment_title, int newAssignment_maxPoints, Date newAssignment_dueTime, String submissionRef, String updateRemoveSubmission, String context)
+    protected void integrateGradebook( String assignmentId, String assignmentRef, String associateGradebookAssignment, String addUpdateRemoveAssignment, String newAssignment_title,
+       int newAssignment_maxPoints, Date newAssignment_dueTime, String submissionId, String updateRemoveSubmission, String context)
     {
     	//add or remove external grades to gradebook
     	// a. if Gradebook does not exists, do nothing, 'cos setting should have been hidden
@@ -907,14 +919,14 @@ public class SakaiUCT extends AbstractWebService {
     		{
     			try
     			{
-    				Assignment a = assignmentService.getAssignment(assignmentRef);
+    				Assignment a = assignmentService.getAssignment(assignmentId);
 
     				if (updateRemoveSubmission.equals("update")
     						&& a.getProperties().get(NEW_ASSIGNMENT_ADD_TO_GRADEBOOK) != null
     						&& !a.getProperties().get(NEW_ASSIGNMENT_ADD_TO_GRADEBOOK).equals(AssignmentServiceConstants.GRADEBOOK_INTEGRATION_NO)
     						&& a.getTypeOfGrade() == Assignment.GradeType.SCORE_GRADE_TYPE)
     				{
-    					if (submissionRef == null)
+    					if (submissionId == null)
     					{
     						// bulk add all grades for assignment into gradebook
     						Iterator submissions = assignmentService.getSubmissions(a).iterator();
@@ -971,7 +983,7 @@ public class SakaiUCT extends AbstractWebService {
     						try
     						{
     							// only update one submission
-    							AssignmentSubmission aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionRef);
+    							AssignmentSubmission aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionId);
     							Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
 								String submitter = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
     							String gradeString = StringUtils.trimToNull(aSubmission.getGrade());
@@ -999,14 +1011,14 @@ public class SakaiUCT extends AbstractWebService {
     						}
     						catch (Exception e)
     						{
-    							log.warn("Cannot find submission " + submissionRef + ": " + e.getMessage());
+    							log.warn("Cannot find submission " + submissionId + ": " + e.getMessage(), e);
     						}
     					} // submissionref != null
 
     				}
     				else if (updateRemoveSubmission.equals("remove"))
     				{
-    					if (submissionRef == null)
+    					if (submissionId == null)
     					{
     						// remove all submission grades (when changing the associated entry in Gradebook)
     						Iterator submissions = assignmentService.getSubmissions(a).iterator();
@@ -1033,21 +1045,21 @@ public class SakaiUCT extends AbstractWebService {
     						// remove only one submission grade
     						try
     						{
-    							AssignmentSubmission aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionRef);
+    							AssignmentSubmission aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionId);
     							Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
     							String submitter = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
     							gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, assignmentRef, submitter, null);
     						}
     						catch (Exception e)
     						{
-    							log.warn("Cannot find submission " + submissionRef + ": " + e.getMessage());
+    							log.warn("Cannot find submission " + submissionId + ": " + e.getMessage());
     						}
     					}
     				}
     			}
     			catch (Exception e)
     			{
-    				log.warn("Cannot find assignment: " + assignmentRef + ": " + e.getMessage());
+    				log.warn("Cannot find assignment: " + assignmentRef + ": " + e.getMessage(), e);
     			}
     		} // updateRemoveSubmission != null
 
@@ -1115,5 +1127,101 @@ public class SakaiUCT extends AbstractWebService {
     	return false;
     	
     }	// isGradebookDefined()
+
+    // These methods moved here from 11.x SakaiLogin.java because of change in method signature in SAK-31960
+
+    /**
+     * Login with the supplied credentials and return the session string which can be used in subsequent web service calls, ie via SakaiScript
+     *
+     * @param id eid, eg jsmith26
+     * @param pw password for the user
+     * @return session string
+     */
+    @WebMethod
+    @Path("/login")
+    @Produces("text/plain")
+    @GET
+    public java.lang.String login(
+            @WebParam(partName = "id", name = "id")
+            @QueryParam("id")
+            java.lang.String id,
+            @WebParam(partName = "pw", name = "pw")
+            @QueryParam("pw")
+            java.lang.String pw) {
+        Message message = PhaseInterceptorChain.getCurrentMessage();
+        HttpServletRequest request = (HttpServletRequest) message.get(AbstractHTTPDestination.HTTP_REQUEST);
+        String ipAddress = request.getRemoteAddr();
+
+        boolean allowLogin = serverConfigurationService.getBoolean("webservices.allowlogin", false);
+
+        if (!allowLogin) {
+            throw new RuntimeException("Web Services Login Disabled");
+        }
+
+        User user = userDirectoryService.authenticate(id, pw);
+        if (user != null) {
+            Session s = sessionManager.startSession();
+            sessionManager.setCurrentSession(s);
+            if (s == null) {
+                log.warn("Web Services Login failed to establish session for id=" + id + " ip=" + ipAddress);
+                throw new RuntimeException("Unable to establish session");
+            } else {
+
+                // We do not care too much on the off-chance that this fails - folks simply won't show up in presense
+                // and events won't be trackable back to people / IP Addresses - but if it fails - there is nothing
+                // we can do anyways.
+
+                usageSessionService.login(user.getId(), id, ipAddress, "SakaiLogin.jws", UsageSessionService.EVENT_LOGIN_WS);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Sakai Web Services Login id=" + id + " ip=" + ipAddress + " session=" + s.getId());
+                }
+                return s.getId();
+            }
+        }
+        log.warn("Failed Web Services Login id=" + id + " ip=" + ipAddress);
+        throw new RuntimeException("Unable to login");
+    }
+
+    /**
+     * Logout of the given session
+     *
+     * @param sessionid sessionid to logout
+     * @return
+     * @throws InterruptedException
+     */
+    @WebMethod
+    @Produces("text/plain")
+    @GET
+    @Path("/logout")
+    public boolean logout(
+            @QueryParam("sessionid")
+            @WebParam(partName = "sessionid", name = "sessionid")
+            java.lang.String sessionid) {
+        Session s = sessionManager.getSession(sessionid);
+
+        if (s == null) {
+            throw new RuntimeException("Session " + sessionid + " is not active");
+        }
+
+        sessionManager.setCurrentSession(s);
+        usageSessionService.logout();
+
+        return true;
+    }
+
+    @WebMethod
+    @Produces("text/plain")
+    @GET
+    @Path("/loginToServer")
+    public java.lang.String loginToServer(
+            @WebParam(partName = "id", name = "id")
+            @QueryParam("id")
+            java.lang.String id,
+            @WebParam(partName = "pw", name = "pw")
+            @QueryParam("pw")
+            java.lang.String pw) {
+        return login(id, pw) + "," + serverConfigurationService.getString("webservices.directurl", serverConfigurationService.getString("serverUrl"));
+    }
 
 }
