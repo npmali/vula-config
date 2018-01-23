@@ -1,0 +1,48 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/providers/jldap/src/java/edu/amc/sakai/user/JLDAPDirectoryProvider.java	2018-01-05 11:44:23.000000000 +0200
++++ providers/jldap/src/java/edu/amc/sakai/user/JLDAPDirectoryProvider.java	2018-01-23 11:17:44.000000000 +0200
+@@ -165,6 +165,9 @@
+ 	
+ 	private int searchScope = DEFAULT_SEARCH_SCOPE;
+ 
++	/** Should the provider support searching by EID */
++	private boolean enableEid = true;
++
+ 	/** Should the provider support searching by Authentication ID */
+ 	private boolean enableAid = false;
+ 
+@@ -583,6 +586,9 @@
+ 	public boolean getUser(UserEdit edit)
+ 	{
+ 
++		if (!enableEid)
++			return false;
++
+ 		try {
+ 			return getUserByEid(edit, edit.getEid(), null);
+ 		} catch ( LDAPException e ) {
+@@ -637,6 +643,11 @@
+ 			log.debug("getUsers(): [Collection size = " + users.size() + "]");
+ 		}
+ 
++		if (!enableEid) {
++			users.clear();
++			return;
++		}
++
+ 		LDAPConnection conn = null;
+ 		boolean abortiveSearch = false;
+ 		int maxQuerySize = getMaxObjectsToQueryFor();
+@@ -1415,6 +1426,13 @@
+ 	}
+ 
+ 	/**
++	 * {@inheritDoc}
++	 */
++	public void setEnableEid(boolean enableEid) {
++		this.enableEid = enableEid;
++	}
++
++	/**
+ 	 * {@inheritDoc}
+ 	 */
+ 	public int getMaxResultSize() {

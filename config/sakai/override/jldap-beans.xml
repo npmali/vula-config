@@ -155,6 +155,14 @@
 		  <value>1000</value>
 		</property -->
 
+		<!-- Optional. Set to false if the provider should not look up users by EID.
+		     This means the provider will only authenticate users, and will not provide
+                     user information.
+		     Defaults to false -->
+		<property name="enableEid">
+		  <value>false</value>
+		</property>
+
 		<!-- Optional. Require a different ID for login. This allows you to have one ID for logins
 		     and another EID which is used when looking up course/group information.
 		     Defaults to false -->
