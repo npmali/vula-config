@@ -80,6 +80,7 @@ import org.w3c.dom.Node;
 import java.io.*;
 import java.lang.management.RuntimeMXBean;
 import java.lang.management.ManagementFactory;
+import java.text.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -779,7 +780,7 @@ public class SakaiUCT extends AbstractWebService {
     		String associateGradebookAssignment = StringUtils.trimToNull(assign.getProperties().get(AssignmentServiceConstants.PROP_ASSIGNMENT_ASSOCIATE_GRADEBOOK_ASSIGNMENT));
     		
     		// update grade in gradebook
-    		integrateGradebook(assignmentId, aReference, associateGradebookAssignment, null, null, -1, null, sub.getId(), "update", context);
+    		integrateGradebook(assignmentId, aReference, associateGradebookAssignment, sub.getId(), context);
 
     	}
 	catch (UserNotDefinedException une) 
@@ -804,278 +805,109 @@ public class SakaiUCT extends AbstractWebService {
     	return "success";
     }
 
-    // This is a copy of the code in AssignmentAction.java
+    // This is modified from the code in AssignmentAction.java
+
 
     /**
+     * integration with gradebook
      *
-     * @param assignmentRef
-     * @param associateGradebookAssignment
-     * @param addUpdateRemoveAssignment
-     * @param newAssignment_title
-     * @param newAssignment_maxPoints
-     * @param newAssignment_dueTime
-     * @param submissionId
-     * @param updateRemoveSubmission
-     * @param context
+     * @param assignmentRef                Assignment reference
+     * @param submissionId                 Submission Id
      */
-    protected void integrateGradebook( String assignmentId, String assignmentRef, String associateGradebookAssignment, String addUpdateRemoveAssignment, String newAssignment_title,
-       int newAssignment_maxPoints, Date newAssignment_dueTime, String submissionId, String updateRemoveSubmission, String context)
-    {
-    	//add or remove external grades to gradebook
-    	// a. if Gradebook does not exists, do nothing, 'cos setting should have been hidden
-    	// b. if Gradebook exists, just call addExternal and removeExternal and swallow any exception. The
-    	//    exception are indication that the assessment is already in the Gradebook or there is nothing
-    	//    to remove.
+    private void integrateGradebook(String assignmentId, String assignmentRef, String associateGradebookAssignment, String submissionId, String context) {
+
+        associateGradebookAssignment = StringUtils.trimToNull(associateGradebookAssignment);
+
+        // add or remove external grades to gradebook
+        // a. if Gradebook does not exists, do nothing, 'cos setting should have been hidden
+        // b. if Gradebook exists, just call addExternal and removeExternal and swallow any exception. The
+        // exception are indication that the assessment is already in the Gradebook or there is nothing
+        // to remove.
+
     	String gradebookUid = context;
     	boolean gradebookExists = isGradebookDefined(context);
-    	
-    	String assignmentToolTitle = "Assignments";
-    	
-    	if (gradebookExists)
-    	{
-    		boolean isExternalAssignmentDefined=gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, assignmentRef);
-    		boolean isExternalAssociateAssignmentDefined = gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, associateGradebookAssignment);
-    		boolean isAssignmentDefined = gradebookService.isAssignmentDefined(gradebookUid, associateGradebookAssignment);
 
-    		if (addUpdateRemoveAssignment != null)
-    		{
-    			if (addUpdateRemoveAssignment.equals("add") || ( addUpdateRemoveAssignment.equals("update") && !gradebookService.isAssignmentDefined(gradebookUid, newAssignment_title)))
-    			{
-    				// add assignment into gradebook
-    				try
-    				{
-    					// add assignment to gradebook
-    					gradebookExternalAssessmentService.addExternalAssessment(gradebookUid,
-    							assignmentRef, 
-    							null,
-    							newAssignment_title,
-    							newAssignment_maxPoints/10,
-    							new Date(newAssignment_dueTime.getTime()),
-    					"Assignment");
-    				}
-    				catch (AssignmentHasIllegalPointsException e)
-    				{
-    					//addAlert(state, rb.getString("addtogradebook.illegalPoints"));
-    				}
-    				catch(ConflictingAssignmentNameException e)
-    				{
-    					// try to modify assignment title, make sure there is no such assignment in the gradebook, and insert again
-    					boolean trying = true;
-    					int attempts = 1;
-    					String titleBase = newAssignment_title;
-    					while(trying && attempts < MAXIMUM_ATTEMPTS_FOR_UNIQUENESS) 	// see end of loop for condition that enforces attempts <= limit)
-    					{
-    						String newTitle = titleBase + "-" + attempts;
-    						
-    						if(!gradebookService.isAssignmentDefined(gradebookUid, newTitle))
-    						{
-    							try
-    							{
-    								// add assignment to gradebook
-    								gradebookExternalAssessmentService.addExternalAssessment(gradebookUid,
-    										assignmentRef, 
-    										null,
-    										newTitle,
-    										newAssignment_maxPoints/10,
-    										new Date(newAssignment_dueTime.getTime()),
-    								"Assignment");
-    								trying = false;
-    							}
-    							catch(Exception ee)
-    							{
-    								// try again, ignore the exception
-    							}
-    						}
-    						
-    						if (trying)
-    						{
-    							attempts++;
-    							if(attempts >= MAXIMUM_ATTEMPTS_FOR_UNIQUENESS)
-    							{
-    								// add alert prompting for change assignment title
-    								//addAlert(state, rb.getString("addtogradebook.nonUniqueTitle"));
-    							}
-    						}
-    					}
-    				}
-    				catch (ConflictingExternalIdException e)
-    				{
-    					// ignore
-    				}
-    				catch (GradebookNotFoundException e)
-    				{
-    					// ignore
-    				}
-    				catch (Exception e)
-    				{
-    					// ignore
-    				}
+        Assignment a;
+        AssignmentSubmission aSubmission;
 
-    			}  // (addUpdateRemoveAssignment.equals("add") || ( addUpdateRemoveAssignment.equals("update") && !g.isAssignmentDefined(gradebookUid, newAssignment_title)))  
-    			
-    		}	// addUpdateRemoveAssignment != null
-    		
-    		if (updateRemoveSubmission != null)
-    		{
-    			try
-    			{
-    				Assignment a = assignmentService.getAssignment(assignmentId);
+        try {
+            a = assignmentService.getAssignment(assignmentId);
+            aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionId);
+        } catch (IdUnusedException iue) {
+            log.warn("Assignment or submission not found: " + assignmentId + " " + submissionId);
+            return;
+        } catch (PermissionException pe) {
+            log.warn("No permission to access Assignment or submission: " + assignmentId + " " + submissionId);
+            return;
+        }
 
-    				if (updateRemoveSubmission.equals("update")
-    						&& a.getProperties().get(NEW_ASSIGNMENT_ADD_TO_GRADEBOOK) != null
-    						&& !a.getProperties().get(NEW_ASSIGNMENT_ADD_TO_GRADEBOOK).equals(AssignmentServiceConstants.GRADEBOOK_INTEGRATION_NO)
-    						&& a.getTypeOfGrade() == Assignment.GradeType.SCORE_GRADE_TYPE)
-    				{
-    					if (submissionId == null)
-    					{
-    						// bulk add all grades for assignment into gradebook
-    						Iterator submissions = assignmentService.getSubmissions(a).iterator();
+        if ((a != null) && (aSubmission != null) &&
+            gradebookService.isGradebookDefined(gradebookUid) && gradebookService.currentUserHasGradingPerm(gradebookUid)) {
 
-    						Map m = new HashMap();
+            boolean isExternalAssignmentDefined = gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, assignmentRef);
+            boolean isExternalAssociateAssignmentDefined = gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, associateGradebookAssignment);
+            boolean isAssignmentDefined = gradebookService.isAssignmentDefined(gradebookUid, associateGradebookAssignment);
 
-    						// any score to copy over? get all the assessmentGradingData and copy over
-    						while (submissions.hasNext())
-    						{
-    							AssignmentSubmission aSubmission = (AssignmentSubmission) submissions.next();
-    							if (aSubmission.getGradeReleased())
-    							{
-    								Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
-    								String submitterId = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
-    								String gradeString = StringUtils.trimToNull(aSubmission.getGrade());
-    								Double grade = gradeString != null ? Double.valueOf(displayGrade(gradeString)) : null;
-    								m.put(submitterId, grade);
-    							}
-    						}
+            String propAddToGradebook = a.getProperties().get(NEW_ASSIGNMENT_ADD_TO_GRADEBOOK);
 
-    						// need to update only when there is at least one submission
-    						if (m.size()>0)
-    						{
-    							if (associateGradebookAssignment != null)
-    							{
-    								if (isExternalAssociateAssignmentDefined)
-    								{
-    									// the associated assignment is externally maintained
-    									gradebookExternalAssessmentService.updateExternalAssessmentScores(gradebookUid, associateGradebookAssignment, m);
-    								}
-    								else if (isAssignmentDefined)
-    								{
-    									// the associated assignment is internal one, update records one by one
-    									submissions = assignmentService.getSubmissions(a).iterator();
-    									while (submissions.hasNext())
-    									{
-    										AssignmentSubmission aSubmission = (AssignmentSubmission) submissions.next();
-    										Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
-    										String submitterId = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
-    										String gradeString = StringUtils.trimToNull(aSubmission.getGrade());
-    										String grade = (gradeString != null && aSubmission.getGradeReleased()) ? displayGrade(gradeString) : null;
-    										gradebookService.setAssignmentScoreString(gradebookUid, associateGradebookAssignment, submitterId, grade, assignmentToolTitle);
-    									}
-    								}
-    							}
-    							else if (isExternalAssignmentDefined)
-    							{
-    								gradebookExternalAssessmentService.updateExternalAssessmentScores(gradebookUid, assignmentRef, m);
-    							}
-    						}
-    					}
-    					else
-    					{
-    						try
-    						{
-    							// only update one submission
-    							AssignmentSubmission aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionId);
-    							Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
-								String submitter = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
-    							String gradeString = StringUtils.trimToNull(aSubmission.getGrade());
+            if ((StringUtils.equals(propAddToGradebook, AssignmentServiceConstants.GRADEBOOK_INTEGRATION_ADD)
+                            || StringUtils.equals(propAddToGradebook, AssignmentServiceConstants.GRADEBOOK_INTEGRATION_ASSOCIATE))
+                            && a.getTypeOfGrade() == Assignment.GradeType.SCORE_GRADE_TYPE) {
 
-    							if (associateGradebookAssignment != null)
-    							{
-    								if (gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, associateGradebookAssignment))
-    								{
-    									// the associated assignment is externally maintained
-    									gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, associateGradebookAssignment, submitter,
-    											(gradeString != null && aSubmission.getGradeReleased()) ? displayGrade(gradeString) : null);
-    								}
-    								else if (gradebookService.isAssignmentDefined(gradebookUid, associateGradebookAssignment))
-    								{
-    									// the associated assignment is internal one, update records
-    									gradebookService.setAssignmentScoreString(gradebookUid, associateGradebookAssignment, submitter,
-    											(gradeString != null && aSubmission.getGradeReleased()) ? displayGrade(gradeString) : null, assignmentToolTitle);
-    								}
-    							}
-    							else
-    							{
-    								gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, assignmentRef, submitter,
-    										(gradeString != null && aSubmission.getGradeReleased()) ? displayGrade(gradeString) : null);
-    							}
-    						}
-    						catch (Exception e)
-    						{
-    							log.warn("Cannot find submission " + submissionId + ": " + e.getMessage(), e);
-    						}
-    					} // submissionref != null
+                // only update one submission
 
-    				}
-    				else if (updateRemoveSubmission.equals("remove"))
-    				{
-    					if (submissionId == null)
-    					{
-    						// remove all submission grades (when changing the associated entry in Gradebook)
-    						Iterator submissions = assignmentService.getSubmissions(a).iterator();
+                int factor = aSubmission.getAssignment().getScaleFactor();
+                Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
+                String gradeString = displayGrade(StringUtils.trimToNull(aSubmission.getGrade()), factor);
 
-    						// any score to copy over? get all the assessmentGradingData and copy over
-    						while (submissions.hasNext())
-    						{
-    							AssignmentSubmission aSubmission = (AssignmentSubmission) submissions.next();
-    							Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
-    							String submitter = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
-    							if (isExternalAssociateAssignmentDefined)
-    							{
-    								// if the old associated assignment is an external maintained one
-    								gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, associateGradebookAssignment, submitter, null);
-    							}
-    							else if (isAssignmentDefined)
-    							{
-    								gradebookService.setAssignmentScoreString(gradebookUid, associateGradebookAssignment, submitter, null, assignmentToolTitle);
-    							}
-    						}
-    					}
-    					else
-    					{
-    						// remove only one submission grade
-    						try
-    						{
-    							AssignmentSubmission aSubmission = (AssignmentSubmission) assignmentService.getSubmission(submissionId);
-    							Set<AssignmentSubmissionSubmitter> submitters = aSubmission.getSubmitters();
-    							String submitter = submitters.stream().filter(AssignmentSubmissionSubmitter::getSubmittee).findFirst().get().getSubmitter();
-    							gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, assignmentRef, submitter, null);
-    						}
-    						catch (Exception e)
-    						{
-    							log.warn("Cannot find submission " + submissionId + ": " + e.getMessage());
-    						}
-    					}
-    				}
-    			}
-    			catch (Exception e)
-    			{
-    				log.warn("Cannot find assignment: " + assignmentRef + ": " + e.getMessage(), e);
-    			}
-    		} // updateRemoveSubmission != null
+                for (AssignmentSubmissionSubmitter submitter : submitters) {
+                        String gradeStringToUse = (a.getIsGroup() && submitter.getGrade() != null) ? submitter.getGrade() : gradeString;
+                        //Gradebook only supports plaintext strings
+                        //String commentString = formattedText.convertFormattedTextToPlaintext(aSubmission.getFeedbackComment());
+                        String commentString = aSubmission.getFeedbackComment();
+                        if (associateGradebookAssignment != null) {
+                            if (gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, associateGradebookAssignment)) {
+                                // the associated assignment is externally maintained
+                                gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, associateGradebookAssignment, submitter.getSubmitter(),
+                                        (gradeStringToUse != null && aSubmission.getGradeReleased()) ? gradeStringToUse : "");
+                                gradebookExternalAssessmentService.updateExternalAssessmentComment(gradebookUid, associateGradebookAssignment, submitter.getSubmitter(),
+                                        (commentString != null && aSubmission.getGradeReleased()) ? commentString : "");
+                            } else if (gradebookService.isAssignmentDefined(gradebookUid, associateGradebookAssignment)) {
+                                Long associateGradebookAssignmentId = gradebookService.getAssignment(gradebookUid, associateGradebookAssignment).getId();
+                                // the associated assignment is internal one, update records
+                                gradebookService.setAssignmentScoreString(gradebookUid, associateGradebookAssignmentId, submitter.getSubmitter(),
+                                        (gradeStringToUse != null && aSubmission.getGradeReleased()) ? gradeStringToUse : "", "");
+                                gradebookService.setAssignmentScoreComment(gradebookUid, associateGradebookAssignmentId, submitter.getSubmitter(),
+                                        (commentString != null && aSubmission.getGradeReleased()) ? commentString : "");
+                            }
+                        } else {
+                            gradebookExternalAssessmentService.updateExternalAssessmentScore(gradebookUid, assignmentRef, submitter.getSubmitter(),
+                                    (gradeStringToUse != null && aSubmission.getGradeReleased()) ? gradeStringToUse : "");
+                            gradebookExternalAssessmentService.updateExternalAssessmentComment(gradebookUid, assignmentRef, submitter.getSubmitter(),
+                                    (commentString != null && aSubmission.getGradeReleased()) ? commentString : "");
+                        }
 
-    		
-    	}	// if gradebook exists
-    	
-    }	// integrateGradebook
+                } // for
+            } // if
+        } // if
+
+    } // integrateGradebook
 
     /**
+     * display grade properly
+     */
+    private String displayGrade(String grade, int factor) {
+        return  assignmentService.getGradeDisplay(grade, Assignment.GradeType.SCORE_GRADE_TYPE, factor);
+    } // displayGrade
+
+     /**
      * display grade properly - copied from AssignmentAction
      */
     private String displayGrade(String grade)
     {
     	if (grade != null && (grade.length() >= 1))
     	{
-    		if (grade.indexOf(".") != -1)
+    		if (grade.indexOf(".")!= -1)
     		{
     			if (grade.startsWith("."))
     			{
