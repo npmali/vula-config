@@ -1,0 +1,16 @@
+diff --git a/login/login-render-engine-impl/impl/src/webapp/vm/defaultskin/choice.vm b/login/login-render-engine-impl/impl/src/webapp/vm/defaultskin/choice.vm
+index 22e468d..7e8fbcf 100644
+--- a/login/login-render-engine-impl/impl/src/webapp/vm/defaultskin/choice.vm
++++ b/login/login-render-engine-impl/impl/src/webapp/vm/defaultskin/choice.vm
+@@ -14,9 +14,9 @@
+ 
+ 		<!-- choice.vm -->
+ 		<div id="Mrphs-choice">
+-			<h1>${loginRequired}</h1>
++			<h1>${choiceRequired}</h1>
+ 			<aside class="logo"></aside>
+-			<p class="msg">${choiceRequired}</p>
++			<!--p class="msg">${choiceRequired}</p-->
+ 			<fieldset>
+ 				<a class="link" href="${containerLoginUrl}" title="${loginTitle}">
+ 					#if("$containerLoginChoiceIcon" != "")

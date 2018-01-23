@@ -20,6 +20,7 @@ p0 VULA-2894-site-manage-group-helper.diff "site group manager fix"
 p0 SAK-32322-mailarchive-attachments.diff "Email Archive attachments fix (workaround)"
 p0 VULA-3023-lti-page-reload.diff "VULA-3023 listen for lti tool page refresh requests"
 p0 VULA-3048_Assignment_en_GB.diff "VULA-3048 Assignment en_GB"
+p0 VULA-3101-choice_vm-change-header.diff "VULA-3101 Change choice.vm to better heading"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
