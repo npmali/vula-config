@@ -22,6 +22,7 @@ p0 VULA-3023-lti-page-reload.diff "VULA-3023 listen for lti tool page refresh re
 p0 VULA-3048_Assignment_en_GB.diff "VULA-3048 Assignment en_GB"
 p0 VULA-3101-choice_vm-change-header.diff "VULA-3101 Change choice.vm to better heading"
 p0 VULA-3110-ldap-authonly.diff "VULA-3110 Do LDAP auth only, disable lookup"
+P0 VULA-3101-change-profile-link-position.diff “VULA-3101 Change profile link location”
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####

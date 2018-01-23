@@ -1,0 +1,31 @@
+diff --git a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
+index cd31cc6..83453b5 100644
+--- a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
++++ b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
+@@ -100,11 +100,6 @@
+                                                     <span class="Mrphs-userNav__submenuitem--profilepicture Mrphs-userNav__pic-changer" style="background-image:url(/direct/profile/${loginUserId}/image/thumb)" tabindex="-1"></span>
+                                                 </a>
+                                             </div>
+-                                            <div class="Mrphs-userNav__submenuitem--profile">
+-                                                <a role="menuitem" href="${tabsSites.mrphs_profileToolUrl}">
+-                                                    <span>${rloader.sit_profile}</span>
+-                                                </a>
+-                                            </div>
+                                         #end
+                                     </div>
+                                     <div class="Mrphs-userNav__submenuitem--fullname-and-id">
+@@ -116,7 +111,13 @@
+                                         </div>
+                                     </div>
+                                 </li>
+-
++                                #if (${tabsSites.mrphs_profileToolUrl})
++                                <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented Mrphs-userNav__submenuitem--profile">
++                                    <a role="menuitem" href="${tabsSites.mrphs_profileToolUrl}">
++                                        <span>${rloader.sit_profile}</span>
++                                    </a>
++                                </li>
++                                #end
+                                 <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
+                                     <a role="menuitem" href="javascript:;" id="Mrphs-userNav__submenuitem--connections">
+                                         <span>${rloader.sit_connections}</span>
