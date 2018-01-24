@@ -1,4 +1,4 @@
--- UCT Vula 11.x db conversion script: 10.x to 11.0
+-- UCT Vula 12.x db conversion script: 11.x to 12.0
 
 SET @uct_start = NOW();
 SELECT @uct_start as 'Start';
