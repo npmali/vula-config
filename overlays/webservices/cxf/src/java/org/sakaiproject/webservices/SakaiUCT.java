@@ -862,9 +862,10 @@ public class SakaiUCT extends AbstractWebService {
 
                 for (AssignmentSubmissionSubmitter submitter : submitters) {
                         String gradeStringToUse = (a.getIsGroup() && submitter.getGrade() != null) ? submitter.getGrade() : gradeString;
-                        //Gradebook only supports plaintext strings
-                        //String commentString = formattedText.convertFormattedTextToPlaintext(aSubmission.getFeedbackComment());
-                        String commentString = aSubmission.getFeedbackComment();
+                        // Gradebook only supports plaintext strings, but for now we are not passing through the comment to GB
+                        // This is compatible with 11.x behaviour. Also GB has a max length on plain-text comments.
+                        // String commentString = formattedText.convertFormattedTextToPlaintext(aSubmission.getFeedbackComment());
+                        String commentString = null;
                         if (associateGradebookAssignment != null) {
                             if (gradebookExternalAssessmentService.isExternalAssignmentDefined(gradebookUid, associateGradebookAssignment)) {
                                 // the associated assignment is externally maintained
