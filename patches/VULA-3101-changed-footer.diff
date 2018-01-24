@@ -1,0 +1,47 @@
+diff --git a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeFooter.vm b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeFooter.vm
+index 3c5a249..5ca4c9f 100644
+--- a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeFooter.vm
++++ b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeFooter.vm
+@@ -30,10 +30,20 @@
+                 <li class="Mrphs-footer--nav__project--copyright">${bottomNavCopyright}</li>
+             </ul>
+ 
+-            <details class="Mrphs-footer--details Mrphs-footer--details__build-info">
++            <ul id="footer-details" class="Mrphs-footer--nav__build__list">
++              <li>${bottomNavService}</li>
++              <li>${bottomNavServiceVersion}</li>
++              <li>
++                #foreach ( $pb in $bottomNavPoweredBy )
++                  <a href="${pb.poweredByUrl}" target="_blank" class="external__link"><span class="Mrphs-footer--nav__project--poweredby">${pb.poweredByAltText}</span><span class="skip external">(${rloader.site_newwindow})</span></a>
++                #end ## END of FOREACH ( $pb in $bottomNavPoweredBy )
++              </li>
++              <li>Server ${bottomNavServer}</li>
++            </ul>
++            <!--details class="Mrphs-footer--details Mrphs-footer--details__build-info">
+                 <summary>${rloader.site_buildinfo_label}</summary>
+                 <p class="Mrphs-footer--nav__build__panel">${bottomNavService} - ${bottomNavServiceVersion} - Sakai ${bottomNavSakaiVersion} - Server ${bottomNavServer}</p>
+-            </details>
++            </details-->
+ 
+             #if ($showServerTime == "true")
+ 
+@@ -53,16 +63,16 @@
+             #end ## END of IF ($showServerTime == "true")
+ 
+         </footer>
+-        
++
+         <div class="Mrphs-container Mrphs-container--extras">
+ 
+         #parse("/vm/morpheus/includeFooterExtras.vm")
+ 
+-        </div> ## END: Mrphs-container Mrphs-container--extras    
++        </div> ## END: Mrphs-container Mrphs-container--extras
+         <div id="tutorial" class="Mrphs-tutorial Mrphs-modal"></div>
+         <div id="social-alerts" class="Mrphs-tutorial Mrphs-modal"></div>
+ 
+-    #else 
++    #else
+ 
+         <!-- dont compact -->
+ 
