@@ -330,20 +330,22 @@ select 'SAM-1129' as 'On';
 ALTER TABLE SAM_QUESTIONPOOL_T MODIFY DESCRIPTION longtext;
 
 -- SAK-30461 Portal bullhorns
-CREATE TABLE BULLHORN_ALERTS
-(
-    ID bigint NOT NULL AUTO_INCREMENT,
-    ALERT_TYPE varchar(8) NOT NULL,
-    FROM_USER varchar(99) NOT NULL,
-    TO_USER varchar(99) NOT NULL,
-    EVENT varchar(32) NOT NULL,
-    REF varchar(255) NOT NULL,
-    TITLE varchar(255),
-    SITE_ID varchar(99),
-    URL TEXT NOT NULL,
-    EVENT_DATE datetime NOT NULL,
-    PRIMARY KEY(ID)
-);
+-- added extra index SAK-33858
+
+ CREATE TABLE `BULLHORN_ALERTS` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ALERT_TYPE` varchar(8) NOT NULL,
+  `FROM_USER` varchar(99) NOT NULL,
+  `TO_USER` varchar(99) NOT NULL,
+  `EVENT` varchar(32) NOT NULL,
+  `REF` varchar(255) NOT NULL,
+  `TITLE` varchar(255) DEFAULT NULL,
+  `SITE_ID` varchar(99) DEFAULT NULL,
+  `URL` text NOT NULL,
+  `EVENT_DATE` datetime NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `bullhorn_user_type_i` (`TO_USER`,`ALERT_TYPE`)
+) ENGINE=InnoDB AUTO_INCREMENT=1238 DEFAULT CHARSET=utf8mb4
 
 -- SAK-32417 Forums permission composite index
 ALTER TABLE MFR_PERMISSION_LEVEL_T ADD INDEX MFR_COMPOSITE_PERM (TYPE_UUID, NAME);
