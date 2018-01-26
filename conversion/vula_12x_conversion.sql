@@ -1,4 +1,5 @@
 -- UCT Vula 12.x db conversion script: 11.x to 12.0
+-- Source: https://github.com/sakaiproject/sakai-reference/blob/master/docs/conversion/sakai_12_mysql_conversion.sql
 
 SET @uct_start = NOW();
 SELECT @uct_start as 'Start';
@@ -485,6 +486,9 @@ WHERE REGISTRATION = 'sakai.iframe.myworkspace';
 
 -- VULA-3087: Remove chat messages that have been deleted so the new foreign__key contstraint works
 delete from CHAT2_MESSAGE where CHANNEL_ID NOT IN (select distinct CHANNEL_ID FROM CHAT2_CHANNEL);
+
+-- SAK-33869 / VULA-3123 Clean up assignments with no context (siteid)
+DELETE FROM ASSIGNMENT_ASSIGNMENT WHERE CONTEXT IS NULL;
 
 -- UCT ad-hoc
 
