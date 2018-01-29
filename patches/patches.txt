@@ -23,7 +23,9 @@ p0 VULA-3048_Assignment_en_GB.diff "VULA-3048 Assignment en_GB"
 p1 VULA-3101-choice_vm-change-header.diff "VULA-3101 Change choice.vm to better heading"
 p0 VULA-3110-ldap-authonly.diff "VULA-3110 Do LDAP auth only, disable lookup"
 p1 VULA-3101-change-profile-link-position.diff "VULA-3101 Change profile link location"
-p1 VULA-3101-changed-footer.diff "VULA-3101 Change footer to display version information“
+p1 VULA-3101-changed-footer.diff "VULA-3101 Change footer to display version information"
+p1 5250.diff "SAK-33869 VULA-3123 Assignment migration"
+p0 VULA-3123-asn-migration-limits.diff "Set asn migration limits"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
