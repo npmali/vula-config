@@ -17,7 +17,7 @@ diff -ur '--exclude=target' '--exclude=*properties*' assignment/impl/src/java/or
 +        XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
 +
 +        xmlInputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTES_PER_ELEMENT, 8000);
-+        xmlInputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, 2097152);
++        xmlInputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, 4500000);
 +
 +        xmlMapper = new XmlMapper(xmlInputFactory);
          xmlMapper.registerModule(new Jdk8Module());
