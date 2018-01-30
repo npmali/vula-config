@@ -490,6 +490,9 @@ delete from CHAT2_MESSAGE where CHANNEL_ID NOT IN (select distinct CHANNEL_ID FR
 -- SAK-33869 / VULA-3123 Clean up assignments with no context (siteid)
 DELETE FROM ASSIGNMENT_ASSIGNMENT WHERE CONTEXT IS NULL;
 
+-- VULA-3123 Remove assignments with no content (drafts, incomplete, approx 18 of these)
+DELETE FROM ASSIGNMENT_ASSIGNMENT where XML LIKE '%assignmentcontent=""%';
+
 -- UCT ad-hoc
 
 SET @uct_end = NOW();
