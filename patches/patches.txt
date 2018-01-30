@@ -24,6 +24,7 @@ p1 VULA-3101-choice_vm-change-header.diff "VULA-3101 Change choice.vm to better 
 p0 VULA-3110-ldap-authonly.diff "VULA-3110 Do LDAP auth only, disable lookup"
 p1 VULA-3101-change-profile-link-position.diff "VULA-3101 Change profile link location"
 p1 VULA-3101-changed-footer.diff "VULA-3101 Change footer to display version information"
+p1 VULA-3101-add-password-change-and-peoplesoft.diff "VULA-3101 Add Password changing and PeopleSoft URLs to profile drop-down" 
 p1 5250.diff "SAK-33869 VULA-3123 Assignment migration"
 p0 VULA-3123-asn-migration-limits.diff "Set asn migration limits"
 #### 
