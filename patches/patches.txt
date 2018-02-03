@@ -15,7 +15,6 @@ p0 VULA-2557-sitestats-labels.diff "Sitestats labels"
 p0 VULA-2501-eb-section-groups.diff "Allow EB groups provider to adjust section membership"
 p0 VULA-2846-motd.diff "Hide Options on MOTD"
 p0 VULA-2838-profile-pic.diff "Make sure profile pic updates on portal"
-p0 BW-158-tests.diff "Disable unit tests"
 p0 VULA-2894-site-manage-group-helper.diff "site group manager fix"
 p0 SAK-32322-mailarchive-attachments.diff "Email Archive attachments fix (workaround)"
 p0 VULA-3023-lti-page-reload.diff "VULA-3023 listen for lti tool page refresh requests"
@@ -28,6 +27,8 @@ p1 VULA-3101-add-password-change-and-peoplesoft.diff "VULA-3101 Add Password cha
 p1 5250.diff "SAK-33869 VULA-3123 Assignment migration"
 p0 VULA-3123-asn-migration-limits.diff "Set asn migration limits"
 p1 VULA-3050-honorpledge.diff "VULA-3050 honorpledge"
+p1 5265.diff "SAK-33868 VULA-3120 GB fix"
+p1 5266.diff "SAK-33867 VULA-3120 GB fix"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
