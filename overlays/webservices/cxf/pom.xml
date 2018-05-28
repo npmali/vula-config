@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <cxf.version>3.1.7</cxf.version>
+        <cxf.version>3.1.14</cxf.version>
     </properties>
 
     <dependencies>
@@ -136,15 +136,7 @@
         <!-- UCT -->
         <dependency>
                 <groupId>org.sakaiproject.common</groupId>
-                <artifactId>sakai-common-edu-person-api</artifactId>
-        </dependency>
-        <dependency>
-                <groupId>org.sakaiproject.common</groupId>
-                <artifactId>sakai-common-type-api</artifactId>
-        </dependency>
-        <dependency>
-                <groupId>org.sakaiproject.common</groupId>
-                <artifactId>sakai-common-manager-api</artifactId>
+                <artifactId>sakai-common-api</artifactId>
         </dependency>
 
         <!--  external dependencies -->
