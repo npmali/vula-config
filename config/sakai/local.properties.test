@@ -21,7 +21,7 @@ smtpFrom@org.sakaiproject.email.api.EmailService=bounces@devslscle001.uct.ac.za
 portal.error.email=help@devslscle001.uct.ac.za
 
 log.config.count = 1
-log.config.1=DEBUG.org.sakaiproject.tool.assessment
+log.config.1=DEBUG.edu.amc
 
 # enable hibernate SQL debugging output
 #hibernate.show_sql=true

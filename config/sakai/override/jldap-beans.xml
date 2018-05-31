@@ -12,7 +12,7 @@
 		
 		<!-- Required. Host name or address of your LDAP server -->
 		<property name="ldapHost">
-			<value>MSLDAP.wf.uct.ac.za</value>
+			<value>MSLDAP.uct.ac.za</value>
 		</property>
 
 		<!-- Optional. LDAP connection port. Typically defaults to 
@@ -70,15 +70,15 @@
 
 		<!-- Optional, but usually specified. Base DN for directory searches. -->
 		<property name="basePath">
-			<value>ou=uct,dc=wf,dc=uct,dc=ac,dc=za</value>
+			<value>OU=UCT,dc=wf,dc=uct,dc=ac,dc=za</value>
 		</property>
 
 		<!-- Optional. Indicate if connections should follow
 			referrals. Defaults to  
 			JLDAPDirectoryProvider.DEFAULT_IS_FOLLOW_REFERRALS (false)-->
-		<!-- property name="followReferrals">
-			<value>false</value>
-		</property -->
+		<property name="followReferrals">
+			<value>true</value>
+		</property>
 
 		<!-- Optional. LDAP operation timeout in millis. Defaults 
 			to JLDAPDirectoryProvider.DEFAULT_OPERATION_TIMEOUT_MILLIS (5000) -->
