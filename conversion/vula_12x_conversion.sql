@@ -31,7 +31,31 @@ CREATE TABLE IF NOT EXISTS CONTENTREVIEW_ITEM (
 );
 -- END SAK-30207
 
--- 
+-- SAK-33723 Content review item properties
+CREATE TABLE CONTENTREVIEW_ITEM_PROPERTIES (
+  CONTENTREVIEW_ITEM_ID bigint(20) NOT NULL,
+  VALUE varchar(255) DEFAULT NULL,
+  PROPERTY varchar(255) NOT NULL,
+  PRIMARY KEY (CONTENTREVIEW_ITEM_ID,PROPERTY),
+  CONSTRAINT FOREIGN KEY (CONTENTREVIEW_ITEM_ID) REFERENCES CONTENTREVIEW_ITEM (id)
+);
+
+-- CONTENTREVIEW_ITEM.PROVIDERID
+-- Possible Provider Ids
+-- Compilatio = 1372282923
+-- Turnitin = 199481773
+-- VeriCite = 1930781763
+-- Urkund = 1752904483
+
+-- *** IMPORTANT ***
+-- If you have used CONTENT REVIEW previously then you may need to run the following:
+-- ALTER TABLE CONTENTREVIEW_ITEM ADD COLUMN PROVIDERID INT NOT NULL;
+-- If you have used multiple content review implementations then you will need to update the correct providerid with the matching content review items
+-- Example where only Turnitin was configured:
+-- UPDATE CONTENTREVIEW_ITEM SET PROVIDERID = 199481773;
+
+-- END SAK-33723
+
 -- SAK-31641 Switch from INTs to VARCHARs in Oauth
 select 'SAK-31641' as 'On';
 
@@ -201,6 +225,9 @@ CREATE TABLE IF NOT EXISTS `tagservice_tag` (
 
 -- KNL-1566
 ALTER TABLE SAKAI_USER CHANGE MODIFIEDON MODIFIEDON DATETIME NOT NULL;
+ALTER TABLE SAKAI_USER CHANGE CREATEDON CREATEDON DATETIME NOT NULL;
+
+
 
 INSERT IGNORE INTO SAKAI_REALM_FUNCTION (FUNCTION_NAME) VALUES ('tagservice.manage');
 -- END SAK-32083 TAGS
@@ -212,6 +239,7 @@ VALUES (0, 0, 'GradePointsMapping', 'Grade Points', 0);
 
 -- add the grade ordering
 select '3432 - grade' as 'On';
+
 INSERT INTO GB_GRADING_SCALE_GRADES_T (grading_scale_id, letter_grade, grade_idx)
 VALUES(
 (SELECT id FROM GB_GRADING_SCALE_T WHERE scale_uid = 'GradePointsMapping')
@@ -263,7 +291,7 @@ VALUES(
 , 'F (0)', 9);
 
 -- add the percent mapping
-select '3432 - precent' as 'On';
+select '3432 - percent' as 'On'
 INSERT INTO GB_GRADING_SCALE_PERCENTS_T (grading_scale_id, percent, letter_grade)
 VALUES(
 (SELECT id FROM GB_GRADING_SCALE_T WHERE scale_uid = 'GradePointsMapping')
@@ -333,31 +361,59 @@ ALTER TABLE SAM_QUESTIONPOOL_T MODIFY DESCRIPTION longtext;
 -- SAK-30461 Portal bullhorns
 -- added extra index SAK-33858
 
- CREATE TABLE `BULLHORN_ALERTS` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ALERT_TYPE` varchar(8) NOT NULL,
-  `FROM_USER` varchar(99) NOT NULL,
-  `TO_USER` varchar(99) NOT NULL,
-  `EVENT` varchar(32) NOT NULL,
-  `REF` varchar(255) NOT NULL,
-  `TITLE` varchar(255) DEFAULT NULL,
-  `SITE_ID` varchar(99) DEFAULT NULL,
-  `URL` text NOT NULL,
-  `EVENT_DATE` datetime NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `bullhorn_user_type_i` (`TO_USER`,`ALERT_TYPE`)
-) ENGINE=InnoDB AUTO_INCREMENT=1238 DEFAULT CHARSET=utf8mb4
+select 'SAK-30461' as 'On';
+CREATE TABLE BULLHORN_ALERTS
+(
+    ID bigint NOT NULL AUTO_INCREMENT,
+    ALERT_TYPE varchar(8) NOT NULL,
+    FROM_USER varchar(99) NOT NULL,
+    TO_USER varchar(99) NOT NULL,
+    EVENT varchar(32) NOT NULL,
+    REF varchar(255) NOT NULL,
+    TITLE varchar(255),
+    SITE_ID varchar(99),
+    URL TEXT NOT NULL,
+    EVENT_DATE datetime NOT NULL,
+    PRIMARY KEY(ID)
+);
 
 -- SAK-32417 Forums permission composite index
+select 'SAK-32417' as 'On';
 ALTER TABLE MFR_PERMISSION_LEVEL_T ADD INDEX MFR_COMPOSITE_PERM (TYPE_UUID, NAME);
 
 -- SAK-32442 - LTI Column cleanup
 -- These conversions may fail if you started Sakai at newer versions that didn't contain these columns/tables
 select 'SAK-32442' as 'On';
+set @exist_Check := (
+    select count(*) from information_schema.columns
+    where TABLE_NAME='lti_tools'
+    and COLUMN_NAME='enabled_capability'
+    and TABLE_SCHEMA=database()
+) ;
+set @sqlstmt := if(@exist_Check>0,'alter table lti_tools drop column enabled_capability', 'select ''''') ;
+prepare stmt from @sqlstmt ;
+execute stmt;
 
-alter table lti_tools drop column enabled_capability;
-alter table lti_deploy drop column allowlori;
-alter table lti_tools drop column allowlori;
+set @exist_Check := (
+    select count(*) from information_schema.columns
+    where TABLE_NAME='lti_tools'
+    and COLUMN_NAME='allowlori'
+    and TABLE_SCHEMA=database()
+) ;
+set @sqlstmt := if(@exist_Check>0,'alter table lti_tools drop column allowlori', 'select ''''') ;
+prepare stmt from @sqlstmt ;
+execute stmt;
+
+set @exist_Check := (
+    select count(*) from information_schema.columns
+    where TABLE_NAME='lti_deploy'
+    and COLUMN_NAME='allowlori'
+    and TABLE_SCHEMA=database()
+) ;
+set @sqlstmt := if(@exist_Check>0,'alter table lti_deploy drop column allowlori', 'select ''''') ;
+prepare stmt from @sqlstmt ;
+execute stmt;
+
 drop table lti_mapping;
 -- END SAK-32442
 
