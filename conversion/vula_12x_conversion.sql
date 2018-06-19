@@ -829,9 +829,13 @@ drop table IF EXISTS SITEASSOC_CONTEXT_ASSOCIATION;
 -- KNL-945 Hibernate changes
 select 'KNL-945' as 'On';
 ALTER TABLE CHAT2_MESSAGE
-    DROP FOREIGN KEY FK720F9882555E0B79,
+    DROP KEY FK720F9882555E0B79,
     MODIFY CHANNEL_ID varchar(128),
     MODIFY MESSAGE_ID varchar(128);
+
+-- VULA-3087: Remove chat messages that have been deleted so the new foreign__key contstraint works
+delete from CHAT2_MESSAGE where CHANNEL_ID NOT IN (select distinct CHANNEL_ID FROM CHAT2_CHANNEL);
+
 ALTER TABLE CHAT2_CHANNEL MODIFY CHANNEL_ID varchar(128);
 ALTER TABLE CHAT2_MESSAGE ADD CONSTRAINT FK720F9882555E0B79 FOREIGN KEY (CHANNEL_ID) REFERENCES CHAT2_CHANNEL(CHANNEL_ID);
 
@@ -849,9 +853,6 @@ ALTER TABLE SAKAI_CONFIG_ITEM MODIFY VALUE varchar(3000);
 -- END KNL-1484
 
 -- UCT ========================================
-
--- VULA-3087: Remove chat messages that have been deleted so the new foreign__key contstraint works
-delete from CHAT2_MESSAGE where CHANNEL_ID NOT IN (select distinct CHANNEL_ID FROM CHAT2_CHANNEL);
 
 -- SAK-33869 / VULA-3123 Clean up assignments with no context (siteid)
 DELETE FROM ASSIGNMENT_ASSIGNMENT WHERE CONTEXT IS NULL;
