@@ -1,0 +1,30 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/assignment/impl/src/java/org/sakaiproject/assignment/impl/conversion/AssignmentConversionServiceImpl.java	2018-05-28 13:18:27.669333481 +0200
++++ assignment/impl/src/java/org/sakaiproject/assignment/impl/conversion/AssignmentConversionServiceImpl.java	2018-06-18 16:59:52.899341989 +0200
+@@ -440,6 +440,7 @@
+                 s.setGroupId(submission.getSubmitterid());
+             } else {
+                 // the submitterid must not be blank for a group submission
++		log.warn("submitterid '{}' is not a group for group submission: context {} submission {}", submission.getSubmitterid(), assignment.getContext(), submission.getId());
+                 return null;
+             }
+ 
+@@ -503,7 +504,10 @@
+             if (StringUtils.isBlank(submitterId)) {
+                 submitterId = (String) submissionAny.get("submitter0");
+                 // don't create a AssignmentSubmissionSubmitter with a null submitter
+-                if (StringUtils.isBlank(submitterId)) return null;
++                if (StringUtils.isBlank(submitterId)) {
++			log.warn("submitter0 is missing or empty for non-group assignment: context {} submission {}", assignment.getContext(), submission.getId());
++			return null;
++		}
+             }
+             submitter.setSubmitter(submitterId);
+             submitter.setSubmittee(true);
+@@ -513,6 +517,7 @@
+         }
+         if (s.getSubmitters().isEmpty()) {
+             // every submission must have at least one submitter
++            log.warn("List of submitters is empty: context {} submission {}", assignment.getContext(), submission.getId());
+             return null;
+         }
+ 

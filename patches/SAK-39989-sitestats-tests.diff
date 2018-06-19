@@ -1,0 +1,18 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/sitestats/sitestats-impl/pom.xml	2018-05-28 13:18:28.221336368 +0200
++++ sitestats/sitestats-impl/pom.xml	2018-05-31 11:53:23.014316221 +0200
+@@ -225,5 +225,15 @@
+                 <directory>src/test</directory>
+             </testResource>
+         </testResources>
++  <plugins>
++      <plugin>
++        <groupId>org.apache.maven.plugins</groupId>
++        <artifactId>maven-surefire-plugin</artifactId>
++        <version>2.12.4</version>
++        <configuration>
++          <skipTests>true</skipTests>
++        </configuration>
++      </plugin>
++    </plugins>
+     </build>
+ </project>
