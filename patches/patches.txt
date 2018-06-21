@@ -29,6 +29,8 @@ p0 SAK-39989-sitestats-tests.diff "Disable sitestats tests"
 p1 VULA-3205-show-profilewow-profile-image.diff "VULA-3205 Display the correct profile image"
 p0 VULA-3115-wiris.diff "WIRIS"
 p0 VULA-3185-turnitin-oldsites.diff "Turnitin do not submit from old course sites"
+p1 VULA-3210-commons-tool-send-through-eid.diff "Send through Eid to commons templates"
+p1 VULA-3210-commons-tool-profile-image.diff "USe correct profile image in commons tool"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####

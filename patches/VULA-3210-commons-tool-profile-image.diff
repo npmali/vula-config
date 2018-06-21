@@ -1,0 +1,46 @@
+diff --git a/commons/tool/src/webapp/WEB-INF/templates/comment.hbs b/commons/tool/src/webapp/WEB-INF/templates/comment.hbs
+index 5450a70..effbfa3 100644
+--- a/commons/tool/src/webapp/WEB-INF/templates/comment.hbs
++++ b/commons/tool/src/webapp/WEB-INF/templates/comment.hbs
+@@ -1,4 +1,4 @@
+-<div class="commons-comment-photo" style="background-image:url(/direct/profile/{{creatorId}}/image/thumb)"></div>
++<div class="commons-comment-photo" style="background-image:url(/direct/profileClassic/{{creatorId}}/image/thumb)"></div>
+ <div class="commons-comment-body">
+     <span id="commons-comment-author-name-{{id}}"><a id="commons-author-name-{{id}}" href="javascript:;" class="commons-comment-author-name">{{creatorDisplayName}}</a></span>
+     <span id="commons-comment-content-{{id}}" class="commons-comment-content">{{{content}}}</span>
+diff --git a/commons/tool/src/webapp/WEB-INF/templates/inplace_comment_editor.hbs b/commons/tool/src/webapp/WEB-INF/templates/inplace_comment_editor.hbs
+index bc32a35..07ae190 100644
+--- a/commons/tool/src/webapp/WEB-INF/templates/inplace_comment_editor.hbs
++++ b/commons/tool/src/webapp/WEB-INF/templates/inplace_comment_editor.hbs
+@@ -1,4 +1,4 @@
+-<div class="commons-photo commons-comment-photo" style="background-image:url(/direct/profile/{{#if currentUserId}}{{currentUserId}}{{else}}{{creatorId}}{{/if}}/image/thumb)"></div>
++<div class="commons-photo commons-comment-photo" style="background-image:url(/direct/profileClassic/{{#if currentUserId}}{{currentUserEidd}}{{else}}{{creatorId}}{{/if}}/image/thumb)"></div>
+ <div class="commons-editor-text-wrapper">
+     <div class="commons-editor-text commons-comment-editor-text" data-post-id="{{id}}"><textarea id="commons-comment-textarea-{{id}}" class="commons-comment-textarea" data-post-id="{{id}}"></textarea></div>
+     <div id="commons-comment-post-buttons-{{id}}">
+diff --git a/commons/tool/src/webapp/WEB-INF/templates/post.hbs b/commons/tool/src/webapp/WEB-INF/templates/post.hbs
+index 488800d..320af90 100644
+--- a/commons/tool/src/webapp/WEB-INF/templates/post.hbs
++++ b/commons/tool/src/webapp/WEB-INF/templates/post.hbs
+@@ -2,7 +2,7 @@
+ 
+     <div class="commons-post-inner-container">
+ 
+-        <div class="commons-photo" style="background-image:url(/direct/profile/{{creatorId}}/image/thumb)"></div>
++        <div class="commons-photo" style="background-image:url(/direct/profileClassic/{{creatorId}}/image/thumb)"></div>
+         <div class="commons-post-text-container">
+             <div class="commons-post-body">
+                 <div class="commons-post-content"><a id="commons-author-name-{{id}}" class="commons-post-author-name" href="javascript:;">{{creatorDisplayName}}</a><span id="commons-post-content-{{id}}">{{{content}}}<span></div>
+diff --git a/commons/tool/src/webapp/WEB-INF/templates/posts.hbs b/commons/tool/src/webapp/WEB-INF/templates/posts.hbs
+index b7c1644..3848615 100644
+--- a/commons/tool/src/webapp/WEB-INF/templates/posts.hbs
++++ b/commons/tool/src/webapp/WEB-INF/templates/posts.hbs
+@@ -1,6 +1,6 @@
+     <div class="commons-post-editor">
+         <div class="commons-photo-text-wrapper">
+-            <div class="commons-photo" style="background-image:url(/direct/profile/{{currentUserId}}/image/thumb)"></div>
++            <div class="commons-photo" style="background-image:url(/direct/profileClassic/{{currentUserEid}}/image/thumb)"></div>
+             <div class="commons-editor-text-wrapper">
+                 <div class="commons-editor-text"><div id="commons-post-creator-editor" contenteditable="true">{{tr 'commons' 'post_editor_initial_text'}}</div></div>
+             </div>
+

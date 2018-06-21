@@ -1,0 +1,49 @@
+diff --git a/commons/tool/src/java/org/sakaiproject/commons/tool/CommonsTool.java b/commons/tool/src/java/org/sakaiproject/commons/tool/CommonsTool.java
+index 4e69444..2c0dec3 100644
+--- a/commons/tool/src/java/org/sakaiproject/commons/tool/CommonsTool.java
++++ b/commons/tool/src/java/org/sakaiproject/commons/tool/CommonsTool.java
+@@ -63,9 +63,11 @@ public class CommonsTool extends HttpServlet {
+         log.debug("doGet()");
+ 
+         String userId = null;
++        String userEid = null;
+         Session session = (Session) request.getAttribute(RequestFilter.ATTR_SESSION);
+         if (session != null) {
+             userId = session.getUserId();
++            userEid = session.getUserEid();
+         } else {
+             throw new ServletException("Not logged in.");
+         }
+@@ -105,6 +107,7 @@ public class CommonsTool extends HttpServlet {
+         request.setAttribute("sakaiHtmlHead", (String) request.getAttribute("sakai.html.head"));
+         request.setAttribute("isolanguage", language);
+         request.setAttribute("userId", userId);
++        request.setAttribute("userEid", userEid);
+         String siteId = sakaiProxy.getCurrentSiteId();
+         request.setAttribute("siteId", siteId);
+         boolean isUserSite = sakaiProxy.isUserSite(siteId);
+diff --git a/commons/tool/src/webapp/WEB-INF/bootstrap.jsp b/commons/tool/src/webapp/WEB-INF/bootstrap.jsp
+index 5a43799..7ac7b22 100644
+--- a/commons/tool/src/webapp/WEB-INF/bootstrap.jsp
++++ b/commons/tool/src/webapp/WEB-INF/bootstrap.jsp
+@@ -15,6 +15,7 @@
+                 siteId: '${siteId}',
+                 embedder: '${embedder}',
+                 userId: '${userId}',
++                userEid: '${userEid}',
+                 isUserSite: ${isUserSite},
+                 postId: '${postId}'
+             };
+diff --git a/commons/tool/src/webapp/js/commons.js b/commons/tool/src/webapp/js/commons.js
+index 67bc9a4..a2deff9 100644
+--- a/commons/tool/src/webapp/js/commons.js
++++ b/commons/tool/src/webapp/js/commons.js
+@@ -38,6 +38,7 @@ commons.switchState = function (state, arg) {
+ 
+         var templateData = {
+                 currentUserId: commons.userId,
++                currentUserEid: commons.userEid,
+                 isUserSite: commons.isUserSite
+             };
+ 
+
