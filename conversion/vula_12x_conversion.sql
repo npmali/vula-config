@@ -860,6 +860,9 @@ DELETE FROM ASSIGNMENT_ASSIGNMENT WHERE CONTEXT IS NULL;
 -- VULA-3123 Remove assignments with no content (drafts, incomplete, approx 18 of these)
 DELETE FROM ASSIGNMENT_ASSIGNMENT where XML LIKE '%assignmentcontent=""%';
 
+-- VULA-3124
+update SAM_ASSESSMENTGRADING_T set HASAUTOSUBMISSIONRUN=1;
+
 -- UCT ad-hoc
 
 SET @uct_end = NOW();
