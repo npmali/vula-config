@@ -27,6 +27,7 @@ p1 VULA-3101-add-password-change-and-peoplesoft.diff "VULA-3101 Add Password cha
 p0 VULA-3123-logging.diff "Assignments conversion logging"
 p0 SAK-39989-sitestats-tests.diff "Disable sitestats tests"
 p1 VULA-3205-show-profilewow-profile-image.diff "VULA-3205 Display the correct profile image"
+p0 VULA-3115-wiris.diff "WIRIS"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####

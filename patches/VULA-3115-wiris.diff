@@ -1,0 +1,34 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/library/pom.xml library/pom.xml
+--- /usr/local/src/vula_src/branches/vula-12.x/library/pom.xml	2018-06-18 13:02:51.025626188 +0200
++++ library/pom.xml	2018-06-21 10:31:58.079671729 +0200
+@@ -18,7 +18,7 @@
+ 		<bootstrap-version>3.3.7</bootstrap-version>
+ 		<font-awesome-version>4.7.0</font-awesome-version>
+ 		<!-- Default extra plugins enabled, currently autosave disabled via SAK-33362 -->
+-		<ckeditor-extra-plugins>sakaipreview,image2,audiorecorder,contentitem,movieplayer,wordcount,notification,autosave</ckeditor-extra-plugins>
++		<ckeditor-extra-plugins>sakaipreview,image2,audiorecorder,contentitem,movieplayer,wordcount,notification,autosave,ckeditor_wiris</ckeditor-extra-plugins>
+ 		<!-- Empty defaults for a11y-->
+ 		<ckeditor-a11y-extra-plugins></ckeditor-a11y-extra-plugins>
+ 	</properties>
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/library/src/webapp-filtered/editor/ckeditor.launch.js library/src/webapp-filtered/editor/ckeditor.launch.js
+--- /usr/local/src/vula_src/branches/vula-12.x/library/src/webapp-filtered/editor/ckeditor.launch.js	2018-05-28 13:18:28.013335281 +0200
++++ library/src/webapp-filtered/editor/ckeditor.launch.js	2018-06-21 11:03:48.257793144 +0200
+@@ -180,7 +180,8 @@
+             '/',
+             ['Styles','Format','Font','FontSize'],
+             ['TextColor','BGColor'],
+-            ['Maximize', 'ShowBlocks']
++            ['Maximize', 'ShowBlocks'],
++            ['ckeditor_wiris_formulaEditor']
+             ,['A11ychecker']
+         ],
+         toolbar: 'Full',
+@@ -266,6 +267,8 @@
+            Hopefully this will get easier to configure soon.
+          */
+         CKEDITOR.plugins.addExternal('atd-ckeditor',basePath+'atd-ckeditor/', 'plugin.js'); 
++
++        CKEDITOR.plugins.addExternal('ckeditor_wiris',basePath+'ckeditor_wiris/', 'plugin.js');
+         /*
+            Replace this with your own server if you download it from http://openatd.wordpress.com/
+            Or you can proxy to the public one, see the page for more information.
