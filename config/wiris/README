@@ -4,3 +4,6 @@ It is not deployed live from this location, and is here for reference. To recrea
 
 jar -cvf pluginwiris_engine.war *
 
+plugin-location.diff is used to patch plugin.js in the WIRIS ckeditor plugin to fix an issue with URLs
+
+Separate patches for library pom.xml and ckeditor.launch.js

@@ -1,0 +1,11 @@
+--- /usr/local/src/vula-12.x/distfiles/ckeditor_wiris/plugin.js	2018-06-04 09:09:08.000000000 +0200
++++ plugin.js	2018-06-21 11:32:05.742724678 +0200
+@@ -7,7 +7,7 @@
+ var _wrs_cont_contextPath;
+ 
+ // Mounting route depending if plugin is a core or it's a drupal module
+-var wrs_int_ckeditorPluginPath = CKEDITOR.plugins.getPath('ckeditor_wiris');
++var wrs_int_ckeditorPluginPath = location.origin + CKEDITOR.plugins.getPath('ckeditor_wiris');
+ 
+ if (CKEDITOR.plugins.externals.hasOwnProperty('ckeditor_wiris')) {
+     if (_wrs_int_conf_file.indexOf('/') == 0) {
