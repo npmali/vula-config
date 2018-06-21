@@ -1,0 +1,76 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/content-review/impl/turnitin/src/main/java/org/sakaiproject/contentreview/turnitin/TurnitinReviewServiceImpl.java content-review/impl/turnitin/src/main/java/org/sakaiproject/contentreview/turnitin/TurnitinReviewServiceImpl.java
+--- /usr/local/src/vula_src/branches/vula-12.x/content-review/impl/turnitin/src/main/java/org/sakaiproject/contentreview/turnitin/TurnitinReviewServiceImpl.java	2018-05-28 13:18:27.733333815 +0200
++++ content-review/impl/turnitin/src/main/java/org/sakaiproject/contentreview/turnitin/TurnitinReviewServiceImpl.java	2018-06-21 13:22:51.592234208 +0200
+@@ -1310,6 +1310,56 @@
+ 
+ 	}
+ 
++	/**
++         * Allow Turnitin for this site?
++         */
++        private boolean isSiteActive(String siteId) {
++
++		Site s = null;
++
++		try {
++	                s = siteService.getSite(siteId);
++		} catch (IdUnusedException iue) {
++			return false;
++		}
++
++                if (s == null) {
++                        return false;
++                }
++
++                log.debug("isSiteActive: " + s.getId() + " / " + s.getTitle());
++
++                // Check site property
++                ResourceProperties properties = s.getProperties();
++
++                String prop = (String) properties.get(TURNITIN_SITE_PROPERTY);
++                if (prop != null) {
++                        log.debug("Checking site property: " + prop);
++			if (!Boolean.parseBoolean(prop))
++				return false;
++                }
++
++                // Check list of allowed site types, if defined
++                if (enabledSiteTypes != null && !enabledSiteTypes.isEmpty()) {
++                        log.debug("Checking site type: " + s.getType());
++			if (!enabledSiteTypes.contains(s.getType()))
++				return false;
++                }
++
++		// If a course type, check term
++		if ("course".equals(s.getType())) {
++			String term = (String) properties.get("term");
++			log.debug("Checking course site term: " + term);
++			if (!"2018".equals(term)) {
++				log.debug("Course is inactive: disallowing further Turnitin submissions");
++				return false;
++			}
++		}
++
++                // No property set, no restriction on site types, so allow
++                return true;
++        }
++
+ 	/*
+ 	 * Get the next item that needs to be submitted
+ 	 *
+@@ -1331,6 +1381,15 @@
+ 			log.debug("Attempting to submit content: " + item.getContentId() + " for user: "
+ 					+ item.getUserId() + " and site: " + item.getSiteId());
+ 
++			String siteId = item.getSiteId();
++			if (!isSiteActive(siteId)) {
++				log.error("Site " + siteId + " is not active: not submitting to Turnitin");
++				item.setStatus(ContentReviewConstants.CONTENT_REVIEW_SUBMISSION_ERROR_NO_RETRY_CODE);
++				crqs.update(item);
++				errors++;
++				continue;
++			}
++
+ 			if (item.getRetryCount() == null) {
+ 				item.setRetryCount(Long.valueOf(0));
+ 				item.setNextRetryTime(this.getNextRetryTime(0));
