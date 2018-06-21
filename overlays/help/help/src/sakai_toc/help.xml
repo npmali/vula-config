@@ -1802,6 +1802,20 @@
       <value>sakai.singleuser</value>
     </property>
   </bean>
+  <bean id="whatisWorksiteSetup" class="org.sakaiproject.component.app.help.model.ResourceBean">
+    <property name="docId">
+      <value>whatisWorksiteSetup</value>
+    </property>
+    <property name="name">
+      <value>What is Worksite Setup?</value>
+    </property>
+    <property name="location">
+      <value>/sakai_screensteps_worksiteSetupAdministratorGuide/whatisWorksiteSetup.html</value>
+    </property>
+    <property name="defaultForTool">
+      <value>sakai.sitesetup</value>
+    </property>
+  </bean>
   <bean id="whatisthePreferencestool" class="org.sakaiproject.component.app.help.model.ResourceBean">
     <property name="docId">
       <value>whatisthePreferencestool</value>
@@ -2544,6 +2558,31 @@
         <ref bean="whatarePermissionsandRoles"/>
         <ref bean="howdoIchangeparticipantroleswithinasite"/>
       </list>
+    </property>
+  </bean>
+  <bean id="whatarePermissionsandRoles" class="org.sakaiproject.component.app.help.model.ResourceBean">
+    <property name="docId">
+      <value>whatarePermissionsandRoles</value>
+    </property>
+    <property name="name">
+      <value>What are Permissions and Roles?</value>
+    </property>
+    <property name="location">
+      <value>/sakai_screensteps_permissionsandRolesAdministratorGuide/whatarePermissionsandRoles.html</value>
+    </property>
+    <property name="defaultForTool">
+      <value>sakai.permissionsandRoles</value>
+    </property>
+  </bean>
+  <bean id="howdoIchangeparticipantroleswithinasite" class="org.sakaiproject.component.app.help.model.ResourceBean">
+    <property name="docId">
+      <value>howdoIchangeparticipantroleswithinasite</value>
+    </property>
+    <property name="name">
+      <value>How do I change participant roles within a site?</value>
+    </property>
+    <property name="location">
+      <value>/sakai_screensteps_permissionsandRolesAdministratorGuide/howdoIchangeparticipantroleswithinasite.html</value>
     </property>
   </bean>
   <bean id="podcastsUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
