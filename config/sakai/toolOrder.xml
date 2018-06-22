@@ -25,6 +25,7 @@
 		<tool id = "sakai.discussion" />
 		<tool id = "sakai.mailbox" />
 		<tool id = "sakai.chat" selected="true"/>
+		<tool id = "sakai.commons" />
 		<tool id = "sakai.dropbox" />
 		<tool id = "sakai.assignment.grades" selected="true" />
 		<tool id = "sakai.samigo" />
@@ -63,6 +64,7 @@
 		<tool id = "sakai.discussion" />
 		<tool id = "sakai.mailbox"  />
 		<tool id = "sakai.chat" selected="true" />
+		<tool id = "sakai.commons" />
 		<tool id = "sakai.dropbox" />
 		<tool id = "sakai.assignment.grades" />
 		<tool id = "sakai.samigo" />
