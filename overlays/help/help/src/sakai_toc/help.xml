@@ -24,10 +24,8 @@
         <ref bean="calendarUserGuide"/>
         <ref bean="chatUserGuide"/>
         <ref bean="commonsUserGuide"/>
-        <ref bean="contactUsUserGuide"/>
         <ref bean="courseandProjectSitesUserGuide"/>
         <ref bean="dropBoxUserGuide"/>
-        <ref bean="emailUserGuide"/>
         <ref bean="emailArchiveUserGuide"/>
         <ref bean="externalToolLTIUserGuide"/>
         <ref bean="forumsUserGuide"/>
@@ -39,12 +37,9 @@
         <ref bean="permissionsandRolesUserGuide"/>
         <ref bean="podcastsUserGuide"/>
         <ref bean="pollsUserGuide"/>
-        <ref bean="postEmUserGuide"/>
-        <ref bean="profileUserGuide"/>
+        <ref bean="postEmUserGuide"/> 
         <ref bean="resourcesUserGuide"/>
         <ref bean="richTextEditorUserGuide"/>
-        <ref bean="rosterUserGuide"/>
-        <ref bean="searchUserGuide"/>
         <ref bean="sectionInfoUserGuide"/>
         <ref bean="signUpUserGuide"/>
         <ref bean="siteInfoUserGuide"/>
@@ -860,42 +855,6 @@
       <value>/sakai_screensteps_commonsUserGuide/howdoIdeleteacommentreplyinCommons.html</value>
     </property>
   </bean>
-  <bean id="contactUsUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
-    <property name="name">
-      <value>Contact Us</value>
-    </property>
-    <property name="resources">
-      <list>
-        <ref bean="whatistheContactUstool"/>
-        <ref bean="howdoIusetheContactUstool"/>
-      </list>
-    </property>
-  </bean>
-  <bean id="whatistheContactUstool" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>whatistheContactUstool</value>
-    </property>
-    <property name="name">
-      <value>What is the Contact Us tool?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_contactUsUserGuide/whatistheContactUstool.html</value>
-    </property>
-    <property name="defaultForTool">
-      <value>sakai.feedback</value>
-    </property>
-  </bean>
-  <bean id="howdoIusetheContactUstool" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIusetheContactUstool</value>
-    </property>
-    <property name="name">
-      <value>How do I use the Contact Us tool?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_contactUsUserGuide/howdoIusetheContactUstool.html</value>
-    </property>
-  </bean>
   <bean id="courseandProjectSitesUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
     <property name="name">
       <value>Course and Project Sites</value>
@@ -1050,66 +1009,6 @@
     </property>
     <property name="location">
       <value>/sakai_screensteps_dropBoxUserGuide/howdoIdownloadmultiplefilesfromDropbox.html</value>
-    </property>
-  </bean>
-  <bean id="emailUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
-    <property name="name">
-      <value>Email</value>
-    </property>
-    <property name="resources">
-      <list>
-        <ref bean="whatistheEmailtool"/>
-        <ref bean="howdoIsendanEmailmessage"/>
-        <ref bean="howtoIsettheEmailtooloptionsformysite"/>
-        <ref bean="howdoIchangetheEmailtoolpermissions"/>
-      </list>
-    </property>
-  </bean>
-  <bean id="whatistheEmailtool" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>whatistheEmailtool</value>
-    </property>
-    <property name="name">
-      <value>What is the Email tool?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_emailUserGuide/whatistheEmailtool.html</value>
-    </property>
-    <property name="defaultForTool">
-      <value>sakai.mailsender</value>
-    </property>
-  </bean>
-  <bean id="howdoIsendanEmailmessage" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIsendanEmailmessage</value>
-    </property>
-    <property name="name">
-      <value>How do I send an Email message?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_emailUserGuide/howdoIsendanEmailmessage.html</value>
-    </property>
-  </bean>
-  <bean id="howtoIsettheEmailtooloptionsformysite" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howtoIsettheEmailtooloptionsformysite</value>
-    </property>
-    <property name="name">
-      <value>How to I set the Email tool options for my site?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_emailUserGuide/howtoIsettheEmailtooloptionsformysite.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIchangetheEmailtoolpermissions" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIchangetheEmailtoolpermissions</value>
-    </property>
-    <property name="name">
-      <value>How do I change the Email tool permissions?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_emailUserGuide/howdoIchangetheEmailtoolpermissions.html</value>
     </property>
   </bean>
   <bean id="emailArchiveUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
@@ -2897,126 +2796,6 @@
       <value>/sakai_screensteps_postEmUserGuide/howdoIdeleteaPostEmfeedbackitem.html</value>
     </property>
   </bean>
-  <bean id="profileUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
-    <property name="name">
-      <value>Profile</value>
-    </property>
-    <property name="resources">
-      <list>
-        <ref bean="whatistheProfiletool"/>
-        <ref bean="howdoIsetupmyprofile"/>
-        <ref bean="howdoIpostastatusmessagetomyprofile"/>
-        <ref bean="howdoIaddpicturestomyprofilepicturegallery"/>
-        <ref bean="howdoIsearchforandaddconnections"/>
-        <ref bean="howdoIacceptaconnectionrequest"/>
-        <ref bean="howdoIsendamessagetoaconnectioninProfile"/>
-        <ref bean="howdoIchangemyprivacysettings"/>
-        <ref bean="howdoIsetmynotificationandotherprofilepreferences"/>
-      </list>
-    </property>
-  </bean>
-  <bean id="whatistheProfiletool" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>whatistheProfiletool</value>
-    </property>
-    <property name="name">
-      <value>What is the Profile tool?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/whatistheProfiletool.html</value>
-    </property>
-    <property name="defaultForTool">
-      <value>sakai.profile2</value>
-    </property>
-  </bean>
-  <bean id="howdoIsetupmyprofile" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIsetupmyprofile</value>
-    </property>
-    <property name="name">
-      <value>How do I set up my profile?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIsetupmyprofile.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIpostastatusmessagetomyprofile" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIpostastatusmessagetomyprofile</value>
-    </property>
-    <property name="name">
-      <value>How do I post a status message to my profile?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIpostastatusmessagetomyprofile.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIaddpicturestomyprofilepicturegallery" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIaddpicturestomyprofilepicturegallery</value>
-    </property>
-    <property name="name">
-      <value>How do I add pictures to my profile picture gallery?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIaddpicturestomyprofilepicturegallery.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIsearchforandaddconnections" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIsearchforandaddconnections</value>
-    </property>
-    <property name="name">
-      <value>How do I search for and add connections?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIsearchforandaddconnections.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIacceptaconnectionrequest" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIacceptaconnectionrequest</value>
-    </property>
-    <property name="name">
-      <value>How do I accept a connection request?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIacceptaconnectionrequest.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIsendamessagetoaconnectioninProfile" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIsendamessagetoaconnectioninProfile</value>
-    </property>
-    <property name="name">
-      <value>How do I send a message to a connection in Profile?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIsendamessagetoaconnectioninProfile.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIchangemyprivacysettings" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIchangemyprivacysettings</value>
-    </property>
-    <property name="name">
-      <value>How do I change my privacy settings?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIchangemyprivacysettings.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIsetmynotificationandotherprofilepreferences" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIsetmynotificationandotherprofilepreferences</value>
-    </property>
-    <property name="name">
-      <value>How do I set my notification and other profile preferences?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_profileUserGuide/howdoIsetmynotificationandotherprofilepreferences.html</value>
-    </property>
-  </bean>
   <bean id="resourcesUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
     <property name="name">
       <value>Resources</value>
@@ -3603,138 +3382,6 @@
     </property>
     <property name="location">
       <value>/sakai_screensteps_richTextEditorUserGuide/howdoIsetmypreferencefortheRichTextEditormode.html</value>
-    </property>
-  </bean>
-  <bean id="rosterUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
-    <property name="name">
-      <value>Roster</value>
-    </property>
-    <property name="resources">
-      <list>
-        <ref bean="whatistheRostertool"/>
-        <ref bean="howdoIviewsearchtheroster"/>
-        <ref bean="howdoIexporttheroster"/>
-        <ref bean="howdoIviewrosterphotosandorprofiles"/>
-        <ref bean="howdoIeditRostertoolpermissions"/>
-      </list>
-    </property>
-  </bean>
-  <bean id="whatistheRostertool" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>whatistheRostertool</value>
-    </property>
-    <property name="name">
-      <value>What is the Roster tool?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_rosterUserGuide/whatistheRostertool.html</value>
-    </property>
-    <property name="defaultForTool">
-      <value>sakai.site.roster2</value>
-    </property>
-  </bean>
-  <bean id="howdoIviewsearchtheroster" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIviewsearchtheroster</value>
-    </property>
-    <property name="name">
-      <value>How do I view/search the roster?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_rosterUserGuide/howdoIviewsearchtheroster.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIexporttheroster" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIexporttheroster</value>
-    </property>
-    <property name="name">
-      <value>How do I export the roster?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_rosterUserGuide/howdoIexporttheroster.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIviewrosterphotosandorprofiles" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIviewrosterphotosandorprofiles</value>
-    </property>
-    <property name="name">
-      <value>How do I view roster photos and/or profiles?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_rosterUserGuide/howdoIviewrosterphotosandorprofiles.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIeditRostertoolpermissions" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIeditRostertoolpermissions</value>
-    </property>
-    <property name="name">
-      <value>How do I edit Roster tool permissions?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_rosterUserGuide/howdoIeditRostertoolpermissions.html</value>
-    </property>
-  </bean>
-  <bean id="searchUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
-    <property name="name">
-      <value>Search</value>
-    </property>
-    <property name="resources">
-      <list>
-        <ref bean="whatistheSearchtool"/>
-        <ref bean="howdoIperformabasicsearch"/>
-        <ref bean="howdoIperformanadvancedsearch"/>
-        <ref bean="whattoolcontentisincludedinsearch"/>
-      </list>
-    </property>
-  </bean>
-  <bean id="whatistheSearchtool" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>whatistheSearchtool</value>
-    </property>
-    <property name="name">
-      <value>What is the Search tool?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_searchUserGuide/whatistheSearchtool.html</value>
-    </property>
-    <property name="defaultForTool">
-      <value>sakai.search</value>
-    </property>
-  </bean>
-  <bean id="howdoIperformabasicsearch" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIperformabasicsearch</value>
-    </property>
-    <property name="name">
-      <value>How do I perform a basic search?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_searchUserGuide/howdoIperformabasicsearch.html</value>
-    </property>
-  </bean>
-  <bean id="howdoIperformanadvancedsearch" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>howdoIperformanadvancedsearch</value>
-    </property>
-    <property name="name">
-      <value>How do I perform an advanced search?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_searchUserGuide/howdoIperformanadvancedsearch.html</value>
-    </property>
-  </bean>
-  <bean id="whattoolcontentisincludedinsearch" class="org.sakaiproject.component.app.help.model.ResourceBean">
-    <property name="docId">
-      <value>whattoolcontentisincludedinsearch</value>
-    </property>
-    <property name="name">
-      <value>What tool content is included in search?</value>
-    </property>
-    <property name="location">
-      <value>/sakai_screensteps_searchUserGuide/whattoolcontentisincludedinsearch.html</value>
     </property>
   </bean>
   <bean id="sectionInfoUserGuide" class="org.sakaiproject.component.app.help.model.CategoryBean">
