@@ -291,7 +291,7 @@ VALUES(
 , 'F (0)', 9);
 
 -- add the percent mapping
-select '3432 - percent' as 'On'
+select '3432 - percent' as 'On';
 INSERT INTO GB_GRADING_SCALE_PERCENTS_T (grading_scale_id, percent, letter_grade)
 VALUES(
 (SELECT id FROM GB_GRADING_SCALE_T WHERE scale_uid = 'GradePointsMapping')
