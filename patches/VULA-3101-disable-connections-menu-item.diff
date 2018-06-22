@@ -1,0 +1,18 @@
+diff --git a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
+index ac160d0..caa2b67 100644
+--- a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
++++ b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
+@@ -117,11 +117,11 @@
+                                     </div>
+                                 </li>
+ 
+-                                <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
++                                <!--li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
+                                     <a role="menuitem" href="javascript:;" id="Mrphs-userNav__submenuitem--connections">
+                                         <span>${rloader.sit_connections}</span>
+                                     </a>
+-                                </li>
++                                </li-->
+ 
+                                     #if (${tabsSites.calendarToolUrl})
+             

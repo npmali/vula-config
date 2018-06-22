@@ -1,0 +1,80 @@
+diff --git a/portal/portal-impl/impl/src/java/org/sakaiproject/portal/charon/SkinnableCharonPortal.java b/portal/portal-impl/impl/src/java/org/sakaiproject/portal/charon/SkinnableCharonPortal.java
+index 8a9273d..d0e25c6 100644
+--- a/portal/portal-impl/impl/src/java/org/sakaiproject/portal/charon/SkinnableCharonPortal.java
++++ b/portal/portal-impl/impl/src/java/org/sakaiproject/portal/charon/SkinnableCharonPortal.java
+@@ -1058,7 +1058,27 @@ public class SkinnableCharonPortal extends HttpServlet implements Portal
+         
+         Preferences prefs = preferencesService.getPreferences(currentUser.getId());
+         String editorType = prefs.getProperties(PreferencesService.EDITOR_PREFS_KEY).getProperty(PreferencesService.EDITOR_PREFS_TYPE);
++                
++                String passwordUrl = StringUtils.trimToNull(ServerConfigurationService.getString("passwordUrl." + currentUser.getType()));
++                String userEditUrl = StringUtils.trimToNull(ServerConfigurationService.getString("institution.userDirectory.userEdit." + currentUser.getType()));
++                String webmailUrl =  StringUtils.trimToNull(ServerConfigurationService.getString("webmailUrl." + currentUser.getType()));
++                String orgUserProfileProvider =  StringUtils.trimToNull(ServerConfigurationService.getString("institution.userDirectory.name"));
++                if (passwordUrl != null) {
++                    rcontext.put("passwordUrl", passwordUrl);
++                }
++
++                if (userEditUrl != null) {
++                    rcontext.put("userEditUrl", userEditUrl);
++                }
+ 
++                if (webmailUrl != null) {
++                    rcontext.put("webmailUrl", webmailUrl);
++                }
++
++                if (orgUserProfileProvider != null) {
++                    rcontext.put("orgUserProfileProvider", orgUserProfileProvider);
++                }
++                
+         rcontext.put("loggedIn", StringUtils.isNotBlank(currentUser.getId()));
+         rcontext.put("userId", currentUser.getId());
+         rcontext.put("userEid", currentUser.getEid());
+diff --git a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
+index ac160d0..3e1e0b8 100644
+--- a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
++++ b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
+@@ -124,15 +124,40 @@
+                                 </li>
+ 
+                                     #if (${tabsSites.calendarToolUrl})
+-            
++
+                                         <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
+                                             <a role="menuitem" href="${tabsSites.calendarToolUrl}" class="Mrphs-userNav__submenuitem--calendar">
+                                                 <span>${rloader.sit_calendar}</span>
+                                             </a>
+                                         </li>
+-            
++
+                                     #end ## END of IF (${tabsSites.calendarToolUrl})
+ 
++                                    <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
++                                    #if (${passwordUrl})
++                                        <a role="menuitem" href="${passwordUrl}" target="_blank" class="Mrphs-userNav__submenuitem--prefs">
++                                    #else
++                                        <a role="menuitem" href="${tabsSites.mrphs_profileToolUrl}" class="Mrphs-userNav__submenuitem--prefs">
++                                    #end
++                                          <span>Change Password</span>
++                                        </a>
++                                    </li>
++                                        
++                                    #if (${webmailUrl})
++                                        <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
++                                            <a role="menuitem" href="${webmailUrl}" target="_blank" class="Mrphs-userNav__submenuitem--prefs">
++                                                <span>UCT Webmail</span>
++                                            </a>
++                                        </li>
++                                    #end
++                                    #if (${userEditUrl} && ${orgUserProfileProvider})
++                                        <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented" style="background: transparent;">
++                                            <a role="menuitem" href="${userEditUrl}" target="_blank" class="Mrphs-userNav__submenuitem--prefs">
++                                                <span>${orgUserProfileProvider}</span>
++                                            </a>
++                                        </li>
++                                    #end
++
+                                     #if (${tabsSites.prefsToolUrl})
+ 
+                                         <li class="Mrphs-userNav__submenuitem Mrphs-userNav__submenuitem-indented">
+
