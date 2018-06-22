@@ -33,6 +33,7 @@ p0 VULA-3185-turnitin-oldsites.diff "Turnitin do not submit from old course site
 p1 VULA-3210-commons-tool-send-through-eid.diff "Send through Eid to commons templates"
 p1 VULA-3210-commons-tool-profile-image.diff "Use correct profile image in commons tool"
 p1 VULA-2936-office365-peoplesoft-links-in-profile-dropdown.diff "Office 365 PeopleSoft links in profile drop-down"
+p0 VULA-3215-chat-profile.diff "Chat profileClassic images"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
