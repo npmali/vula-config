@@ -4,6 +4,8 @@
 DIRNAME=$(dirname "$0")
 PROGNAME=$(basename "$0")
 
+BUILD_HOME=$PWD
+
 source ./profile.sh
 
 ERROR="########################## VULA BUILD FAILED ##########################"
@@ -28,7 +30,7 @@ echo Copying Sakai source to build directory
 
 rm -rf sakai
 
-# rsync is much faster than cp because we can exclude the svn stuff
+# rsync is much faster than cp because we can exclude the git stuff
 rsync -a  $SAKAISRC/ sakai2 --exclude .git --delete
 
 echo "Done copying Sakai src.."
@@ -55,11 +57,11 @@ echo "Done copying skin"
 # Copy the src mods
 cp -R src_mods/* sakai2/
 
-# Get the versions (svn revision numbers)
-LOCALVER=`svn info http://source.cet.uct.ac.za/svn/sakai/ | grep "^Revision:" | awk '{print $2}'`
+# Get the versions (git last commit)
+LOCALVER=`cd $SAKAISRC ; git rev-parse --short=7 HEAD`
 SAKAIVER=12.x
 
-cd sakai2
+cd $BUILD_HOME/sakai2
 
 echo
 echo "##### Apply patches"
@@ -139,7 +141,7 @@ cd ..
 # Record version
 BUILDTIME=`date +%y%m%d-%H%M`
 echo $BUILDTIME > latest-build-time
-echo r$SAKAIVER-r$LOCALVER > latest-build-version
+echo $SAKAIVER-$LOCALVER > latest-build-version
 
 echo "[OK]"
 
