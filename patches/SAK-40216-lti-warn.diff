@@ -1,0 +1,21 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/basiclti/basiclti-api/src/java/org/sakaiproject/lti/api/LTIService.java basiclti/basiclti-api/src/java/org/sakaiproject/lti/api/LTIService.java
+--- /usr/local/src/vula_src/branches/vula-12.x/basiclti/basiclti-api/src/java/org/sakaiproject/lti/api/LTIService.java	2018-05-28 13:18:27.685333565 +0200
++++ basiclti/basiclti-api/src/java/org/sakaiproject/lti/api/LTIService.java	2018-06-25 19:40:18.964943411 +0200
+@@ -84,7 +84,7 @@
+             "sha256:radio:label=bl_sha256:choices=off,on",
+             // LTI 1.3 expansion space (See SAK-33772)
+             "lti13:radio:label=bl_lti13:role=admin",
+-            "lti13_settings:text:maxlength=1M:role=admin",
++            "lti13_settings:text:label=bl_lti13_settings:maxlength=1M:role=admin",
+             "created_at:autodate",
+             "updated_at:autodate"};
+     String[] CONTENT_EXTRA_FIELDS = {
+@@ -152,7 +152,7 @@
+             "sha256:radio:label=bl_sha256:choices=off,on,content",
+             // LTI 1.3 expansion space (See SAK-33772)
+             "lti13:radio:label=bl_lti13:choices=off,on,content:role=admin",
+-            "lti13_settings:text:maxlength=1M:role=admin",
++            "lti13_settings:text:label=bl_lti13_settings:maxlength=1M:role=admin",
+             "xmlimport:textarea:hidden=true:maxlength=1M",
+             "splash:textarea:label=bl_splash:rows=5:cols=25:maxlength=16384",
+             "created_at:autodate",

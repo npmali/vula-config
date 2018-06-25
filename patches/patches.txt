@@ -33,6 +33,7 @@ p1 VULA-3210-commons-tool-profile-image.diff "Use correct profile image in commo
 p1 VULA-2936-office365-peoplesoft-links-in-profile-dropdown.diff "Office 365 PeopleSoft links in profile drop-down"
 p0 VULA-3215-chat-profile.diff "Chat profileClassic images"
 p1 VULA-3218-profile-image-update-var.diff "Add the code to portal impl to provide a timed variable for profile images"
+p0 SAK-40216-lti-warn.diff "Get rid of a basiclti startup label warning"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
