@@ -6,4 +6,50 @@
      <util:list id="contentReviewProviders">
 	    <ref bean="org.sakaiproject.contentreview.turnitin.ContentReviewServiceTurnitin"/>
     </util:list>
+
+    <util:map
+                id="org.sakaiproject.coursemanagement.GroupProviderConfiguration">
+                <entry key="siteRoleResolutionOrder">
+                        <list>
+                                <value>Site owner</value>
+                                <value>Lecturer</value>
+                                <value>Support staff</value>
+                                <value>Librarian</value>
+                                <value>Tutor</value>
+                                <value>Student</value>
+                                <value>Participant</value>
+                                <value>Observer</value>
+                        </list>
+                </entry>
+                <entry key="officialInstructorToSiteRole" value="Instructor" />
+                <entry key="enrollmentStatusToSiteRole">
+                        <map>
+                                <entry key="enrolled" value="Student" />
+                                <entry key="wait" value="Student" />
+                        </map>
+                </entry>
+                <entry key="sectionRoleToSiteRole">
+                        <map>
+                                <entry key="I" value="Instructor" />
+                                <entry key="GSI" value="Teaching Assistant" />
+                                <entry key="Student" value="Student" />
+                                <entry key="Participant" value="Participant" />
+                        </map>
+                </entry>
+                <entry key="courseOfferingRoleToSiteRole">
+                        <map>
+                                <entry key="CourseAdmin" value="Instructor" />
+                                <entry key="I" value="Instructor" />
+                        </map>
+                </entry>
+                <entry key="courseSetRoleToSiteRole">
+                        <map>
+                                <entry key="DeptAdmin" value="Support Staff" />
+                                <entry key="Observer" value="Observer" />
+                                <entry key="Lecturer" value="Lecturer" />
+                                <entry key="Librarian" value="Librarian" />
+                        </map>
+                </entry>
+    </util:map>
+
 </beans>
