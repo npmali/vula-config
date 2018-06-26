@@ -21,6 +21,7 @@ else
 	MVNTEST=""
 	printf " (With Tests)\n"
 fi
+
 echo
 
 mvn --version
