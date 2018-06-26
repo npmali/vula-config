@@ -24,8 +24,9 @@ fi
 echo
 
 mvn --version
-echo
+
 # Copy target Sakai source to build directory
+echo
 echo Copying Sakai source to build directory
 
 rm -rf sakai
