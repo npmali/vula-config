@@ -1,10 +1,10 @@
 #! /bin/sh
 
 # Must build with JDK8
-export JAVA_HOME=/usr/java/jdk1.8.0_162
+export JAVA_HOME=/usr/java/jdk1.8.0_172-amd64
 
 # Set Tomcat version
-export TOMCAT=8.5.31
+export TOMCAT=8.5.32
 
 echo "TOMCAT: $TOMCAT"
 
