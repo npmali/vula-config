@@ -34,6 +34,7 @@ p1 VULA-2936-office365-peoplesoft-links-in-profile-dropdown.diff "Office 365 Peo
 p0 VULA-3215-chat-profile.diff "Chat profileClassic images"
 p1 VULA-3218-profile-image-update-var.diff "Add the code to portal impl to provide a timed variable for profile images"
 p0 SAK-40216-lti-warn.diff "Get rid of a basiclti startup label warning"
+p1 KNL-1588-lastModifiedInstant.diff "KNL-1588 m_lastModifiedInstant.getEpochSecond() => m_lastModifiedInstant.toEpochMilli()"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
