@@ -36,6 +36,7 @@ p1 VULA-3218-profile-image-update-var.diff "Add the code to portal impl to provi
 p0 SAK-40216-lti-warn.diff "Get rid of a basiclti startup label warning"
 p0 VULA-3250-chat-limit.diff "Chat max messages limit increase"
 p0 SAK-40351-email-precedence.diff "Remove Precendence: bulk for single user emails"
+p0 SAK-40354-chat-lazy.diff "Chat lazy-loading for performance"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####

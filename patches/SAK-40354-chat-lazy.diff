@@ -1,0 +1,12 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/chat/chat-api/api/src/java/org/sakaiproject/chat2/model/ChatChannel.java chat/chat-api/api/src/java/org/sakaiproject/chat2/model/ChatChannel.java
+--- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-api/api/src/java/org/sakaiproject/chat2/model/ChatChannel.java 2018-01-05 11:44:22.000000000 +0200
++++ chat/chat-api/api/src/java/org/sakaiproject/chat2/model/ChatChannel.java    2018-07-19 15:58:31.043672478 +0200
+@@ -119,7 +119,7 @@
+    @Column(name = "ENABLE_USER_OVERRIDE", nullable = false)
+    private boolean enableUserOverride = true;
+
+-   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "chatChannel")
++   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "chatChannel")
+    @BatchSize(size = 50)
+    private Set<ChatMessage> messages;
+
