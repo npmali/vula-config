@@ -10,6 +10,10 @@ setup.request=help@devslscle001.uct.ac.za
 # Email address quoted in bounce messages to incoming mail
 support.email=help@devslscle001.uct.ac.za
 
+# Used in some other contexts
+mail.support=help@devslscle001.uct.ac.za
+mail.support.name=Vula Help
+
 # Tsugi and Opencast dev launch URLs
 sakai.opencast.setup.launch=https://tsugidev.uct.ac.za/mod/tsugi-welcome-to-lecture-recording/
 sakai.opencast.series.launch=https://mediadev.uct.ac.za/lti
@@ -20,8 +24,8 @@ smtpFrom@org.sakaiproject.email.api.EmailService=bounces@devslscle001.uct.ac.za
 # email address to send errors caught by the portal
 portal.error.email=help@devslscle001.uct.ac.za
 
-log.config.count = 1
-log.config.1=DEBUG.edu.amc
+#log.config.count = 1
+#log.config.1=DEBUG.org.sakaiproject.util.ResourceLoader
 
 # enable hibernate SQL debugging output
 #hibernate.show_sql=true
