@@ -368,21 +368,41 @@ public class SakaiUCT extends AbstractWebService {
     @Path("/addExternalToolToSite")
     @Produces("text/plain")
     @GET
-	public String addExternalToolToSite(
+        public String addExternalToolToSite(
+        @WebParam(name = "sessionid", partName = "sessionid") @QueryParam("sessionid") String sessionid,
+        @WebParam(name = "siteid", partName = "siteid") @QueryParam("siteid") String siteid,
+        @WebParam(name = "tooltitle", partName = "tooltitle") @QueryParam("tooltitle") String tooltitle,
+        @WebParam(name = "ltilaunchurl", partName = "ltilaunchurl") @QueryParam("ltilaunchurl") String ltiLaunchUrl,
+        @WebParam(name = "lticustomparams", partName = "lticustomparams") @QueryParam("lticustomparams") String ltiCustomParams) {
+
+	return addExternalToolToSiteById(sessionid, siteid, tooltitle, ltiLaunchUrl, ltiCustomParams, LTI_TOOL_ID);
+    }
+
+    /**
+     * Add External (LTI) tool to site
+     * @return added, updated, failure
+     * @
+     */
+    @WebMethod
+    @Path("/addExternalToolToSite")
+    @Produces("text/plain")
+    @GET
+	public String addExternalToolToSiteById(
 	@WebParam(name = "sessionid", partName = "sessionid") @QueryParam("sessionid") String sessionid,
 	@WebParam(name = "siteid", partName = "siteid") @QueryParam("siteid") String siteid,
 	@WebParam(name = "tooltitle", partName = "tooltitle") @QueryParam("tooltitle") String tooltitle,
-	@WebParam(name = "ltilaunchurl", partName = "ltilaunchurl") @QueryParam("tooltitle") String ltiLaunchUrl,
-	@WebParam(name = "lticustomparams", partName = "lticustomparams") @QueryParam("tooltitle") String ltiCustomParams) {
+	@WebParam(name = "ltilaunchurl", partName = "ltilaunchurl") @QueryParam("ltilaunchurl") String ltiLaunchUrl,
+	@WebParam(name = "lticustomparams", partName = "lticustomparams") @QueryParam("lticustomparams") String ltiCustomParams,
+	@WebParam(name = "toolid", partName = "toolid") @QueryParam("toolid") String toolid) {
 
-		log.info("Adding external tool to " + siteid + " with title: " + tooltitle);
+		log.info("Adding external tool {} to site {} with title {} ", toolid, siteid, tooltitle);
 	
 		try {
 			// Establish the session. SiteService will enforce security for changes.
 			Session s = establishSession(sessionid);
 			
 			// get info for this tool
-			Tool newTool = toolManager.getTool(LTI_TOOL_ID);
+			Tool newTool = toolManager.getTool(toolid);
 			
 			Site siteEdit = siteService.getSite(siteid);
 
