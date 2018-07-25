@@ -1,0 +1,10 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/site-manage/site-manage-group-section-role-helper/tool/src/webapp/content/templates/GroupList.html	2018-01-05 11:44:23.000000000 +0200
++++ site-manage/site-manage-group-section-role-helper/tool/src/webapp/content/templates/GroupList.html	2018-07-25 14:53:21.579975912 +0200
+@@ -18,7 +18,6 @@
+ 			<!-- action links -->
+ 			<ul rsf:id="actions:" class="navIntraTool actionToolBar">
+ 				<li class="firstToolBarItem"><span><a href="#" rsf:id="add" class="item_control" title="Create New Group" onclick="">Create New Group</a></span></li>
+-				<li><span><a href="#" rsf:id="joinableset_add" class="item_control" title="Create New Joinable Set" onclick="">Create New Joinable Set</a></span></li>
+ 				<li><span><a href="#" rsf:id="auto_add" class="item_control" title="Automatically Create New Group" onclick="">Auto Groups</a></span></li>
+ 				<li><span><a href="#" rsf:id="import_add" class="item_control" title="Automatically Create New Group" onclick="">Auto Groups</a></span></li>
+ 			</ul>
