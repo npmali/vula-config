@@ -1,0 +1,12 @@
+Only in site-manage/site-manage-impl/impl/src/bundle: SectionFields_en.properties
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/site-manage/site-manage-impl/impl/src/java/org/sakaiproject/sitemanage/impl/SiteManageServiceImpl.java site-manage/site-manage-impl/impl/src/java/org/sakaiproject/sitemanage/impl/SiteManageServiceImpl.java
+--- /usr/local/src/vula_src/branches/vula-12.x/site-manage/site-manage-impl/impl/src/java/org/sakaiproject/sitemanage/impl/SiteManageServiceImpl.java	2018-05-28 13:18:28.213336326 +0200
++++ site-manage/site-manage-impl/impl/src/java/org/sakaiproject/sitemanage/impl/SiteManageServiceImpl.java	2018-07-25 13:42:47.038215289 +0200
+@@ -161,7 +161,7 @@
+         if (pageList != null) {
+             for (SitePage page : pageList) {
+                 List<ToolConfiguration> pageToolList = page.getTools();
+-                if (pageToolList != null) {
++                if ((pageToolList != null) && !pageToolList.isEmpty()) {
+                     Tool tool = pageToolList.get(0).getTool();
+                     String toolId = tool != null ? tool.getId() : "";
