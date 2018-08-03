@@ -69,6 +69,8 @@ import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.StringUtil;
 import org.sakaiproject.util.Xml;
 
+import com.google.common.util.concurrent.Striped;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 
@@ -82,6 +84,8 @@ import java.lang.management.RuntimeMXBean;
 import java.lang.management.ManagementFactory;
 import java.text.*;
 import java.util.Collection;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -112,6 +116,8 @@ public class SakaiUCT extends AbstractWebService {
     protected SakaiPersonManager sakaiPersonManager;
 
     private static Base64 base64 = new Base64();
+
+    Striped<ReadWriteLock> rwLockStripes = Striped.readWriteLock(1000);
 
     // ####### Service injection ##########
 
@@ -750,8 +756,13 @@ public class SakaiUCT extends AbstractWebService {
 		return "failure: invalid-session";
         }
 
+	String lockAsnUser = assignmentId.concat(":").concat(userId);
+	Lock rwLock = rwLockStripes.get(lockAsnUser).writeLock();
+
         try {
 
+		log.info("Locking for {}", lockAsnUser);
+		rwLock.lock();
     		log.info("User " + s.getUserEid() + " setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "'"); 
 
     		User user = userDirectoryService.getUserByEid(userId);
@@ -762,7 +773,6 @@ public class SakaiUCT extends AbstractWebService {
 		}
 			
     		Assignment assign = assignmentService.getAssignment(assignmentId);
-
     		String aReference = AssignmentReferenceReckoner.reckoner().assignment(assign).reckon().getReference();
     		
     		if (!securityService.unlock(AssignmentServiceConstants.SECURE_GRADE_ASSIGNMENT_SUBMISSION, aReference))
@@ -771,15 +781,18 @@ public class SakaiUCT extends AbstractWebService {
     			return "failure: no permission";
     		}
 
-		int scaleFactor = assign.getScaleFactor();
-		log.info("Scale factor for this assignment: " + scaleFactor);
-    		
+		Integer scaleFactor = assign.getScaleFactor();
+		if (scaleFactor == null) {
+			log.warn("No scale factor defined for assignment {} - probably ungraded", assignmentId);
+			return "failure: ungraded-assignment";
+		}
+
     		log.info("Setting assignment grade/comment for " + userId + " on " + assignmentId + " to " + grade); 
     		
     		AssignmentSubmission sub = assignmentService.getSubmission(assignmentId, user);
-    		String context = assign.getContext();
 
     		if (sub == null) {
+			log.info("Adding new submission for assignment {} user {}", assignmentId, user.getId());
     			sub = assignmentService.addSubmission(assignmentId, user.getId());
     		}
 
@@ -796,11 +809,10 @@ public class SakaiUCT extends AbstractWebService {
     		assignmentService.updateSubmission(sub);
 
     		// If necessary, update the assignment grade in the Gradebook
-
     		String associateGradebookAssignment = StringUtils.trimToNull(assign.getProperties().get(AssignmentServiceConstants.PROP_ASSIGNMENT_ASSOCIATE_GRADEBOOK_ASSIGNMENT));
     		
     		// update grade in gradebook
-    		integrateGradebook(assignmentId, aReference, associateGradebookAssignment, sub.getId(), context);
+		integrateGradebook(assignmentId, aReference, associateGradebookAssignment, sub.getId(), assign.getContext());
 
     	}
 	catch (UserNotDefinedException une) 
@@ -821,6 +833,9 @@ public class SakaiUCT extends AbstractWebService {
 		log.error("WS setAssignmentGradeCommentforUser(): Exception while setting assignment grade/comment for " + userId + " on " + assignmentId + " to grade '" + grade + "'", e); 
 		return "failure: " + e.getMessage();	
     	}
+	finally {
+		rwLock.unlock();
+	}
     	
     	return "success";
     }
