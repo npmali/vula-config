@@ -1,23 +1,22 @@
 diff --git a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
-index ac160d0..7766c75 100644
+index 8d6ada1..79cc8e4 100644
 --- a/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
 +++ b/portal/portal-render-engine-impl/impl/src/webapp/vm/morpheus/includeLoginNav.vm
-@@ -75,7 +75,7 @@
-                                     #if (${tabsSites.mrphs_profileToolUrl})
+@@ -76,7 +76,7 @@
  
                                          <div id="loginUser" class="has-avatar Mrphs-userNav__submenuitem--userlink #if (${site.isCurrentSite}) current-site #end">
--                                            <a href="javascript:void(0);" class="Mrphs-userNav__drop-btn Mrphs-userNav__submenuitem--profilepicture" style="background-image:url(/direct/profile/${loginUserId}/image/thumb)" tabindex="-1"></a>
-+                                            <a href="javascript:void(0);" class="Mrphs-userNav__drop-btn Mrphs-userNav__submenuitem--profilepicture" style="background-image:url(/direct/profileClassic/${loginUserDispId}/image?_=${profileLastUpdate})" tabindex="-1"></a>
-                                             <a href="javascript:void(0);" class="Mrphs-userNav__drop-btn Mrphs-userNav__submenuitem--username" aria-haspopup="true">${loginUserFirstName}</a>
+                                             <a href="javascript:void(0);" role="button" aria-haspopup="true" class="Mrphs-userNav__drop-btn Mrphs-userNav__submenuitem--username">
+-                                                <span class="Mrphs-userNav__submenuitem--profilepicture" style="background-image:url(/direct/profile/${loginUserId}/image/thumb)"></span>
++                                                <span class="Mrphs-userNav__submenuitem--profilepicture" style="background-image:url(/direct/profileClassic/${loginUserDispId}/image?_=${profileLastUpdate})"></span>
+                                                 <span class="textlink">${loginUserFirstName}</span>
+                                             </a>
                                          </div>
- 
-@@ -97,7 +97,7 @@
+@@ -99,7 +99,7 @@
                                          #if (${tabsSites.mrphs_profileToolUrl})
                                              <div class="has-avatar">
-                                                 <a role="menuitem" class="Mrphs-userNav__submenuitem--profilelink" href="${tabsSites.mrphs_profileToolUrl}">
--                                                    <span class="Mrphs-userNav__submenuitem--profilepicture Mrphs-userNav__pic-changer" style="background-image:url(/direct/profile/${loginUserId}/image/thumb)" tabindex="-1"></span>
-+                                                    <span class="Mrphs-userNav__submenuitem--profilepicture" style="background-image:url(/direct/profileClassic/${loginUserDispId}/image?_=${profileLastUpdate})" tabindex="-1"></span>
+                                                 <a role="menuitem" class="Mrphs-userNav__submenuitem--profilelink" href="${tabsSites.mrphs_profileToolUrl}" aria-haspopup="dialog">
+-                                                    <span class="Mrphs-userNav__submenuitem--profilepicture Mrphs-userNav__pic-changer" style="background-image:url(/direct/profile/${loginUserId}/image/thumb)"></span>
++                                                    <span class="Mrphs-userNav__submenuitem--profilepicture" style="background-image:url(/direct/profileClassic/${loginUserDispId}/image?_=${profileLastUpdate})"></span>
+                                                     <span class="sr-only">${rloader.pic_changer_title}</span>
                                                  </a>
                                              </div>
-                                             <div class="Mrphs-userNav__submenuitem--profile">
-
