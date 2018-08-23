@@ -1,0 +1,82 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/kernel/api/src/main/java/org/sakaiproject/user/api/User.java kernel/api/src/main/java/org/sakaiproject/user/api/User.java
+--- /usr/local/src/vula_src/branches/vula-12.x/kernel/api/src/main/java/org/sakaiproject/user/api/User.java	2018-05-28 13:18:27.945334924 +0200
++++ kernel/api/src/main/java/org/sakaiproject/user/api/User.java	2018-08-23 12:03:06.901612779 +0200
+@@ -70,6 +70,7 @@
+ 	 * @return The user's name for display purposes.
+ 	 */
+ 	String getDisplayName();
++	String getDisplayName(String context);
+ 
+ 	/**
+ 	 * Access the user's name for sorting purposes.
+@@ -124,4 +125,6 @@
+ 	 * @return The user's display id string.
+ 	 */
+ 	String getDisplayId();
++	String getDisplayId(String context);
++
+ }
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/kernel/kernel-impl/src/main/java/org/sakaiproject/user/impl/BaseUserDirectoryService.java kernel/kernel-impl/src/main/java/org/sakaiproject/user/impl/BaseUserDirectoryService.java
+--- /usr/local/src/vula_src/branches/vula-12.x/kernel/kernel-impl/src/main/java/org/sakaiproject/user/impl/BaseUserDirectoryService.java	2018-07-19 09:59:14.330245513 +0200
++++ kernel/kernel-impl/src/main/java/org/sakaiproject/user/impl/BaseUserDirectoryService.java	2018-08-23 12:22:00.328761989 +0200
+@@ -2529,13 +2529,17 @@
+ 		/**
+ 		 * @inheritDoc
+ 		 */
+-		public String getDisplayName()
++		public String getDisplayName(String context)
+ 		{
+ 			String rv = null;
+ 
+ 			// If a contextual aliasing service exists, let it have the first try.
+ 			if (m_contextualUserDisplayService != null) {
+-				rv = m_contextualUserDisplayService.getUserDisplayName(this);
++				if (context != null) {
++					rv = m_contextualUserDisplayService.getUserDisplayName(this, context);
++				} else {
++					rv = m_contextualUserDisplayService.getUserDisplayName(this);
++				}
+ 				if (rv != null) {
+ 					return rv;
+ 				}
+@@ -2575,13 +2579,24 @@
+ 		/**
+ 		 * @inheritDoc
+ 		 */
+-		public String getDisplayId()
++		public String getDisplayName() {
++			return getDisplayName(null);
++		}
++
++		/**
++		 * @inheritDoc
++		 */
++		public String getDisplayId(String context)
+ 		{
+ 			String rv = null;
+ 			
+ 			// If a contextual aliasing service exists, let it have the first try.
+ 			if (m_contextualUserDisplayService != null) {
+-				rv = m_contextualUserDisplayService.getUserDisplayId(this);
++				if (context != null) {
++					rv = m_contextualUserDisplayService.getUserDisplayId(this, context);
++				} else {
++					rv = m_contextualUserDisplayService.getUserDisplayId(this);
++				}
+ 				if (rv != null) {
+ 					return rv;
+ 				}
+@@ -2603,6 +2618,13 @@
+ 		}
+ 
+ 		/**
++		 * @inheritDoc
++		 */
++		public String getDisplayId() {
++			return getDisplayId(null); 
++		}
++
++		/**
+ 		 * @inheritDoc
+ 		 */
+ 		public String getFirstName()

@@ -1,0 +1,53 @@
+Only in chat/chat-api/api: target
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatManagerImpl.java chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatManagerImpl.java
+--- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatManagerImpl.java	2018-01-05 11:44:22.000000000 +0200
++++ chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatManagerImpl.java	2018-08-22 20:59:17.982560222 +0200
+@@ -995,7 +995,7 @@
+         ZonedDateTime ldt = ZonedDateTime.ofInstant(item.getMessageDate().toInstant(), ZoneId.of(getUserTimeZone()));
+         Locale locale = rl.getLocale();
+         
+-        String newText = body + ", " + user.getDisplayName() + ", " + ldt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(locale));
++        String newText = body + ", " + user.getDisplayName(item.getChatChannel().getContext()) + ", " + ldt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).withLocale(locale));
+         return newText;
+     }
+ 
+@@ -1109,11 +1109,11 @@
+                     String displayName = us.getUserDisplayId();
+                     String userId = us.getUserId();
+                     try {
+-                        displayName = userDirectoryService.getUser(us.getUserId()).getDisplayName();
++                        displayName = userDirectoryService.getUser(us.getUserId()).getDisplayName(siteId);
+                         //if user stored in heartbeat is different to the presence one
+                         if(!userId.equals(sessionUserId)) {
+                             userId += ":"+sessionUserId;
+-                            displayName += " (" + userDirectoryService.getUser(sessionUserId).getDisplayName() + ")";
++                            displayName += " (" + userDirectoryService.getUser(sessionUserId).getDisplayName(siteId) + ")";
+                         }
+                     }catch(Exception e){
+                         log.error("Error getting user "+sessionUserId, e);
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatMessageEntityProvider.java chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatMessageEntityProvider.java
+--- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatMessageEntityProvider.java	2018-01-05 11:44:22.000000000 +0200
++++ chat/chat-impl/impl/src/java/org/sakaiproject/chat2/model/impl/ChatMessageEntityProvider.java	2018-08-22 18:42:38.603551402 +0200
+@@ -97,8 +97,8 @@
+ 			
+ 			try {
+ 				User msgowner = userDirectoryService.getUser(this.owner);
+-				this.ownerDisplayId = msgowner.getDisplayId();
+-				this.ownerDisplayName = msgowner.getDisplayName();
++				this.ownerDisplayId = msgowner.getDisplayId(this.context);
++				this.ownerDisplayName = msgowner.getDisplayName(this.context);
+ 			} catch (UserNotDefinedException e) {
+ 				// user not found - ignore
+ 			}
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java
+--- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java	2018-01-05 11:44:22.000000000 +0200
++++ chat/chat-tool/tool/src/java/org/sakaiproject/chat2/tool/ChatTool.java	2018-08-22 21:00:42.703123301 +0200
+@@ -1242,7 +1242,7 @@
+          log.debug("Failed to find user for ID: "+ message.getOwner(), e);
+          return message.getOwner();
+       }
+-      return sender.getDisplayName();
++      return sender.getDisplayName(message.getChatChannel().getContext());
+    }
+ 
+    protected String getPastXDaysText(int x) {

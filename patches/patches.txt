@@ -37,6 +37,9 @@ p0 SAK-40216-lti-warn.diff "Get rid of a basiclti startup label warning"
 p0 VULA-3250-chat-limit.diff "Chat max messages limit increase"
 p1 VULA-3253-turnitinoc-disable.diff "Disable new TurnitinOC provider"
 p0 VULA-3258-disable-joinable-sets.diff "Remove joinable sets link in group helper"
+p0 VULA-3282-alias-chat.diff "User alias chat"
+p0 VULA-3282-alias-kernel.diff "User alias kernel"
+p1 VULA-3282-alias-mocks.diff "User alias mocks and implementations"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####

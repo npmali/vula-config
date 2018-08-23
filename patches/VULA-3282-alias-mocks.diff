@@ -1,0 +1,77 @@
+diff --git a/admin-tools/src/java/org/sakaiproject/user/tool/PasswordPolicyHelper.java b/admin-tools/src/java/org/sakaiproject/user/tool/PasswordPolicyHelper.java
+index eb8a9c346d..c8ceea2186 100644
+--- a/admin-tools/src/java/org/sakaiproject/user/tool/PasswordPolicyHelper.java
++++ b/admin-tools/src/java/org/sakaiproject/user/tool/PasswordPolicyHelper.java
+@@ -135,7 +135,9 @@ public class PasswordPolicyHelper {
+         @Override public boolean 			checkPassword(String arg0) 					{ return false; }
+         @Override public String 			getId() 									{ return null; }
+         @Override public String 			getDisplayId() 								{ return null; }
++        @Override public String 			getDisplayId(String arg0) 							{ return null; }
+         @Override public String 			getDisplayName() 							{ return null; }
++        @Override public String 			getDisplayName(String arg0) 						{ return null; }
+         @Override public String 			getEid() 									{ return null; }
+         @Override public String 			getFirstName() 								{ return null; }
+         @Override public String 			getLastName() 								{ return null; }
+diff --git a/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/model/EntityUser.java b/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/model/EntityUser.java
+index d96d3caba1..30929594d0 100644
+--- a/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/model/EntityUser.java
++++ b/entitybroker/core-providers/src/java/org/sakaiproject/entitybroker/providers/model/EntityUser.java
+@@ -175,6 +175,10 @@ public class EntityUser implements User {
+         return displayName;
+     }
+ 
++    public String getDisplayName(String context) {
++        return displayName;
++    }
++
+     public void setDisplayName(String displayName) {
+         this.displayName = displayName;
+     }
+@@ -234,6 +238,10 @@ public class EntityUser implements User {
+         return displayId;
+     }
+ 
++    public String getDisplayId(String context) {
++        return displayId;
++    }
++
+     public User getModifiedBy() {
+         if (user != null) {
+             return user.getModifiedBy();
+diff --git a/providers/jldap-mock/src/java/edu/amc/sakai/user/UserEditStub.java b/providers/jldap-mock/src/java/edu/amc/sakai/user/UserEditStub.java
+index d7fbba04da..c5a20d01a3 100644
+--- a/providers/jldap-mock/src/java/edu/amc/sakai/user/UserEditStub.java
++++ b/providers/jldap-mock/src/java/edu/amc/sakai/user/UserEditStub.java
+@@ -161,11 +161,15 @@ class UserEditStub implements UserEdit {
+ 		return this.id;
+ 	}
+     
+-    public String getDisplayId() {
+-        return this.eid;
+-    }
+-         
+-    public String getDisplayName() {
++	public String getDisplayId() {
++		return this.eid;
++	}
++
++	public String getDisplayId(String context) {
++		return this.eid;
++	}
++
++	public String getDisplayName() {
+ 
+ 		// This was copied from BaseUserDirectoryService
+ 
+@@ -184,7 +188,10 @@ class UserEditStub implements UserEdit {
+ 		}
+ 
+ 	}
+-    
++
++	public String getDisplayName(String context) {
++		return getDisplayName();
++	}
+ 
+ 	public ResourceProperties getProperties() {
+ 		return this.properties;
