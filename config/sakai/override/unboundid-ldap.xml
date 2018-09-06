@@ -172,6 +172,7 @@
 					<list>
 						<value>null</value>
 						<value>admin</value>
+						<value>.*@.*</value>
 						<!--value>nobody</value-->
 						<!--value>adversary</value-->
 					</list>
