@@ -6,7 +6,9 @@
 	<bean id="org.sakaiproject.user.api.UserDirectoryProvider"
 		class="org.sakaiproject.unboundid.UnboundidDirectoryProvider" init-method="init"
 		destroy-method="destroy">
-		
+
+		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>
+
 		<!-- Required. Uses Unboundid SingleServerSet by default. Easy to modify code to use FailoverServerSet or RoundRobinServerSet. -->
 		<property name="ldapHost">
 			<list>
@@ -100,12 +102,20 @@
 			<value>true</value>
 		</property -->
 
+		<property name="allowAuthenticationExternal">
+			<value>false</value>
+		</property>
+
                 <!--  Optional. Control whether or not the directory may be searched for
                       users that match given search criteria. Defaults to
                       UnboundidDirectoryProvider.DEFAULT_ALLOW_SEARCH_EXTERNAL  -->
-                <property name="allowSearchExternal">
-                        <value>false</value>
-                </property>
+		<property name="allowSearchExternal">
+			<value>false</value>
+		</property>
+
+		<property name="allowGetExternal">
+			<value>false</value>
+		</property>
 		
 		<!-- Optional. Defaults to an instance of 
 		org.sakaiproject.unboundid.SimpleLdapConnectionManager -->
