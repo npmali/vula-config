@@ -40,6 +40,7 @@ p0 VULA-3258-disable-joinable-sets.diff "Remove joinable sets link in group help
 p0 VULA-3282-alias-chat.diff "User alias chat"
 p0 VULA-3282-alias-kernel.diff "User alias kernel"
 p1 VULA-3282-alias-mocks.diff "User alias mocks and implementations"
+p0 VULA-3225-basicauth-logging.diff "Remove unnecessary stack trace"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
