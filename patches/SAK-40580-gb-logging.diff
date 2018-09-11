@@ -1,0 +1,21 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/edu-services/gradebook-service/impl/src/java/org/sakaiproject/component/gradebook/GradebookServiceHibernateImpl.java edu-services/gradebook-service/impl/src/java/org/sakaiproject/component/gradebook/GradebookServiceHibernateImpl.java
+--- /usr/local/src/vula_src/branches/vula-12.x/edu-services/gradebook-service/impl/src/java/org/sakaiproject/component/gradebook/GradebookServiceHibernateImpl.java	2018-09-11 20:31:54.079588470 +0200
++++ edu-services/gradebook-service/impl/src/java/org/sakaiproject/component/gradebook/GradebookServiceHibernateImpl.java	2018-09-11 20:57:30.981602337 +0200
+@@ -2469,7 +2469,7 @@
+ 	  			// If this is the student, then the assignment needs to have
+ 	  			// been released.
+ 	  			if (studentRequestingOwnScore && !assignment.isReleased()) {
+-	  				log.error("AUTHORIZATION FAILURE: Student {} in gradebook {} attempted to retrieve score for unreleased assignment {}", getUserUid(), gradebookUid, assignment.getName());
++	  				log.debug("AUTHORIZATION FAILURE: Student {} in gradebook {} attempted to retrieve score for unreleased assignment {}", getUserUid(), gradebookUid, assignment.getName());
+ 	  				throw new GradebookSecurityException();
+ 	  			}
+ 
+@@ -2536,7 +2536,7 @@
+ 			log.debug("Assessment not found by name", e);
+ 		}
+ 		catch (GradebookSecurityException gse) {
+-			log.warn("User {} does not have permission to retrieve score for assignment {}", studentUid, assignmentName, gse);
++			log.debug("User {} does not have permission to retrieve score for assignment {}", studentUid, assignmentName, gse);
+ 			return null;
+ 		}
+ 
