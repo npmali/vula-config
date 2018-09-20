@@ -135,7 +135,7 @@ read -t2
 
 #Maven2 build command
 
-mvn -Dmaven.tomcat.home=$DEST -Dmaven.repo.local=$LOCALMAVENREPO/repository/ $MVNTEST clean install sakai:deploy
+mvn -T 1C -Dmaven.tomcat.home=$DEST -Dmaven.repo.local=$LOCALMAVENREPO/repository/ $MVNTEST clean install sakai:deploy
 
 # Almost finished
 cd ..
