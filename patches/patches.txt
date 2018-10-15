@@ -40,9 +40,9 @@ p0 VULA-3282-alias-chat.diff "User alias chat"
 p0 VULA-3282-alias-kernel.diff "User alias kernel"
 p1 VULA-3282-alias-mocks.diff "User alias mocks and implementations"
 p0 VULA-3225-basicauth-logging.diff "Remove unnecessary stack trace"
-p1 SAK-39943-gb-warn.diff "Gradebook WARN logging for student tool icons"
 p0 SAK-40580-gb-logging.diff "GB quieter logging"
-p1 SAK-40710-turnitin-title.diff "Remove special chars in assignment titles"
+p0 VULA-3313-autoscore-logging.diff "T&Q auto-score error logging"
+p1 SAK-40760-tq-classcast.diff "T&Q classcast"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
