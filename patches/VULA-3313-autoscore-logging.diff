@@ -1,0 +1,41 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/samigo/samigo-services/src/java/org/sakaiproject/tool/assessment/services/GradingService.java	2018-07-19 09:59:14.362245611 +0200
++++ samigo/samigo-services/src/java/org/sakaiproject/tool/assessment/services/GradingService.java	2018-10-15 15:29:39.879194629 +0200
+@@ -876,7 +876,7 @@
+     	boolean NeededAllOk = false;
+     	
+       String agent = data.getAgentId();
+-      
++
+       // note that this itemGradingSet is a partial set of answer submitted. it contains only 
+       // newly submitted answers, updated answers and MCMR/FIB/FIN answers ('cos we need the old ones to
+       // calculate scores for new ones)
+@@ -884,6 +884,11 @@
+       if (itemGradingSet == null)
+         itemGradingSet = new HashSet<>();
+       log.debug("****itemGrading size="+itemGradingSet.size());
++
++      log.info("storeGrades userid={} publishedAssessmentId={} itemGrading size={} publishedItemHash size={}", agent,
++        (pub!=null) ? pub.getPublishedAssessmentId() : -1,
++        (itemGradingSet!=null) ? itemGradingSet.size() : -1,
++        (publishedItemHash!=null) ? publishedItemHash.size() : -1);
+       
+       List<ItemGradingData> tempItemGradinglist = new ArrayList<>(itemGradingSet);
+       
+@@ -941,7 +946,7 @@
+         ItemDataIfc item = (ItemDataIfc) publishedItemHash.get(itemId);
+         if (item == null) {
+         	//this probably shouldn't happen
+-        	log.error("unable to retrive itemDataIfc for: {}", publishedItemHash.get(itemId));
++        	log.error("Cannot find item {} in publishedItemHash for userid {} published assessment id {} : item auto-scoring failed (case 1)", itemId, agent, pub.getPublishedAssessmentId());
+         	continue;
+         }
+         for (ItemMetaDataIfc meta : item.getItemMetaDataSet())
+@@ -1047,7 +1052,7 @@
+         ItemDataIfc item = (ItemDataIfc) publishedItemHash.get(itemId);
+       //SAM-1724 it's possible the item is not in the hash -DH
+         if (item == null) {
+-        	log.error("unable to retrive itemDataIfc for: " + publishedItemHash.get(itemId));
++        	log.error("Cannot find item {} in publishedItemHash for userid {} published assessment id {} : item auto-scoring failed (case 2)", itemId, agent, pub.getPublishedAssessmentId());
+         	continue;
+         }
+ 
