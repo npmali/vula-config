@@ -1,0 +1,36 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java
+--- /usr/local/src/vula_src/branches/vula-12.x/announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java	2018-09-06 15:23:33.025618811 +0200
++++ announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java	2018-10-23 20:58:23.114874182 +0200
+@@ -192,9 +192,11 @@
+ 		{
+ 			buf.append(rb.getFormattedMessage("noti.header.update", new Object[]{title, url}));
+ 		}
+-		buf.append(" " + rb.getString("at_date") + " ");
+-		buf.append(hdr.getDate().toStringLocalFull());
+-		buf.append(newline);
++                if (StringUtils.isNotEmpty(rb.getString("noti.header.add"))) {
++			buf.append(" " + rb.getString("at_date") + " ");
++			buf.append(hdr.getDate().toStringLocalFull());
++			buf.append(newline);
++		}
+ 		buf.append(msg.getBody());
+ 		buf.append(newline);
+ 
+@@ -530,10 +532,13 @@
+ 		{
+ 			buf.append(FormattedText.convertFormattedTextToPlaintext(rb.getFormattedMessage("noti.header.update", new Object[]{title,url})));
+ 		}
+-		
+-        buf.append(" " + rb.getString("at_date") + " ");
+-        buf.append(hdr.getDate().toStringLocalFull());
+-		buf.append(newline);
++
++		if (StringUtils.isNotEmpty(rb.getString("noti.header.add"))) {
++			buf.append(" " + rb.getString("at_date") + " ");
++			buf.append(hdr.getDate().toStringLocalFull());
++			buf.append(newline);
++		}
++
+ 		buf.append(FormattedText.convertFormattedTextToPlaintext(msg.getBody()));
+ 		buf.append(newline);
+ 
