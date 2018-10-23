@@ -1,5 +1,5 @@
 --- /usr/local/src/vula_src/branches/vula-12.x/samigo/samigo-services/src/java/org/sakaiproject/tool/assessment/services/GradingService.java	2018-07-19 09:59:14.362245611 +0200
-+++ samigo/samigo-services/src/java/org/sakaiproject/tool/assessment/services/GradingService.java	2018-10-15 15:29:39.879194629 +0200
++++ samigo/samigo-services/src/java/org/sakaiproject/tool/assessment/services/GradingService.java	2018-10-23 15:43:11.790365340 +0200
 @@ -876,7 +876,7 @@
      	boolean NeededAllOk = false;
      	
@@ -21,16 +21,27 @@
        
        List<ItemGradingData> tempItemGradinglist = new ArrayList<>(itemGradingSet);
        
-@@ -941,7 +946,7 @@
+@@ -939,9 +944,18 @@
+         
+         itemId = itemGrading.getPublishedItemId();
          ItemDataIfc item = (ItemDataIfc) publishedItemHash.get(itemId);
++
++        boolean logItems = true;
++       
          if (item == null) {
          	//this probably shouldn't happen
 -        	log.error("unable to retrive itemDataIfc for: {}", publishedItemHash.get(itemId));
 +        	log.error("Cannot find item {} in publishedItemHash for userid {} published assessment id {} : item auto-scoring failed (case 1)", itemId, agent, pub.getPublishedAssessmentId());
++
++		if (logItems) {
++			log.error("publishedItemHash keys: {}", Arrays.toString(publishedItemHash.keySet().toArray()));
++			logItems = false;
++		}
++
          	continue;
          }
          for (ItemMetaDataIfc meta : item.getItemMetaDataSet())
-@@ -1047,7 +1052,7 @@
+@@ -1047,7 +1061,7 @@
          ItemDataIfc item = (ItemDataIfc) publishedItemHash.get(itemId);
        //SAM-1724 it's possible the item is not in the hash -DH
          if (item == null) {
