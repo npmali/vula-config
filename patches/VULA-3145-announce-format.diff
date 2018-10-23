@@ -1,6 +1,6 @@
 diff -ur /usr/local/src/vula_src/branches/vula-12.x/announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java
 --- /usr/local/src/vula_src/branches/vula-12.x/announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java	2018-09-06 15:23:33.025618811 +0200
-+++ announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java	2018-10-23 20:58:23.114874182 +0200
++++ announcement/announcement-impl/impl/src/java/org/sakaiproject/announcement/impl/SiteEmailNotificationAnnc.java	2018-10-23 21:40:51.264627494 +0200
 @@ -192,9 +192,11 @@
  		{
  			buf.append(rb.getFormattedMessage("noti.header.update", new Object[]{title, url}));
@@ -15,6 +15,22 @@ diff -ur /usr/local/src/vula_src/branches/vula-12.x/announcement/announcement-im
 +		}
  		buf.append(msg.getBody());
  		buf.append(newline);
+ 
+@@ -287,12 +289,12 @@
+ 	/**
+ 	 * @inheritDoc
+ 	 */
+-	protected String getTag(String title, boolean shouldUseHtml)
++	protected String getTag(String title, String url, boolean shouldUseHtml)
+ 	{
+ 		if (shouldUseHtml) {
+-			return rb.getFormattedMessage("noti.tag.html", new Object[]{ServerConfigurationService.getString("ui.service", "Sakai"), ServerConfigurationService.getPortalUrl(), title});
++			return rb.getFormattedMessage("noti.tag.html", new Object[]{ServerConfigurationService.getString("ui.service", "Sakai"), ServerConfigurationService.getPortalUrl(), title, url});
+ 		} else {
+-			return rb.getFormattedMessage("noti.tag", new Object[]{ServerConfigurationService.getString("ui.service", "Sakai"), ServerConfigurationService.getPortalUrl(), title});
++			return rb.getFormattedMessage("noti.tag", new Object[]{ServerConfigurationService.getString("ui.service", "Sakai"), ServerConfigurationService.getPortalUrl(), title, url});
+ 		}
+ 	}
  
 @@ -530,10 +532,13 @@
  		{

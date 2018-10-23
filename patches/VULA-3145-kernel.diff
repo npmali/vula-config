@@ -1,0 +1,51 @@
+--- /usr/local/src//vula_src/branches/vula-12.x/kernel/kernel-util/src/main/java/org/sakaiproject/util/EmailNotification.java	2018-01-05 11:44:22.000000000 +0200
++++ kernel/kernel-util/src/main/java/org/sakaiproject/util/EmailNotification.java	2018-10-23 21:33:56.503178833 +0200
+@@ -305,10 +305,12 @@
+ 		// get a site title: use either the configured site, or if not configured, the site (context) of the resource
+ 		Reference ref = EntityManager.newReference(event.getResource());
+ 		String title = (getSite() != null) ? getSite() : ref.getContext();
++		String url = null;
+ 		try
+ 		{
+ 			Site site = SiteService.getSite(title);
+ 			title = site.getTitle();
++			url = site.getUrl();
+ 		}
+ 		catch (Exception ignore) {}
+ 
+@@ -318,13 +320,13 @@
+ 		message.append(BOUNDARY_LINE);
+ 		message.append(plainTextHeaders());
+ 		message.append(plainTextContent(event));
+-		message.append( getTag(title, false) );
++		message.append( getTag(title, url, false) );
+ 		
+ 		message.append(BOUNDARY_LINE);
+ 		message.append(htmlHeaders());
+ 		message.append(htmlPreamble(event));
+ 		message.append(htmlContent(event));
+-		message.append( getTag(title, true) );
++		message.append( getTag(title, url, true) );
+ 		message.append(htmlEnd());
+ 		
+ 		message.append(TERMINATION_LINE);
+@@ -375,6 +377,19 @@
+ 		return "";
+ 	}
+ 
++        /**
++         * Get the message tag, the text to display at the bottom of the message.
++         * 
++         * @param title The title string
++         * @param url The site URL
++         * @param shouldUseHtml if true, use html not plain text encoding in message
++         * @return The message tag.
++         */
++        protected String getTag(String title, String url, boolean shouldUseHtml)
++        {
++                return getTag(title, shouldUseHtml);
++        }
++
+ 	/**
+ 	 * Get headers for the email (List of String, full header lines) - including Subject: Date: To: From: if appropriate, as well as any others
+ 	 * 
