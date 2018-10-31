@@ -1,0 +1,22 @@
+diff --git a/content/content-tool/tool/src/webapp/vm/resources/sakai_properties_scripts.vm b/content/content-tool/tool/src/webapp/vm/resources/sakai_properties_scripts.vm
+index f3b70149f32..934748b3175 100644
+--- a/content/content-tool/tool/src/webapp/vm/resources/sakai_properties_scripts.vm
++++ b/content/content-tool/tool/src/webapp/vm/resources/sakai_properties_scripts.vm
+@@ -1565,7 +1565,7 @@
+ document.calendars = new Array();
+ document.calendarcounter = 0;
+ 
+-#if($calendarcounter > 0)	
++#if($calendarcounter && $calendarcounter > 0)	
+ 	document.calendars = new Array();
+ 	document.calendarcounter = $calendarcounter;
+ #set($n = $calendarcounter - 1)
+@@ -1577,7 +1577,7 @@ document.calendarcounter = 0;
+ #end
+ #end
+ </script>
+-#if($calendarcounter > 0)
++#if($calendarcounter && $calendarcounter > 0)
+ #javascript("/library/calendar/sakai-calendar.js")
+ #javascript("/library/calendar/js/calendar2.js")
+ #end
