@@ -1,0 +1,17 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/assignment/impl/src/java/org/sakaiproject/assignment/impl/AssignmentServiceImpl.java	2018-10-23 14:56:57.764241952 +0200
++++ assignment/impl/src/java/org/sakaiproject/assignment/impl/AssignmentServiceImpl.java	2018-10-31 13:31:55.832412344 +0200
+@@ -2308,9 +2308,11 @@
+         } else {
+             // otherwise use grade maintained by assignments or is considered externally mananged or is not released
+             grade = submission.getGrade(); // start with submission grade
+-            Optional<AssignmentSubmissionSubmitter> submissionSubmitter = submission.getSubmitters().stream().filter(s -> s.getSubmitter().equals(submitter)).findAny();
+-            if (submissionSubmitter.isPresent()) {
+-                grade = StringUtils.defaultIfBlank(submissionSubmitter.get().getGrade(), grade); // if there is a grade override use that
++            if (assignment.getIsGroup()) {
++                Optional<AssignmentSubmissionSubmitter> submissionSubmitter = submission.getSubmitters().stream().filter(s -> s.getSubmitter().equals(submitter)).findAny();
++                if (submissionSubmitter.isPresent()) {
++                    grade = StringUtils.defaultIfBlank(submissionSubmitter.get().getGrade(), grade); // if there is a grade override use that
++                }
+             }
+         }
+ 
