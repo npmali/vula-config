@@ -42,10 +42,11 @@ p1 VULA-3282-alias-mocks.diff "User alias mocks and implementations"
 p0 VULA-3225-basicauth-logging.diff "Remove unnecessary stack trace"
 p0 SAK-40580-gb-logging.diff "GB quieter logging"
 p0 VULA-3313-autoscore-logging.diff "T&Q auto-score error logging"
-p1 SAK-40760-tq-classcast.diff "T&Q classcast"
 p0 VULA-3145-announce-format.diff "Announcement format"
 p0 VULA-3145-kernel.diff "Notification method"
-
+p1 SAK-40219-calendar.diff "Calendar error in logs"
+p0 VULA-3323-asn-override.diff "Assignments grade override issue"
+p1 SAK-40723-prefs-upd.diff "Prefs.upd events"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
