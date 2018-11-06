@@ -88,8 +88,8 @@
                clientAuth="false" sslProtocol="TLS" keystoreFile="${sakai.security}/keystore"/>
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
-    <Connector port="8009" connectionTimeout="630000" backlog="500" packetSize="16384" 
-               maxThreads="250" enableLookups="false" redirectPort="8443" protocol="AJP/1.3" URIEncoding="UTF-8"  />
+    <Connector port="8009" connectionTimeout="630000" acceptCount="500" packetSize="16384"
+               maxThreads="120" enableLookups="false" redirectPort="8443" protocol="AJP/1.3" URIEncoding="UTF-8"  />
 
     <!-- An Engine represents the entry point (within Catalina) that processes
          every request.  The Engine implementation for Tomcat stand alone
