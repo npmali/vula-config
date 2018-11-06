@@ -1,0 +1,14 @@
+diff --git a/jobscheduler/scheduler-component-shared/src/java/org/sakaiproject/component/app/scheduler/SchedulerManagerImpl.java b/jobscheduler/scheduler-component-shared/src/java/org/sakaiproject/component/app/scheduler/SchedulerManagerImpl.java
+index fb67dc1cdff..d11e159a53c 100644
+--- a/jobscheduler/scheduler-component-shared/src/java/org/sakaiproject/component/app/scheduler/SchedulerManagerImpl.java
++++ b/jobscheduler/scheduler-component-shared/src/java/org/sakaiproject/component/app/scheduler/SchedulerManagerImpl.java
+@@ -503,7 +503,8 @@ private void loadInitialSchedules()
+    */
+   public void destroy()
+   {
+-
++      this.stop();
++      log.info("destroy()");
+   }
+ 
+ 

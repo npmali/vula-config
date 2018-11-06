@@ -1,0 +1,16 @@
+diff -ur /usr/local/src/vula_src/branches/vula-12.x/sitestats/sitestats-impl/src/java/org/sakaiproject/sitestats/impl/StatsUpdateManagerImpl.java sitestats/sitestats-impl/src/java/org/sakaiproject/sitestats/impl/StatsUpdateManagerImpl.java
+--- /usr/local/src/vula_src/branches/vula-12.x/sitestats/sitestats-impl/src/java/org/sakaiproject/sitestats/impl/StatsUpdateManagerImpl.java	2018-09-06 15:23:33.473621356 +0200
++++ sitestats/sitestats-impl/src/java/org/sakaiproject/sitestats/impl/StatsUpdateManagerImpl.java	2018-11-06 10:00:56.181980986 +0200
+@@ -544,6 +544,12 @@
+ 	// Event process methods
+ 	// ################################################################	
+ 	private void preProcessEvent(Event event) {
++
++		if (event == null) {
++			log.debug("Ignoring null event");
++			return;
++		}
++
+ 		totalEventsProcessed++;
+ 		String userId = event.getUserId();
+ 		Event e = fixMalFormedEvents(event);
