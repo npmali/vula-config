@@ -30,8 +30,8 @@ diff -ur /usr/local/src/vula_src/branches/vula-12.x/content-review/impl/turnitin
 +                String prop = (String) properties.get(TURNITIN_SITE_PROPERTY);
 +                if (prop != null) {
 +                        log.debug("Checking site property: " + prop);
-+			if (!Boolean.parseBoolean(prop))
-+				return false;
++			if (Boolean.parseBoolean(prop))
++				return true;
 +                }
 +
 +                // Check list of allowed site types, if defined
