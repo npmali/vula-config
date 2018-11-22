@@ -220,6 +220,9 @@
 
     <!-- Allow multiple instances of this tool within one site -->
     <configuration name="allowMultipleInstances" value="true" />
+
+    <!-- Allow this tool to be copied into a new site when a site is duplicated -->
+    <configuration name="allowToolDuplicate" value="false" />
   </tool>
 
   <!-- This is the LTI tool for a Personal Series in Opencast (My Videos) -->

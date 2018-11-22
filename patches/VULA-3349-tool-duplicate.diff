@@ -1,0 +1,77 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java	2018-09-06 15:23:33.465621309 +0200
++++ site-manage/site-manage-tool/tool/src/java/org/sakaiproject/site/tool/SiteAction.java	2018-11-22 12:21:29.124917267 +0200
+@@ -7836,6 +7830,64 @@
+ 		return false;
+ 	}
+ 	
++        /**
++         * Read from tool registration whether the tool may be duplicated across sites
++         * @param toolId
++         * @return
++         */
++        private boolean isDuplicateAllowed(String toolId)
++        {
++                Tool tool = ToolManager.getTool(toolId);
++                if (tool != null)
++                {
++                        Properties tProperties = tool.getRegisteredConfig();
++                        return (tProperties.containsKey("allowToolDuplicate")
++                                        && tProperties.getProperty("allowToolDuplicate").equalsIgnoreCase(Boolean.FALSE.toString())) ? false : true;
++                }
++                return true;
++        }
++
++
++	private void removeToolsNotForDuplication(Site site)
++	{
++
++                List<String> removePageIds = new ArrayList();
++
++		for (SitePage page : site.getPages()) {
++
++			boolean keepPage = false;
++
++                	List<String> removeToolIds = new ArrayList();
++
++	                for (ToolConfiguration t : page.getTools()) {
++                        	if (isDuplicateAllowed(t.getToolId())) {
++					keepPage = true;
++				} else {
++					removeToolIds.add(t.getId());
++				}
++			}
++
++			// Remove tool if it may not be duplicated
++			for (String removeId : removeToolIds) {
++				ToolConfiguration t = page.getTool(removeId);
++				page.removeTool(t);
++			}
++
++			if (!keepPage) {
++                                removePageIds.add(page.getId());
++			}
++		}
++
++		// Remove page if it contains no tools that may be duplicated
++                for (String removeId : removePageIds) {
++                        SitePage sitePage = site.getPage(removeId);
++                        site.removePage(sitePage);
++		}
++
++		return;
++	}
++
++
+ 	private HashMap<String, String> getMultiToolConfiguration(String toolId, ToolConfiguration toolConfig)
+ 	{
+ 		HashMap<String, String> rv = new HashMap<String, String>();
+@@ -9716,6 +9768,9 @@
+ 							try {
+ 								SiteService.save(site);
+ 
++								// Remove tools and pages that may not be duplicate
++								removeToolsNotForDuplication(site);
++
+ 								// import tool content
+ 								siteManageService.importToolContent(oldSiteId, site, false);
+ 								

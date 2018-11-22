@@ -50,7 +50,7 @@ p1 SAK-40140-shutdown.diff "Shutdown"
 p0 SAK-40889-sitestats-npe.diff "Sitestats NPE"
 p1 SAK-40891-dbfactory.diff "Static dbFactory"
 p1 SAK-26580-cache-creation.diff "Cache creation race on startup"
-
+p0 VULA-3349-tool-duplicate.diff "Do not duplicate selected tools"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
