@@ -73,7 +73,7 @@ cp -f $DISTFILES/index.html $DEST/webapps/ROOT/
 rm -f $DEST/webapps/ROOT/index.jsp
 
 # Copy mysql connector
-cp -f $DISTFILES/mysql-connector-java-8.0.11.jar $DEST/lib/
+cp -f $DISTFILES/mysql-connector-java-8.0.13.jar $DEST/lib/
 rm -f $DEST/lib/mariadb-java-client*
 
 # Respondus Production Jar (VULA-2882 can't put both jars in the same build)
