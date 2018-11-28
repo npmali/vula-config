@@ -19,10 +19,11 @@
  *
  **********************************************************************************/
 /*PART 1 - APPLICATION CHROME*/
+#rwiki_container { height: 100%; width: 100% }
 
 /*PART  1 - Edit*/
 /* tabbing contaner */
-ul.tabs {
+#rwiki_container ul.tabs {
 	position: relative;
 	margin-top: 0px;
 	margin-left: 30px;
@@ -31,19 +32,19 @@ ul.tabs {
 	padding-top: 4px
 }
 /* class tor tab headding */
-.tabhead { margin: 2px 0 }
+#rwiki_container .tabhead { margin: 2px 0 }
 /* tab links */
-ul.tabs li a { text-decoration: none; padding-top: 0px }
+#rwiki_container ul.tabs li a { text-decoration: none; padding-top: 0px }
 /* highlighting of tabs */
-ul.tabs li a:hover { text-decoration: none }
-ul.tabs li a:active, ul.tabs li a:focus { outline: none }
-ul.tabs li {
+#rwiki_container ul.tabs li a:hover { text-decoration: none }
+#rwiki_container ul.tabs li a:active, ul.tabs li a:focus { outline: none }
+#rwiki_container ul.tabs li {
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 	-moz-border-radius: 5px 5px 0 0
 }
 /* turn off a tab header */
-ul.tabs li.tabHeadOff {
+#rwiki_container ul.tabs li.tabHeadOff {
 	zoom: 1;
 	float: left;
 	list-style: none;
@@ -56,7 +57,7 @@ ul.tabs li.tabHeadOff {
 	background-color: #eee
 }
 /* turn on tab header */
-ul.tabs li.tabHeadOn  {
+#rwiki_container ul.tabs li.tabHeadOn  {
 	zoom: 1;
 	float: left;
 	list-style: none;
@@ -70,7 +71,7 @@ ul.tabs li.tabHeadOn  {
 	background-color: #fff
 }
 /* turn the tab content off */
-div.tabOff {
+#rwiki_container div.tabOff {
 	zoom: 1;
 	clear: left;
 	width: 100%;
@@ -80,7 +81,7 @@ div.tabOff {
 	left: -9000px
 }
 /* trunf the tab content on, nested inside  */
-div.tabOn {
+#rwiki_container div.tabOn {
 	zoom: 1;
 	clear: left;
 	width: 100%;
@@ -88,60 +89,72 @@ div.tabOn {
 	left: 0px;
 	z-index: 5
 }
-li.autoSaveOffClass { display: none }
-#rwiki_container { height: 100%; width: 100% }
+#rwiki_container li.autoSaveOffClass { display: none }
+
 #guillotineFixer { clear: both }
-#toolbarButtonSave {
+#rwiki_container #toolbarButtonSave {
 	background: url(/library/image/silk/page_save.png) center center no-repeat
 }
-#toolbarButtonBold {
+#rwiki_container #toolbarButtonBold {
 	background: url(/library/image/silk/text_bold.png) center center no-repeat
 }
-#toolbarButtonItalic {
+#rwiki_container #toolbarButtonItalic {
 	background: url(/library/image/silk/text_italic.png) center center no-repeat
 }
-#toolbarButtonSuper {
+#rwiki_container #toolbarButtonSuper {
 	background: url(/library/image/silk/text_superscript.png) center center no-repeat
 }
-#toolbarButtonSub {
+#rwiki_container #toolbarButtonSub {
 	background: url(/library/image/silk/text_subscript.png) center center no-repeat
 }
-#toolbarButtonHeading { }
-#toolbarButtonTable {
+#rwiki_container #toolbarButtonHeading { }
+#rwiki_container #toolbarButtonTable {
 	background: url(/library/image/silk/table.png) center center no-repeat
 }
-#toolbarButtonLink {
+#rwiki_container #toolbarButtonLink {
 	background: url(/library/image/silk/page_link.png) center center no-repeat
 }
-#toolbarButtonImage {
+#rwiki_container #toolbarButtonImage {
 	background: url(/library/image/silk/picture.png) center center no-repeat
 }
-#toolbarButtonRecover {
+#rwiki_container #toolbarButtonRecover {
 	background: url(/library/image/silk/arrow_undo.png) center center no-repeat;
 	height: 1.7em;
 	vertical-align: middle
 }
-.editToolBarContainer,.previewToolBarContainer,.autosaveToolBarContainer  {
+#rwiki_container .editToolBarContainer,
+#rwiki_container .previewToolBarContainer,
+#rwiki_container .autosaveToolBarContainer  {
 	background-color: #efefde;
 	height: 1.7em;
 	padding: 3px;
 	border: 1px solid #ccc
 }
-.editToolBarContainer select { zoom: 1; font-size: .9em; border: 1px solid #efeffe }
-a.editToolBar,a.editToolBar:visited,a.previewToolBar,a.previewToolBar:visited,a.autosaveToolBar,a.autosaveToolBar:visited  {
+#rwiki_container .editToolBarContainer select { zoom: 1; font-size: .9em; border: 1px solid #efeffe }
+#rwiki_container a.editToolBar,
+#rwiki_container a.editToolBar:visited,
+#rwiki_container a.previewToolBar,
+#rwiki_container a.previewToolBar:visited,
+#rwiki_container a.autosaveToolBar,
+#rwiki_container a.autosaveToolBar:visited  {
 	border: 1px solid #efefde;
 	padding-top: 2px;
 	padding-bottom: 3px;
 	padding-left: 8px;
 	padding-right: 8px
 }
-a.editToolBar:hover,a.editToolBar:active,a.previewToolBar:hover,a.previewToolBar:active,a.autosaveToolBar:hover,a.autosaveToolBar:active {
+#rwiki_container a.editToolBar:hover,
+#rwiki_container a.editToolBar:active,
+#rwiki_container a.previewToolBar:hover,
+#rwiki_container a.previewToolBar:active,
+#rwiki_container a.autosaveToolBar:hover,
+#rwiki_container a.autosaveToolBar:active {
 	border: 1px solid #316ac5;
 	cursor: pointer;
 }
 .previewToolBarContainer select { zoom: 1; font-size: .9em; border: 1px solid #efeffe }
 .autosaveToolBarContainer input { zoom: 1; font-size: .9em; border: 1px solid #efeffe }
-a.anchorpoint { vertical-align: top }
+#rwiki_container a.anchorpoint { vertical-align: top }
 .publicview { padding: 10px 10px 10px 30px }
 /* head is the edit page headder */
 #rwiki_head{ background-color: #eee; height: 100%; overflow: hidden }
@@ -152,7 +165,7 @@ a.anchorpoint { vertical-align: top }
 	height: 100%;
 	width: 60%
 }
-/* contains the on off switchers */	
+/* contains the on off switchers */
 #rwiki_sidebar_switcher{ padding-right: 4px }
 #rwiki_sidebar_switcher a{ padding-top: 4px }
 /* this causes the content area to expand to 100% */
@@ -269,23 +282,24 @@ a.anchorpoint { vertical-align: top }
 
 
 /*breadcrumb*/
-h3.breadcrumb{
-	padding: 1em 0 .5em 0;
-	margin: 0 0 .5em 0;
+#rwiki_container h3.breadcrumb{
+	/*padding: 1em 0 .5em 0;
+	margin: 0 0 .5em 0;*/
 	height:100%;
 	overflow:hidden;
 }
-h3.breadcrumb #breadPref{
+
+#rwiki_container h3.breadcrumb #breadPref{
 	color:#aaa;
 }
-h3.breadcrumb #breadCurr{
+#rwiki_container h3.breadcrumb #breadCurr{
 	color:#666;
 
 }
 .navPanel  {
 	border-bottom:1px solid #ddd;
 }
-.viewNav h3.breadcrumb{
+.viewNav h3.breadvcrumb{
 	padding:0;
 	margin:0;
 }
@@ -581,7 +595,7 @@ MOOT
 .rwiki_comments { list-style: none; margin: 0; padding: 0 }
 .rwiki_comments .hidden .rwikicommenttop, .rwiki_comments .hidden .rwikicomenttext{background:#eee;color:#999}
 .rwiki_comments .hidden .commentAuthor{ /*.commentHeader*/
-	color: #bbb 
+	color: #bbb
 }
 
 .lastmodified { font-size: smaller; text-align: right; color: #555;padding:.5em 0}
@@ -655,36 +669,37 @@ added only to site index, could be added to other things*/
 .selectedSelected{
 	background: #def;
 }
+
 /*PART 2 - USER CREATED CONTENT STYLES*/
 
 /************************************************/
 
-.bold { font-weight: bold }
-.italic { font-style: italic }
+#rwiki_container .bold { font-weight: bold }
+#rwiki_container .italic { font-style: italic }
 
 /* SAK-8663 Right to left text */
-.rtl{ unicode-bidi: override; direction: rtl }
-.line{ height: 1px; color: #aaa;background: #aaa;border:none }
+#rwiki_container .rtl{ unicode-bidi: override; direction: rtl }
+#rwiki_container .line{ height: 1px; color: #aaa;background: #aaa;border:none }
 
 
 /* image positioning*/
 
-img {
+#rwiki_container img {
 	padding-top: 2px;
 	padding-bottom: 1px;
 	padding-left: 1px;
 	padding-right: 1px
 }
-img.left { display: block; left: 0px }
-img.right { display: block; right: 0px }
-img.center { text-align: center }
-img.float-left {
+#rwiki_container img.left { display: block; left: 0px }
+#rwiki_container img.right { display: block; right: 0px }
+#rwiki_container img.center { text-align: center }
+#rwiki_container img.float-left {
 	float: left;
 	margin-top: 3px;
 	margin-right: 3px;
 	margin-bottom: 3px
 }
-img.float-right {
+#rwiki_container img.float-right {
 	float: right;
 	margin-top: 3px;
 	margin-left: 3px;
@@ -692,7 +707,7 @@ img.float-right {
 }
 /*****************************************/
 /*          Div positioning              */
-div.float-right {
+#rwiki_container div.float-right {
 	float: right;
 	border-left: 1px solid #ccc;
 	padding-left: 10px;
@@ -704,7 +719,7 @@ div.float-right {
 	color: #006699;
 	overflow-y: auto
 }
-h4.search {
+#rwiki_container h4.search {
 	font-size: 12px;
 	line-height: normal;
 	font-weight: normal;
@@ -712,7 +727,7 @@ h4.search {
 	padding: 4px;
 	margin: 18px 0px 4px 0px
 }
-h5 {
+#rwiki_container h5 {
 	font-size: 10px;
 	line-height: normal;
 	font-weight: bold;
@@ -720,7 +735,7 @@ h5 {
 	padding: 2px;
 	margin: 14px 0px 4px 0px
 }
-h6 {
+#rwiki_container h6 {
 	font-size: 8px;
 	line-height: normal;
 	font-weight: bold;
@@ -792,9 +807,9 @@ h6 {
 .wiki-table .table-even { }
 /************************************************/
 /* list formatting                              */
-.list { }
-.list-title { font-weight: bold }
-.list ul {
+#rwiki_container .list { }
+#rwiki_container .list-title { font-weight: bold }
+#rwiki_container .list ul {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
@@ -802,20 +817,20 @@ h6 {
 	list-style-type: none
 }
 /* wiki lists */
-ul {padding:.5em;list-style-position:inside;}
-ul.minus { list-style-type: square }
-ul.star { list-style-type: circle }
-ol.roman { list-style-type: lower-roman }
-ol.ROMAN { list-style-type: upper-roman }
-ol.alpha { list-style-type: lower-alpha }
-ol.ALPHA { list-style-type: upper-alpha }
-ol.greek { list-style-type: lower-greek }
-ol.GREEK { list-style-type: upper-greek }
-ol.hiragana { list-style-type: hiragana }
-ol.HIRAGANA { list-style-type: hiragana-iroha }
-ol.katakana { list-style-type: katakana }
-ol.KATAKANA { list-style-type: katakana-iroha }
-ol.HEBREW { list-style-type: hebrew }
+#rwiki_container ul {list-style-position:inside;}
+#rwiki_container ul.minus { list-style-type: square }
+#rwiki_container ul.star { list-style-type: circle }
+#rwiki_container ol.roman { list-style-type: lower-roman }
+#rwiki_container ol.ROMAN { list-style-type: upper-roman }
+#rwiki_container ol.alpha { list-style-type: lower-alpha }
+#rwiki_container ol.ALPHA { list-style-type: upper-alpha }
+#rwiki_container ol.greek { list-style-type: lower-greek }
+#rwiki_container ol.GREEK { list-style-type: upper-greek }
+#rwiki_container ol.hiragana { list-style-type: hiragana }
+#rwiki_container ol.HIRAGANA { list-style-type: hiragana-iroha }
+#rwiki_container ol.katakana { list-style-type: katakana }
+#rwiki_container ol.KATAKANA { list-style-type: katakana-iroha }
+#rwiki_container ol.HEBREW { list-style-type: hebrew }
 /************************************************/
 /* index formatting                             */
 .index-top { border-top: 1px solid #003366; margin-bottom: 5px }
@@ -848,78 +863,78 @@ ol.HEBREW { list-style-type: hebrew }
  * Feel free to use this on your websites, but please leave this message in the fies
  * http://www.silverstripe.com/blog
  */
-ul.tree{ width: auto; padding-left: 0px; margin-left: 0px;border:1px solid #ccc;padding:5px;background:#ffe;}
-ul.tree img{ border: none }
-ul.tree, ul.tree ul { padding-left: 0 }
-ul.tree ul { margin-left: 16px }
-ul.tree li.closed ul { display: none }
-ul.tree li {
+ #rwiki_container ul.tree{ width: auto; padding-left: 0px; margin-left: 0px;border:1px solid #ccc;padding:5px;background:#ffe;}
+ #rwiki_container ul.tree img{ border: none }
+ #rwiki_container ul.tree, ul.tree ul { padding-left: 0 }
+ #rwiki_container ul.tree ul { margin-left: 16px }
+ #rwiki_container ul.tree li.closed ul { display: none }
+ #rwiki_container ul.tree li {
 	list-style: none;
 	background: url(../images/i-repeater.gif) 0 0 repeat-y;
 	display: block;
 	width: auto
 }
-ul.tree li.last { list-style: none; background-image: none }
+#rwiki_container ul.tree li.last { list-style: none; background-image: none }
 /* Span-A: I/L/I glpyhs */
-ul.tree span.a {
+#rwiki_container ul.tree span.a {
 	background: url(../images/t.gif) 0 50% no-repeat;
 	display: block
 }
-ul.tree span.a.last { background: url(../images/l.gif) 0 50% no-repeat }
+#rwiki_container ul.tree span.a.last { background: url(../images/l.gif) 0 50% no-repeat }
 /* Span-B: Plus/Minus icon */
-ul.tree span.b { }
-ul.tree span.a.children span.b {
+#rwiki_container ul.tree span.b { }
+#rwiki_container ul.tree span.a.children span.b {
 	background: url(../images/minus.gif) 0 50% no-repeat;
 	cursor: pointer
 }
-ul.tree li.closed span.a.children span.b {
+#rwiki_container ul.tree li.closed span.a.children span.b {
 	background: url(../images/plus.gif) 0 50% no-repeat;
 	cursor: pointer
 }
 /* Span-C: Spacing and extending tree line below the icon */
-ul.tree span.c { margin-left: 16px }
-ul.tree span.a.children span.c {
+#rwiki_container ul.tree span.c { margin-left: 16px }
+#rwiki_container ul.tree span.a.children span.c {
 	background: url(../images/i-bottom.gif) 0 50% no-repeat
 }
-ul.tree span.a.spanClosed span.c { background-image: none }
+#rwiki_container ul.tree span.a.spanClosed span.c { background-image: none }
 /* Anchor tag: Page icon */
-ul.tree a {
+#rwiki_container ul.tree a {
 	white-space: nowrap;
 	overflow: hidden;
 	padding: 0px 0px 0px 18px;
 	line-height: 16px;
 	background: url(../images/page-file.png) 0 50% no-repeat
 }
-ul.tree span.a.children a {
+#rwiki_container ul.tree span.a.children a {
 	background: url(../images/page-openfoldericon.png) 0 50% no-repeat
 }
-ul.tree span.a.children.spanClosed a {
+#rwiki_container ul.tree span.a.children.spanClosed a {
 	background: url(../images/page-foldericon.png) 0 50% no-repeat
 }
 /* Unformatted tree */
-ul.tree.unformatted li { background-image: none; padding-left: 16px }
-ul.tree.unformatted li li { background-image: none; padding-left: 0px }
+#rwiki_container ul.tree.unformatted li { background-image: none; padding-left: 16px }
+#rwiki_container ul.tree.unformatted li li { background-image: none; padding-left: 0px }
 /*
  * Divs, by default store vertically aligned data
  */
-ul.tree li div {
+ #rwiki_container ul.tree li div {
 	float: right;
 	clear: right;
 	height: 1em;
 	margin-top: -26px
 }
 /* As inside DIVs should be treated normally */
-ul.tree div a {
+#rwiki_container ul.tree div a {
 	padding: 0;
 	background-image: none;
 	min-height: auto;
 	height: auto
 }
-ul.tree li A:link, ul.tree li A:hover, ul.tree li A:visited { color: #111111 }
-ul.tree li .over{ background-color: pink }
+#rwiki_container ul.tree li A:link,
+#rwiki_container ul.tree li A:hover,
+#rwiki_container ul.tree li A:visited { color: #111111 }
+#rwiki_container ul.tree li .over{ background-color: pink }
 
 #jsMath_Warning {
     display: none
 }
-
-¡
