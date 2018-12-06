@@ -48,6 +48,7 @@ p0 VULA-3323-asn-override.diff "Assignments grade override issue"
 p0 SAK-40889-sitestats-npe.diff "Sitestats NPE"
 p1 SAK-26580-cache-creation.diff "Cache creation race on startup"
 p0 VULA-3349-tool-duplicate.diff "Do not duplicate selected tools"
+p0 SAK-40218-basiclti-error.diff "Reduce spurious ERROR log to INFO"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
