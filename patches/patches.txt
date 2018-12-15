@@ -50,6 +50,7 @@ p1 SAK-26580-cache-creation.diff "Cache creation race on startup"
 p0 VULA-3349-tool-duplicate.diff "Do not duplicate selected tools"
 p0 SAK-40218-basiclti-error.diff "Reduce spurious ERROR log to INFO"
 p1 SAK-40103-gbng-events.diff "GradebookNG events"
+p1 SAK-41086-unboundid-ldapsdk.4.0.9.diff "SAK-41086 unboundid-ldapsdk 4.0.9"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
