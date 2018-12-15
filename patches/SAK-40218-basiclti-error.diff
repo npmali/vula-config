@@ -1,0 +1,11 @@
+--- /usr/local/src/vula_src/branches/vula-12.x/basiclti/basiclti-common/src/java/org/sakaiproject/basiclti/util/SakaiBLTIUtil.java	2018-11-02 10:17:19.405539712 +0200
++++ basiclti/basiclti-common/src/java/org/sakaiproject/basiclti/util/SakaiBLTIUtil.java	2018-12-06 14:33:25.617408311 +0200
+@@ -322,7 +322,7 @@
+ 			String newsecret = SimpleEncryption.decrypt(encryptionKey, orig);
+ 			return newsecret;
+ 		} catch (RuntimeException re) {
+-			log.error("Exception when decrypting secret - this is normal if the secret is unencrypted");
++			log.info("Exception when decrypting secret - this is normal if the secret is unencrypted");
+ 			return orig;
+ 		}
+ 	}
