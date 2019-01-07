@@ -45,7 +45,7 @@ diff -ur /usr/local/src/vula_src/branches/vula-12.x/content-review/impl/turnitin
 +		if ("course".equals(s.getType())) {
 +			String term = (String) properties.get("term");
 +			log.debug("Checking course site term: " + term);
-+			if (!"2018".equals(term)) {
++			if (!"2018".equals(term) && !"2019".equals(term)) {
 +				log.debug("Course is inactive: disallowing further Turnitin submissions");
 +				return false;
 +			}
