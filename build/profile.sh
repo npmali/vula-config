@@ -4,7 +4,7 @@
 export JAVA_HOME=/usr/java/jdk1.8.0_191-amd64
 
 # Set Tomcat version
-export TOMCAT=8.5.37
+export TOMCAT=8.5.38
 
 echo "TOMCAT: $TOMCAT"
 
