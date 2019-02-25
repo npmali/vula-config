@@ -24,8 +24,10 @@ smtpFrom@org.sakaiproject.email.api.EmailService=bounces@devslscle001.uct.ac.za
 # email address to send errors caught by the portal
 portal.error.email=help@devslscle001.uct.ac.za
 
-#log.config.count = 1
-#log.config.1=DEBUG.org.sakaiproject.util.ResourceLoader
+log.config.count = 2
+log.config.1=DEBUG.org.sakaiproject.login
+log.config.2=DEBUG.org.springframework.security
+#log.config.3=DEBUG.org.sakaiproject.db.impl.BasicSqlService
 
 # enable hibernate SQL debugging output
 #hibernate.show_sql=true
