@@ -15,7 +15,6 @@ p0 VULA-2501-eb-section-groups.diff "Allow EB groups provider to adjust section 
 p0 VULA-2846-motd.diff "Hide Options on MOTD"
 p0 VULA-2838-profile-pic.diff "Make sure profile pic updates on portal"
 p0 VULA-2894-site-manage-group-helper.diff "site group manager fix"
-p0 SAK-32322-mailarchive-attachments.diff "Email Archive attachments fix (workaround)"
 p0 VULA-3048_Assignment_en_GB.diff "VULA-3048 Assignment en_GB"
 p1 VULA-3101-choice_vm-change-header.diff "VULA-3101 Change choice.vm to better heading"
 p0 VULA-3110-ldap-authonly.diff "VULA-3110 Do LDAP auth only, disable lookup"
@@ -33,7 +32,6 @@ p1 VULA-2936-office365-peoplesoft-links-in-profile-dropdown.diff "Office 365 Peo
 p0 VULA-3215-chat-profile.diff "Chat profileClassic images"
 p1 VULA-3218-profile-image-update-var.diff "Add the code to portal impl to provide a timed variable for profile images"
 p0 SAK-40216-lti-warn.diff "Get rid of a basiclti startup label warning"
-p0 VULA-3250-chat-limit.diff "Chat max messages limit increase"
 p0 VULA-3258-disable-joinable-sets.diff "Remove joinable sets link in group helper"
 p0 VULA-3282-alias-chat.diff "User alias chat"
 p0 VULA-3282-alias-kernel.diff "User alias kernel"
@@ -49,7 +47,6 @@ p1 SAK-40989-wicket.diff "SAK-40989 wicket 6.26.0 & 7.10.0"
 p0 SAK-40218-basiclti-error.diff "Reduce spurious ERROR log to INFO"
 p0 VULA-3375-rwiki-history.diff "RWiki history bugs"
 p0 VULA-3377-rwiki-subspace.diff "RWiki subspace page creation"
-p0 SAK-41271-rwiki-macros.diff "RWiki macros"
 #### 
 # Occasional patches - these are not applied to the build but kept for ad-hoc builds
 ####
