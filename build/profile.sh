@@ -1,7 +1,8 @@
 #! /bin/sh
 
 # Must build with JDK8
-export JAVA_HOME=/usr/java/jdk1.8.0_191-amd64
+#export JAVA_HOME=/usr/java/jdk1.8.0_191-amd64
+export JAVA_HOME=/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0
 
 # Set Tomcat version
 export TOMCAT=8.5.39
