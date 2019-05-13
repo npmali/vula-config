@@ -1,25 +1,27 @@
 diff -ur /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/webapp/js/chatscript.js chat/chat-tool/tool/src/webapp/js/chatscript.js
---- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/webapp/js/chatscript.js  2018-01-05 11:44:22.000000000 +0200
-+++ chat/chat-tool/tool/src/webapp/js/chatscript.js     2018-06-22 15:42:43.422700381 +0200
-@@ -203,7 +203,7 @@
-                                messageItem.removeAttr("id");
-                                messageItem.attr("data-message-id", messageId);
-                                messageItem.attr("data-owner-id", ownerId);
--                               messageItem.find(".chatUserAvatar").css("background-image", "url(/direct/profile/" + ownerId + "/image)");
-+                               messageItem.find(".chatUserAvatar").css("background-image", "url(/direct/profileClassic/" + ownerId + "/image)");
-                                messageItem.find(".chatMessage").attr("data-message-id", messageId);
-                                messageItem.find(".chatName").attr("id", ownerId);
-                                messageItem.find(".chatName").text(ownerDisplayName);
+--- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/webapp/js/chatscript.js	2019-05-13 14:11:11.755592407 +0200
++++ chat/chat-tool/tool/src/webapp/js/chatscript.js	2019-05-13 14:16:05.263204410 +0200
+@@ -243,7 +243,7 @@
+ 				messageItem.attr("data-message-id", messageId);
+ 				messageItem.attr("data-owner-id", ownerId);
+ 				messageItem.attr("data-millis", messageDate);
+-				messageItem.find(".chatUserAvatar").css("background-image", "url(/direct/profile/" + ownerId + "/image)");
++				messageItem.find(".chatUserAvatar").css("background-image", "url(/direct/profileClassic/" + ownerId + "/image)");
+ 				messageItem.find(".chatMessage").attr("data-message-id", messageId);
+ 				messageItem.find(".chatName").attr("id", ownerId);
+ 				messageItem.find(".chatName").text(ownerDisplayName);
+Only in chat/chat-tool/tool/src/webapp/js: chatscript.js.orig
+Only in chat/chat-tool/tool/src/webapp/js: chatscript.js.rej
 diff -ur /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/webapp/jsp/roomMonitor.jspf chat/chat-tool/tool/src/webapp/jsp/roomMonitor.jspf
---- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/webapp/jsp/roomMonitor.jspf      2018-01-05 11:44:22.000000000 +0200
-+++ chat/chat-tool/tool/src/webapp/jsp/roomMonitor.jspf 2018-06-22 15:42:52.670749719 +0200
-@@ -33,7 +33,7 @@
-                 <c:out value="<li data-message-id='${message.chatMessage.id}' data-owner-id='${message.chatMessage.owner}'>" escapeXml="false" />
+--- /usr/local/src/vula_src/branches/vula-12.x/chat/chat-tool/tool/src/webapp/jsp/roomMonitor.jspf	2019-05-13 14:11:11.755592407 +0200
++++ chat/chat-tool/tool/src/webapp/jsp/roomMonitor.jspf	2019-05-13 14:14:08.211358944 +0200
+@@ -38,7 +38,7 @@
+                 <c:out value="<li data-message-id='${message.chatMessage.id}' data-owner-id='${message.chatMessage.owner}' data-millis='${message.timeInMillis}'>" escapeXml="false" />
              </c:otherwise>
-         </c:choose>
+         </c:choose>        
 -            <c:out value="<span class='chatUserAvatar' style=\"background-image: url(/direct/profile/${message.chatMessage.owner}/image)\">" escapeXml="false"/>
 +            <c:out value="<span class='chatUserAvatar' style=\"background-image: url(/direct/profileClassic/${message.chatMessage.owner}/image)\">" escapeXml="false"/>
              <c:out value="<span class='chatUserOnline'></span>" escapeXml="false" />
              <c:out value="</span>" escapeXml="false" />
-
-
+ 
+Only in chat/chat-tool/tool/src/webapp/jsp: roomMonitor.jspf.orig
