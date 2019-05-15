@@ -57,6 +57,7 @@ import org.sakaiproject.service.gradebook.shared.AssignmentHasIllegalPointsExcep
 import org.sakaiproject.service.gradebook.shared.ConflictingAssignmentNameException;
 import org.sakaiproject.service.gradebook.shared.ConflictingExternalIdException;
 import org.sakaiproject.service.gradebook.shared.GradebookNotFoundException;
+import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SitePage;
 import org.sakaiproject.site.api.ToolConfiguration; 
@@ -1091,5 +1092,53 @@ public class SakaiUCT extends AbstractWebService {
             java.lang.String pw) {
         return login(id, pw) + "," + serverConfigurationService.getString("webservices.directurl", serverConfigurationService.getString("serverUrl"));
     }
+
+    @WebMethod
+    @Path("/addSection")
+    @Produces("text/plain")
+    @POST
+    public String addSection(
+            @WebParam(name = "sessionId", partName = "sessionId") @FormParam("sessionId") String sessionId,
+            @WebParam(name = "siteId", partName = "siteId") @FormParam("siteId") String siteId,
+            @WebParam(name = "title", partName = "title") @FormParam("title") String title,
+            @WebParam(name = "category", partName = "comment") @FormParam("comment") String category,
+            @WebParam(name = "maxStudents", partName = "maxStudents") @FormParam("maxStudents") int maxStudents) {
+
+        // establish the session
+
+        if (StringUtils.isEmpty(sessionId)) {
+                log.warn("No sessionId");
+                return "failure: no-session-id";
+        }
+
+        Session s = null;
+
+        try {
+                s = establishSession(sessionId);
+        } catch (RuntimeException e) {
+                log.warn("Invalid session for addSection (not active)");
+                return "failure: invalid-session";
+        }
+
+        Site site;
+        try {
+            site = siteService.getSite(siteId);
+        } catch (IdUnusedException e) {
+            return "failure: site-id not found";
+        }
+
+        // Create a section in the category if it doesn't already exist
+        // TODO use Sections service
+        String groupId;
+
+        Group group = site.addGroup();
+        group.getProperties().addProperty("sections_category", category);
+        if (maxStudents > 0) {
+            group.getProperties().addProperty("sections_max_enrollments", String.valueOf(maxStudents));
+        }
+        group.setTitle(title);
+
+        return group.getId();
+   }
 
 }
