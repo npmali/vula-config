@@ -22,6 +22,8 @@ PATCHES_FILE=$PATCHES/patches.txt
 LOCALMAVENREPO=$MYPATH/.m2
 MAVEN_PATH=/usr/local/apache-maven-3.3.9
 SKIN_PATH=/usr/local/src/vula-skin-$VERSION
+#mysql-connector-java verions
+MYSQLJ=8.0.16
 
 # Source directory
 SAKAISRC=/usr/local/src/vula_src/branches/vula-$VERSION
