@@ -82,6 +82,9 @@ cp $DISTFILES/respondus-samigo-ldb-1.0.8-vula.jar $DEST/lib/
 # Install WIRIS WAR - https://jira.cet.uct.ac.za/browse/VULA-999 / VULA-2774
 cp $DISTFILES/pluginwiris_engine.war $DEST/webapps/
 
+# Install Examity WAR - https://jira.cilt.uct.ac.za/browse/VULA-3463
+cp $DISTFILES/EINC-ExamitySakaiEDI.war $DEST/webapps/
+
 # change the ownership to tomcat
 chown -R tomcat $DEST
 
